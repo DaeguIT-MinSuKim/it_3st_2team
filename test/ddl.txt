@@ -1,0 +1,170 @@
+-- 헤어샵
+DROP SCHEMA IF EXISTS hairshop;
+
+-- 헤어샵
+CREATE SCHEMA hairshop;
+
+-- 이벤트
+CREATE TABLE hairshop.event (
+	evnNo    INTEGER     NOT NULL COMMENT '이벤트번호', -- 이벤트번호
+	evnName  VARCHAR(30) NOT NULL COMMENT '이벤트명', -- 이벤트명
+	discount FLOAT       NOT NULL COMMENT '할인율' -- 할인율
+)
+COMMENT '이벤트';
+
+-- 이벤트
+ALTER TABLE hairshop.event
+	ADD CONSTRAINT PK_event -- 이벤트 기본키
+		PRIMARY KEY (
+			evnNo -- 이벤트번호
+		);
+
+-- 헤어정보
+CREATE TABLE hairshop.hair (
+	hairNum  INTEGER     NOT NULL COMMENT '헤어번호', -- 헤어번호
+	hairName VARCHAR(30) NOT NULL COMMENT '헤어명', -- 헤어명
+	price    INTEGER     NOT NULL COMMENT '원가', -- 원가
+	pic      BLOB        NULL     COMMENT '사진' -- 사진
+)
+COMMENT '헤어정보';
+
+-- 헤어정보
+ALTER TABLE hairshop.hair
+	ADD CONSTRAINT PK_hair -- 헤어정보 기본키
+		PRIMARY KEY (
+			hairNum -- 헤어번호
+		);
+
+-- 주소
+CREATE TABLE hairshop.address (
+	zipcode   CHAR(5)     NULL COMMENT '우편번호', -- 우편번호
+	sido      VARCHAR(20) NULL COMMENT '시도', -- 시도
+	sigungu   VARCHAR(20) NULL COMMENT '시군구', -- 시군구
+	doro      VARCHAR(20) NULL COMMENT '도로', -- 도로
+	building1 INT(5)      NULL COMMENT '건물명1', -- 건물명1
+	building2 VARCHAR(20) NULL COMMENT '건물명2' -- 건물명2
+)
+COMMENT '주소';
+
+-- 영업
+CREATE TABLE hairshop.sale (
+	saleNo      INTEGER      NOT NULL COMMENT '영업번호', -- 영업번호
+	description VARCHAR(255) NULL     COMMENT '예약메모', -- 예약메모
+	date        DATE         NOT NULL COMMENT '영업일자', -- 영업일자
+	time        TIME         NOT NULL COMMENT '영업시간', -- 영업시간
+	state       INTEGER      NOT NULL COMMENT '영업현황', -- 영업현황
+	sprice      INTEGER      NULL     COMMENT '할인후가격', -- 할인후가격
+	cusNo       INTEGER      NOT NULL COMMENT '고객번호', -- 고객번호
+	empNo       INTEGER      NOT NULL COMMENT '직원번호', -- 직원번호
+	hairNum     INTEGER      NOT NULL COMMENT '헤어번호', -- 헤어번호
+	evnNo       INTEGER      NOT NULL COMMENT '이벤트번호' -- 이벤트번호
+)
+COMMENT '영업';
+
+-- 직원
+CREATE TABLE hairshop.employee (
+	empNo    INTEGER      NOT NULL COMMENT '직원번호', -- 직원번호
+	empName  VARCHAR(16)  NOT NULL COMMENT '직원명', -- 직원명
+	title    VARCHAR(16)  NOT NULL COMMENT '직책', -- 직책
+	joinDate DATE         NULL     COMMENT '입사일자', -- 입사일자
+	addr     VARCHAR(100) NULL     COMMENT '주소', -- 주소
+	id       VARCHAR(32)  NOT NULL COMMENT '아이디', -- 아이디
+	password VARCHAR(32)  NOT NULL COMMENT '패스워드' -- 패스워드
+)
+COMMENT '직원';
+
+-- 직원
+ALTER TABLE hairshop.employee
+	ADD CONSTRAINT PK_employee -- 직원 기본키
+		PRIMARY KEY (
+			empNo -- 직원번호
+		);
+
+-- 고객
+CREATE TABLE hairshop.customer (
+	cusNo    INTEGER      NOT NULL COMMENT '고객번호', -- 고객번호
+	cusName  VARCHAR(16)  NOT NULL COMMENT '고객명', -- 고객명
+	birth    DATE         NOT NULL COMMENT '생년월일', -- 생년월일
+	age      INTEGER      NULL     COMMENT '나이', -- 나이
+	joinDate DATE         NOT NULL COMMENT '가입일자', -- 가입일자
+	phone    VARCHAR(30)  NOT NULL COMMENT '연락처', -- 연락처
+	gender   BOOLEAN      NOT NULL COMMENT '성별', -- 성별
+	pic      BLOB         NULL     COMMENT '사진', -- 사진
+	addr     VARCHAR(100) NULL     COMMENT '주소', -- 주소
+	empNo    INTEGER      NOT NULL COMMENT '직원번호' -- 직원번호
+)
+COMMENT '고객';
+
+-- 고객
+ALTER TABLE hairshop.customer
+	ADD CONSTRAINT PK_customer -- 고객 기본키
+		PRIMARY KEY (
+			cusNo -- 고객번호
+		);
+
+-- 직원휴무
+CREATE TABLE hairshop.eoff (
+	empNo   INTEGER NOT NULL COMMENT '직원번호', -- 직원번호
+	eoffDay DATE    NOT NULL COMMENT '휴무일' -- 휴무일
+)
+COMMENT '직원휴무';
+
+-- 영업
+ALTER TABLE hairshop.sale
+	ADD CONSTRAINT FK_customer_TO_sale -- 고객 -> 영업
+		FOREIGN KEY (
+			cusNo -- 고객번호
+		)
+		REFERENCES hairshop.customer ( -- 고객
+			cusNo -- 고객번호
+		);
+
+-- 영업
+ALTER TABLE hairshop.sale
+	ADD CONSTRAINT FK_employee_TO_sale -- 직원 -> 영업
+		FOREIGN KEY (
+			empNo -- 직원번호
+		)
+		REFERENCES hairshop.employee ( -- 직원
+			empNo -- 직원번호
+		);
+
+-- 영업
+ALTER TABLE hairshop.sale
+	ADD CONSTRAINT FK_hair_TO_sale -- 헤어정보 -> 영업
+		FOREIGN KEY (
+			hairNum -- 헤어번호
+		)
+		REFERENCES hairshop.hair ( -- 헤어정보
+			hairNum -- 헤어번호
+		);
+
+-- 영업
+ALTER TABLE hairshop.sale
+	ADD CONSTRAINT FK_event_TO_sale -- 이벤트 -> 영업
+		FOREIGN KEY (
+			evnNo -- 이벤트번호
+		)
+		REFERENCES hairshop.event ( -- 이벤트
+			evnNo -- 이벤트번호
+		);
+
+-- 고객
+ALTER TABLE hairshop.customer
+	ADD CONSTRAINT FK_employee_TO_customer -- 직원 -> 고객
+		FOREIGN KEY (
+			empNo -- 직원번호
+		)
+		REFERENCES hairshop.employee ( -- 직원
+			empNo -- 직원번호
+		);
+
+-- 직원휴무
+ALTER TABLE hairshop.eoff
+	ADD CONSTRAINT FK_employee_TO_eoff -- 직원 -> 직원휴무
+		FOREIGN KEY (
+			empNo -- 직원번호
+		)
+		REFERENCES hairshop.employee ( -- 직원
+			empNo -- 직원번호
+		);

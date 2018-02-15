@@ -42,46 +42,29 @@ insert into eoff (empNo,eoffDay) values
 (4,'2018-02-25'); 
 select * from eoff; 
 
-/*트리거 만들기*/
-create trigger discount_price
-before insert on sale 
-for each row  
-begin 
-declare x int; 
-declare y float; 
-set x =(select h.price from hair h join sale s on h.hairNum=s.hairNum); 
-set y =(select e.discount from event e join sale s on s.evnNo=e.evnNo); 
-set new.sprice=(x*y); 
-end
+/*트리거 생성*/
+create trigger tri_after_insert_sale
+after insert on sale
+for each row
+begin
+	set @z =(select count(*) from sale);
+	set @x =(select h.price from hair h join sale s on h.hairNum=s.hairNum where s.saleNo=@z);
+	set @y =(select e.discount from event e join sale s on s.evnNo=e.evnNo where s.saleNo=@z); 
+	set @mul = @x*(1-@y);
+	set @idx =(select saleNo from sale where saleNo=@z);
+	insert into result(saleNo, income) values (@idx, @mul);
+end;
 
+/*영업 데이타 넣기*/
+insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
+(1,null,'2000-05-10','11:00:00',0,3,1,8,2);
+insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
+(2,null,'2000-05-10','11:00:00',0,3,1,8,3);
+insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
+(3,null,'2000-05-10','11:00:00',0,3,1,2,2); 
+insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
+(4,null,'2000-05-10','11:00:00',0,3,1,4,1); 
 select * from sale;
-/*순서1. 트리거 적용전 insert. sprice가 null인 데이터 추가*/
-insert into sale (saleNo, description, date, time, state, sprice, cusNo, empNo, hairNum, evnNo) values 
-(1,null,'2000-05-10','11:00:00',0,null,3,1,5,1);  
-/*순서2. 트리거 적용 후 insert. sprice를 null로 입력하였지만 할인 후 적용가로 들어간 것을 확인해야함*/
-insert into sale (saleNo, description, date, time, state, sprice, cusNo, empNo, hairNum, evnNo) values 
-(2,null,'2000-05-10','11:00:00',0,null,3,1,5,1); 
-delete from sale where saleNo=2; 
 
-/*그냥 해본 테스트들..(필요하면 참고하세요)*/
-select c.cusName, s.empNo as '담당직원', s.evnNo, s.hairNum, h.price, e.discount, (h.price*e.discount) as '할인적용가' from customer c join sale s on c.cusNo=s.cusNo 
-left join hair h on s.hairNum=h.hairNum 
-left join event e on s.evnNo=e.evnNo; 
-select h.price from hair h join sale s on h.hairNum=s.hairNum; 
-select e.discount from event e join sale s on s.evnNo=e.evnNo; 
-select discount from event where evnNo=1; 
-
-/*트리거 만들때 연습용으로 해봄..*/
-create trigger discount_price 
-before insert on sale 
-for each row  
-begin 
-declare x int; 
-declare y int; 
-set x=10000; 
-set new.sprice = x; 
-end  
-
-
-
-  
+/*할인적용된 가격 확인*/
+select * from result;

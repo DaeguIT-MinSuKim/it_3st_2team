@@ -3,7 +3,7 @@ INSERT INTO event (evnNo,evnName,discount) VALUES
  (2,'생일',0.3), 
  (3,'조조',0.2), 
  (4,'어린이',0.6),
- (5,'일반',1.0);
+ (5,'일반',0.0); /*0.0으로 수정됨 khj*/
  select * from event; 
   
 INSERT INTO hair (hairNum,hairName,price,pic) VALUES  
@@ -57,14 +57,31 @@ end;
 
 /*영업 데이타 넣기*/
 insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(1,null,'2000-05-10','11:00:00',0,3,1,8,2);
+(1,null,'2017-01-10','11:00:00',0,3,1,8,2);
 insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(2,null,'2000-05-10','11:00:00',0,3,1,8,3);
+(2,null,'2017-02-01','10:00:00',1,3,1,7,3);
 insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(3,null,'2000-05-10','11:00:00',0,3,1,2,2); 
+(3,null,'2017-03-26','15:00:00',2,1,1,2,2); 
 insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(4,null,'2000-05-10','11:00:00',0,3,1,4,1); 
+(4,null,'2017-03-15','18:00:00',0,2,1,4,1); 
+insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
+(5,null,'2017-04-02','14:00:00',0,4,1,6,2);
+insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
+(6,null,'2017-05-30','12:00:00',1,1,1,1,5);
+insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
+(7,null,'2017-06-26','13:00:00',2,2,1,3,2); 
+insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
+(8,null,'2017-09-17','11:00:00',0,1,1,4,5);
+insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
+(9,null,'2017-12-19','19:00:00',0,1,1,5,2);
+insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
+(10,null,'2017-12-20','16:00:00',1,2,1,5,5);
 select * from sale;
+delete from sale;
 
 /*할인적용된 가격 확인*/
 select * from result;
+delete from result;
+
+/*월별 매출*/
+select MONTH(sub.d) as `month`, sum(sub.i) from (select s.date d, r.income i from result r join sale s on r.saleNo=s.saleNo) sub group by `month`;

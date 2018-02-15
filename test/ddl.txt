@@ -53,13 +53,19 @@ CREATE TABLE hairshop.sale (
 	date        DATE         NOT NULL COMMENT '영업일자', -- 영업일자
 	time        TIME         NOT NULL COMMENT '영업시간', -- 영업시간
 	state       INTEGER      NOT NULL COMMENT '영업현황', -- 영업현황
-	sprice      INTEGER      NULL     COMMENT '할인후가격', -- 할인후가격
 	cusNo       INTEGER      NOT NULL COMMENT '고객번호', -- 고객번호
 	empNo       INTEGER      NOT NULL COMMENT '직원번호', -- 직원번호
 	hairNum     INTEGER      NOT NULL COMMENT '헤어번호', -- 헤어번호
 	evnNo       INTEGER      NOT NULL COMMENT '이벤트번호' -- 이벤트번호
 )
 COMMENT '영업';
+
+-- 영업
+ALTER TABLE hairshop.sale
+	ADD CONSTRAINT PK_sale -- 영업 기본키
+		PRIMARY KEY (
+			saleNo -- 영업번호
+		);
 
 -- 직원
 CREATE TABLE hairshop.employee (
@@ -108,6 +114,13 @@ CREATE TABLE hairshop.eoff (
 	eoffDay DATE    NOT NULL COMMENT '휴무일' -- 휴무일
 )
 COMMENT '직원휴무';
+
+-- 결산
+CREATE TABLE hairshop.result (
+	saleNo INTEGER NOT NULL COMMENT '영업번호', -- 영업번호
+	income INTEGER NOT NULL COMMENT '실수입' -- 실수입
+)
+COMMENT '결산';
 
 -- 영업
 ALTER TABLE hairshop.sale
@@ -167,4 +180,14 @@ ALTER TABLE hairshop.eoff
 		)
 		REFERENCES hairshop.employee ( -- 직원
 			empNo -- 직원번호
+		);
+
+-- 결산
+ALTER TABLE hairshop.result
+	ADD CONSTRAINT FK_sale_TO_result -- 영업 -> 결산
+		FOREIGN KEY (
+			saleNo -- 영업번호
+		)
+		REFERENCES hairshop.sale ( -- 영업
+			saleNo -- 영업번호
 		);

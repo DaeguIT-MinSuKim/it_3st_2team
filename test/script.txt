@@ -4,7 +4,7 @@ INSERT INTO event (evnNo,evnName,discount) VALUES
  (3,'조조',0.2), 
  (4,'어린이',0.6),
  (5,'일반',0.0);
- select * from event; 
+ select * from event;
   
 INSERT INTO hair (hairNum,hairName,price,pic) VALUES  
  (1,'커트',15000,null), 
@@ -15,7 +15,7 @@ INSERT INTO hair (hairNum,hairName,price,pic) VALUES
  (6,'트리트먼트',35000,null), 
  (7,'앰플',18000,null), 
  (8,'기타',16000,null); 
- select * from hair; 
+ select * from hair;
   
 insert into employee (empNo, empName, title, joinDate, addr, id, password) values 
 (1,'직원1','사장','2011-01-02',null,'idemp1','pwemp1'), 
@@ -26,10 +26,10 @@ insert into employee (empNo, empName, title, joinDate, addr, id, password) value
 select * from employee; 
 
 insert into customer (cusNo, cusName, birth, age, joinDate, phone, gender, pic, addr, empNo) values 
-(1,'고객1','1990-02-20',null,'2001-05-10','010-1111-1111',0,null,'서울시 서초구 서초동',2), 
-(2,'고객2','1992-09-09',null,'2000-03-02','010-2222-2222',1,null,'경기도 영통구 천천동',1), 
-(3,'고객3','1987-06-01',null,'2001-08-08','010-3333-3333',0,null,'경산시 정평동',3), 
-(4,'고객4','1990-10-11',null,'2001-08-02','010-4444-4444',1,null,'대구시 북구 반월동',5); 
+(1,'고객1','1990-02-20',YEAR(CURDATE())-YEAR(birth),'2001-05-10','010-1111-1111',0,null,'서울시 서초구 서초동',2), 
+(2,'고객2','1992-09-09',YEAR(CURDATE())-YEAR(birth),'2000-03-02','010-2222-2222',1,null,'경기도 영통구 천천동',1), 
+(3,'고객3','1987-06-01',YEAR(CURDATE())-YEAR(birth),'2001-08-08','010-3333-3333',0,null,'경산시 정평동',3), 
+(4,'고객4','1990-10-11',YEAR(CURDATE())-YEAR(birth),'2001-08-02','010-4444-4444',1,null,'대구시 북구 반월동',5); 
 select * from customer; 
 
 insert into eoff (empNo,eoffDay) values 
@@ -46,7 +46,7 @@ select * from eoff;
 create trigger tri_after_insert_sale
 after insert on sale
 for each row
-begin
+begin 
 	set @z =(select count(*) from sale);
 	set @x =(select h.price from hair h join sale s on h.hairNum=s.hairNum where s.saleNo=@z);
 	set @y =(select e.discount from event e join sale s on s.evnNo=e.evnNo where s.saleNo=@z); 
@@ -55,19 +55,34 @@ begin
 	insert into result(saleNo, income) values (@idx, @mul);
 end;
 
+/*트리거 생성+if문 추가*/
+create trigger tri_after_insert_sale
+after insert on sale
+for each row
+begin 
+	set @z =(select count(*) from sale);
+	if (new.state>1) then
+	set @x =(select h.price from hair h join sale s on h.hairNum=s.hairNum where s.saleNo=@z);
+	set @y =(select e.discount from event e join sale s on s.evnNo=e.evnNo where s.saleNo=@z); 
+	set @mul = @x*(1-@y);
+	set @idx =(select saleNo from sale where saleNo=@z);
+	insert into result(saleNo, income) values (@idx, @mul);
+	end if;
+end;
+
 /*영업 데이타 넣기*/
 insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(1,null,'2017-01-10','11:00:00',0,3,1,8,2);
+(1,null,'2017-01-10','11:00:00',2,3,1,8,2);
 insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
 (2,null,'2017-02-01','10:00:00',1,3,4,7,3);
 insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
 (3,null,'2017-03-26','15:00:00',2,1,3,2,2); 
 insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(4,null,'2017-03-15','18:00:00',0,2,5,4,1); 
+(4,null,'2017-03-15','18:00:00',2,2,5,4,1); 
 insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
 (5,null,'2017-04-02','14:00:00',0,4,2,6,2);
 insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(6,null,'2017-05-30','12:00:00',1,1,1,1,5);
+(6,null,'2017-05-30','12:00:00',2,1,1,1,5);
 insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
 (7,null,'2017-06-26','13:00:00',2,2,2,3,2); 
 insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
@@ -78,9 +93,9 @@ insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum,
 (10,null,'2017-12-20','16:00:00',1,2,2,5,5);
 -- 연도별 데이터 추가
 insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(11,null,'2016-01-15','10:00:00',0,3,2,2,3);
+(11,null,'2016-01-15','10:00:00',2,3,2,2,3);
 insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(12,null,'2016-02-21','09:00:00',1,3,1,5,3);
+(12,null,'2016-02-21','09:00:00',2,3,1,5,3);
 insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
 (13,null,'2015-03-19','11:00:00',2,1,3,7,2); 
 insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
@@ -96,29 +111,32 @@ insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum,
 insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
 (19,null,'2010-12-24','20:00:00',0,1,3,2,5);
 insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(20,null,'2010-12-25','15:00:00',1,2,2,8,1);
+(20,null,'2010-12-25','15:00:00',2,2,2,8,1);
 select * from sale;
-delete from sale;
-delete from sale where saleNo=20; -- 외래키 때문에 영업 테이블 데이터를 삭제하지 못함
+
 /*할인적용된 가격 확인*/
 select * from result;
-delete from result;
-delete from result where saleNo=20;
 
 /*기간별*/
 SELECT DATE(sub.d) AS `date`, sum(sub.i) FROM (select s.date d, r.income i from result r join sale s on r.saleNo=s.saleNo) sub
 WHERE DATE(sub.d) >= STR_TO_DATE('2010-01-01','%Y-%m-%d')
 and DATE(sub.d) <= STR_TO_DATE('2017-12-31', '%Y-%m-%d') group by `date`;
+
 /*년도별 매출합,건수*/
 select DATE_FORMAT(sub.d,'%Y') year, sum(sub.i) sum, count(sub.d) as `건` from (select s.date d, r.income i from result r join sale s on r.saleNo=s.saleNo) sub group by `year`;
+
 /*월별 매출합,건수*/
 select DATE_FORMAT(sub.d,'%Y-%m') month, sum(sub.i) as sum, count(sub.d) as `건` from (select s.date d, r.income i from result r join sale s on r.saleNo=s.saleNo) sub group by `month`;
+
 /*차트현황*/
 select count(cusNo) `총고객수` from customer;
-select count(saleNo) `총영업수` from sale;
+select count(saleNo) `총예약수(예약취소포함)` from sale;
+select count(saleNo) `총영업수` from result;
 select sum(income) `총금액` from result;
+
 /*헤어별 주문건수*/
 select sub.u `헤어번호`, sub.a `헤어명`, count(sub.u) `주문건수` from (select s.hairNum u, h.hairName a from sale s left join hair h on s.hairNum=h.hairNum) sub group by `헤어번호`;
+
 /*직원별 매출*/
 select s.empNo `직원번호`, e.empName `직원명`, e.title `직급`, sum(r.income) `매출액` 
 from sale s left join employee e on s.empNo=e.empNo left join result r on s.saleNo=r.saleNo group by `직원번호`;

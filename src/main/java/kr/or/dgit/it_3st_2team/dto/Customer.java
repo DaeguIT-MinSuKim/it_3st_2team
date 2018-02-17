@@ -31,6 +31,11 @@ public class Customer {
 		this.emp = emp;
 		this.cTf = cTf;
 	}
+	
+	public Customer(int cusNo) {
+		super();
+		this.cusNo = cusNo;
+	}
 	public int getCusNo() {
 		return cusNo;
 	}

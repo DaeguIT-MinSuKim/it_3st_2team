@@ -13,14 +13,18 @@
 		<result property="eTf" column="e_tf" />
 	</resultMap>
 
-
+	<resultMap type="Employee" id="empNoResult">
+		<id property="empNo" column="emp_no" />
+	</resultMap>
+	
+	
+	
+	
+	
 		<resultMap type="Employee" id="empNoNameResult">
 			<id property="empNo" column="emp_no" />
 			<result property="empName" column="emp_name" />
 		</resultMap>
-
-
-
 
 		<resultMap type="Employee" id="EmployeeAddTitle" extends="employeeResult">
 			<association property="title"

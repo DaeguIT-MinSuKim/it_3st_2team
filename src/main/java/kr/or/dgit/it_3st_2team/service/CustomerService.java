@@ -45,4 +45,10 @@ public class CustomerService {
 			return res;
 		}
 	}
+	public List<Customer>SelectWhereCusId(Customer customer){
+		log.debug("SelectWhereCusId()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			return sqlSession.selectList(namespace + "SelectWhereCusId",customer);
+		}
+	}
 }

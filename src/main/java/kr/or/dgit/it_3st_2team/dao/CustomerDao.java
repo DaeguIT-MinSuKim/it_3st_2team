@@ -13,4 +13,6 @@ public interface CustomerDao {
 	
 	/*insert customer*/
 	int inSertCustomer(Customer customer);
+	
+	List<Customer>SelectWhereCusId(Customer customer);
 }

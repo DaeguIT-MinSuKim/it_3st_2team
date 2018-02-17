@@ -18,6 +18,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -35,9 +36,11 @@ import kr.or.dgit.it_3st_2team.dto.Employee;
 import kr.or.dgit.it_3st_2team.dto.PhoneNumber;
 import kr.or.dgit.it_3st_2team.service.CustomerService;
 import kr.or.dgit.it_3st_2team.service.EmployeeService;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 
 @SuppressWarnings("serial")
-public class CustomerJPanel extends JPanel implements ActionListener, KeyListener{
+public class CustomerJPanel extends JPanel implements ActionListener, KeyListener, MouseListener{
 	private JTextField tfNo;
 	private JTextField tfName;
 	private JTextField tfBirth;
@@ -54,9 +57,12 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 	
 	private CustomerService cservice;
 	private EmployeeService eservice;
-	private JButton btnNewButton_1;
+	private JButton btnAdd;
 	private JComboBox cmbEmp;
 	private JComboBox cmbphone1;
+	private JScrollPane scrollPane;
+	private JButton btnCancel;
+	private JButton btnUpdate;
 	/**
 	 * Create the panel.
 	 */
@@ -94,13 +100,13 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		panel_1.add(lblNo);
 		
 		
-		int no = cList.size()+1;
+		
 		tfNo = new JTextField();
 		tfNo.setFocusable(false);
 		panel_1.add(tfNo);
 		tfNo.setColumns(10);
 		tfNo.setEditable(false);
-		tfNo.setText(toString().format("%s", no));
+		addtfNo();
 		
 		JLabel lblName = new JLabel("고객이름");
 		lblName.setHorizontalAlignment(SwingConstants.CENTER);
@@ -175,7 +181,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		panel_4.add(lblPhone1);
 		
 		cmbphone1 = new JComboBox();
-		cmbphone1.setModel(new DefaultComboBoxModel(new String[] {"010"}));
+		cmbphone1.setModel(new DefaultComboBoxModel(new String[] {"010","000"}));
 		
 		panel_4.add(cmbphone1);
 		
@@ -215,15 +221,13 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		JPanel panel_7 = new JPanel();
 		panel_6.add(panel_7, BorderLayout.SOUTH);
 		
-		btnNewButton_1 = new JButton("등록");
-		btnNewButton_1.addActionListener(this);
-		panel_7.add(btnNewButton_1);
+		btnAdd = new JButton("등록");
+		btnAdd.addActionListener(this);
+		panel_7.add(btnAdd);
 		
-		JButton btnNewButton_3 = new JButton("수정");
-		panel_7.add(btnNewButton_3);
-		
-		JButton btnNewButton_2 = new JButton("취소");
-		panel_7.add(btnNewButton_2);
+		btnCancel = new JButton("취소");
+		btnCancel.addActionListener(this);
+		panel_7.add(btnCancel);
 		
 		JPanel panel_11 = new JPanel();
 		panel_11.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "\uACE0\uAC1D\uC815\uBCF4", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -245,23 +249,48 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		panel_9.add(tfSearch);
 		tfSearch.setColumns(10);
 		
-		JButton btnName = new JButton("고객찾기");
-		panel_9.add(btnName);
+		JButton btnSearch = new JButton("고객찾기");
+		panel_9.add(btnSearch);
 		
 		JButton btnAll = new JButton("모든고객보기");
 		panel_9.add(btnAll);
 		
-		JButton btnNewButton_4 = new JButton("고객 탈퇴");
-		panel_9.add(btnNewButton_4);
+		btnUpdate = new JButton("고객 수정");
+		btnUpdate.addActionListener(this);
+		panel_9.add(btnUpdate);
+		btnUpdate.setEnabled(false);
+		
+		JButton btnDelete = new JButton("고객 탈퇴");
+		panel_9.add(btnDelete);
 		
 		JPanel panel_10 = new JPanel();
 		panel_11.add(panel_10);
 		panel_10.setLayout(new BorderLayout(0, 0));
 		
-		JScrollPane scrollPane = new JScrollPane();
-		panel_10.add(scrollPane);
+		scrollPane = new JScrollPane();
+		panel_10.add(scrollPane, BorderLayout.NORTH);
 		
 		table = new JTable();
+		table.addMouseListener(this);
+		
+		showTables();
+	}
+	
+	private void clear() {
+		tfName.setText("");
+		tfBirth.setText("");
+		tfAge.setText("");
+		cmbEmp.setSelectedIndex(0);
+		cmbphone1.setSelectedIndex(0);
+		tfphone2.setText("");
+		tfphone3.setText("");
+		tfaddr.setText("");
+	}
+	private void addtfNo() {
+		int no = cList.size()+1;
+		tfNo.setText(toString().format("%s", no));
+	}
+	private void showTables() {
 		
 		table.setModel(new DefaultTableModel(getObj(cList),getColumNames()));
 		NonEditableModel  Nemodel = new NonEditableModel(getObj(cList),getColumNames());
@@ -286,13 +315,27 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		
 	}
 
-	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() == btnNewButton_1) {
-			actionPerformedBtnNewButton_1(arg0);
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnUpdate) {
+			do_btnUpdate_actionPerformed(e);
 		}
-		if (arg0.getSource() == btnNewButton) {
-			actionPerformedBtnNewButton(arg0);
+		if (e.getSource() == btnCancel) {
+			do_btnCancel_actionPerformed(e);
 		}
+		if (e.getSource() == btnAdd) {
+			if(e.getActionCommand().equals("등록")) {
+			actionPerformedBtnAdd(e);
+			}else if(e.getActionCommand().equals("수정")) {
+				actionPerformedBtnUpdate(e);
+				}
+		}
+		if (e.getSource() == btnNewButton) {
+			actionPerformedBtnNewButton(e);
+		}
+	}
+	private void actionPerformedBtnUpdate(ActionEvent e) {
+		/*수정하기*/
+		
 	}
 	protected void actionPerformedBtnNewButton(ActionEvent arg0) {
 	}
@@ -313,10 +356,16 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 			return empNo;
 		}
 
+		
+	
 
 		@Override
 		public String toString() {
 			return String.format("%s(%s)", empName, titleName);
+		}
+
+		private CustomerJPanel getOuterType() {
+			return CustomerJPanel.this;
 		}
 	}
 
@@ -404,7 +453,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		}
 	}
 
-	protected void actionPerformedBtnNewButton_1(ActionEvent arg0) {
+	protected void actionPerformedBtnAdd(ActionEvent arg0) {
 		
 		int tfno = Integer.parseInt(tfNo.getText().trim());
 		String tfname = tfName.getText();
@@ -415,15 +464,15 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		int jdyear = Integer.parseInt(jd[0]);
 		int jdmonth = Integer.parseInt(jd[1]);
 		int jdday = Integer.parseInt(jd[2]);
-		jDate.set(jdyear, jdmonth,jdday);
+		jDate.set(jdyear, jdmonth-1,jdday);
 		
 		Calendar jBirth = GregorianCalendar.getInstance();
 		String jbirth = tfBirth.getText();
 		String[] jdr = jbirth.split("-");
-		int jdryear = Integer.parseInt(jd[0]);
-		int jdrmonth = Integer.parseInt(jd[1]);
-		int jdrday = Integer.parseInt(jd[2]);
-		jBirth.set(jdryear, jdrmonth,jdrday);
+		int jdryear = Integer.parseInt(jdr[0]);
+		int jdrmonth = Integer.parseInt(jdr[1]);
+		int jdrday = Integer.parseInt(jdr[2]);
+		jBirth.set(jdryear, jdrmonth-1,jdrday);
 		
 		
 		int age = Integer.parseInt(tfAge.getText());
@@ -434,7 +483,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		String phone1 = (String) cmbphone1.getSelectedItem();
 		String phone2 = tfphone2.getText();
 		String phone3 = tfphone3.getText();
-		String phone =phone1+phone2+phone3;
+		String phone =phone1+"-"+phone2+"-"+phone3;
 		
 		
 		String addr = tfaddr.getText();
@@ -443,6 +492,60 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		Customer ctm = new Customer
 				(tfno,tfname,jBirth.getTime(),age,jDate.getTime(),new PhoneNumber(phone),addr,new Employee(emp),true);
 		cservice.inSertCustomer(ctm);
-		System.out.println(ctm);
+		JOptionPane.showMessageDialog(null, "고객이 등록 되었습니다.");
+		
+		cList = cservice.SelectAllCustomerEmpName();
+		showTables();
+		addtfNo();		
+		clear();
+	}
+	protected void do_btnCancel_actionPerformed(ActionEvent arg0) {
+		clear();
+	}
+	public void mouseClicked(MouseEvent arg0) {
+		if (arg0.getSource() == table) {
+			do_table_mouseClicked(arg0);
+		}
+	}
+	public void mouseEntered(MouseEvent arg0) {
+	}
+	public void mouseExited(MouseEvent e) {
+	}
+	public void mousePressed(MouseEvent e) {
+	}
+	public void mouseReleased(MouseEvent e) {
+	}
+	protected void do_table_mouseClicked(MouseEvent arg0) {
+		btnUpdate.setEnabled(true);
+	}
+	protected void do_btnUpdate_actionPerformed(ActionEvent e) {
+	
+		int row = table.getSelectedRow();
+		int cusno = (int) (table.getValueAt(row, 0));
+	
+		List<Customer> cus = cservice.SelectWhereCusId(new Customer(cusno));		
+		Employee cmbemp = cus.get(0).getEmp();
+		int ce = cmbemp.getEmpNo();
+		cmbEmp.setSelectedIndex(ce-1);
+		
+		String ph = toString().format("%s", table.getValueAt(row, 5));
+		String[] ph1 = ph.split("-");
+		
+		tfNo.setText(toString().format("%s", table.getValueAt(row, 0)));
+		tfName.setText(toString().format("%s", table.getValueAt(row, 1)));
+		tfJoin.setText(toString().format("%s", table.getValueAt(row, 4)));
+		tfBirth.setText(toString().format("%s", table.getValueAt(row, 2)));
+		tfAge.setText(toString().format("%s", table.getValueAt(row, 3)));
+		tfaddr.setText(toString().format("%s", table.getValueAt(row, 6)));
+		cmbphone1.setSelectedItem(ph1[0]);
+		tfphone2.setText(toString().format("%s", ph1[1]));
+		tfphone3.setText(toString().format("%s", ph1[2]));
+		
+	
+		btnAdd.setText("수정");
+		
+		
+		
+	
 	}
 }

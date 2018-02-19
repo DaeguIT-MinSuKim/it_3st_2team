@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 # Created by https://www.gitignore.io/api/git,java,gradle,eclipse,windows
 
@@ -127,3 +128,4 @@ gradle-app.setting
 #log
 /log
 # End of https://www.gitignore.io/api/git,java,gradle,eclipse,windows
+

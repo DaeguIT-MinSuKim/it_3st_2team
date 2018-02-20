@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class CustomerUI extends JFrame {
+public class MainFrame extends JFrame {
 
 	private JPanel contentPane;
 
@@ -18,7 +18,7 @@ public class CustomerUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CustomerUI frame = new CustomerUI();
+					MainFrame frame = new MainFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -30,7 +30,11 @@ public class CustomerUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CustomerUI() {
+	public MainFrame() {
+		initComponents();
+	}
+	private void initComponents() {
+		setTitle("hairshop");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

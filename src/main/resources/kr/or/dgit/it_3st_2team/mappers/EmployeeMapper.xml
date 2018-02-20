@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.or.dgit.it_3st_2team.dao.employeeDao">
+<mapper namespace="kr.or.dgit.it_3st_2team.dao.EmployeeDao">
 
 	<sql id="selectSql">
 		select emp_no, emp_name,join_date,addr,id,password,title_no,e_tf;
-		from employee
+		from Employee
 	</sql>
 
 
 
-	<select id="selectAllemployee" resultType="employee">
+	<select id="selectAllEmployee" resultType="Employee">
 		<include refid="selectSql"/>
 	</select>
 

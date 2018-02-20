@@ -110,7 +110,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 		if(employee.getPassword().equals(searchEmployee.getPassword())) {
 			System.out.println("로그인 성공");
 		}else {
-			System.out.println("비밀번호가 틀렸습니다");
+			System.out.println("비밀번호가 틀렸습니");
 		}
 		
 		

@@ -6,18 +6,24 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import kr.or.dgit.it_3st_2team.dto.Employee;
+
 import javax.swing.JTextField;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import java.awt.Dimension;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class LoginFrame extends JFrame {
+public class LoginFrame extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
+	private JButton btnNewButton;
 
 	/**
 	 * Launch the application.
@@ -63,7 +69,8 @@ public class LoginFrame extends JFrame {
 		panel.add(textField_1);
 		textField_1.setColumns(10);
 		
-		JButton btnNewButton = new JButton("로그인");
+		btnNewButton = new JButton("로그인");
+		btnNewButton.addActionListener(this);
 		panel.add(btnNewButton);
 		
 		JPanel panel_1 = new JPanel();
@@ -76,4 +83,11 @@ public class LoginFrame extends JFrame {
 		panel_1.add(btnNewButton_2);
 	}
 
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnNewButton) {
+			actionPerformedBtnNewButton(e);
+		}
+	}
+	protected void actionPerformedBtnNewButton(ActionEvent e) {
+	}
 }

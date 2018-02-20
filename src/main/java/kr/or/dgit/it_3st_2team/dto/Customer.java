@@ -10,14 +10,14 @@ public class Customer {
 	private Date joinDate;
 	private PhoneNumber phone;
 	private String addr;
-	private String empNo;
+	private Employee empNo;
 	private Boolean cTf;
 	public Customer() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Customer(int cusNo, String cusName, Date birth, int age, Date joinDate, PhoneNumber phone, String addr,
-			String empNo, Boolean cTf) {
+	private Customer(int cusNo, String cusName, Date birth, int age, Date joinDate, PhoneNumber phone, String addr,
+			Employee empNo, Boolean cTf) {
 		super();
 		this.cusNo = cusNo;
 		this.cusName = cusName;
@@ -71,10 +71,10 @@ public class Customer {
 	public void setAddr(String addr) {
 		this.addr = addr;
 	}
-	public String getEmpNo() {
+	public Employee getEmpNo() {
 		return empNo;
 	}
-	public void setEmpNo(String empNo) {
+	public void setEmpNo(Employee empNo) {
 		this.empNo = empNo;
 	}
 	public Boolean getcTf() {
@@ -89,6 +89,7 @@ public class Customer {
 				"Customer [cusNo=%s, cusName=%s, birth=%s, age=%s, joinDate=%s, phone=%s, addr=%s, empNo=%s, cTf=%s]",
 				cusNo, cusName, birth, age, joinDate, phone, addr, empNo, cTf);
 	}
+	
 	
 	
 }

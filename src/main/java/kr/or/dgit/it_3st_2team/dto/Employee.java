@@ -9,15 +9,13 @@ public class Employee {
 	private String addr;
 	private String id;
 	private String password;
-	private int titleNo;
+	private Title titleNo;
 	private Boolean eTf;
+	
 	public Employee() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
-	public Employee(int empNo, String empName, Date joinDate, String addr, String id, String password, int titleNo,
+	public Employee(int empNo, String empName, Date joinDate, String addr, String id, String password, Title titleNo,
 			Boolean eTf) {
-		super();
 		this.empNo = empNo;
 		this.empName = empName;
 		this.joinDate = joinDate;
@@ -63,10 +61,10 @@ public class Employee {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getTitleNo() {
+	public Title getTitleNo() {
 		return titleNo;
 	}
-	public void setTitleNo(int titleNo) {
+	public void setTitleNo(Title titleNo) {
 		this.titleNo = titleNo;
 	}
 	public Boolean geteTf() {

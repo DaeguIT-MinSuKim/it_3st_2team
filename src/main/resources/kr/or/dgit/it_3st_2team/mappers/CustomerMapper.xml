@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.dgit.it_3st_2team.dao.CustomerDao">
+
+	<sql id="selectSql">
+		select cus_no, cus_name,birth,age,join_date,phone,addr,emp_no,c_tf
+		from customer
+	</sql>
+	
+	<select id="selectAllCustomer" resultType="Customer">
+		<include refid="selectSql"/>
+	</select>
+</mapper>

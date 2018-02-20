@@ -11,10 +11,11 @@
 	<typeAliases>
 		<package name="kr.or.dgit.it_3st_2team.dto"/>
 	</typeAliases>
-	<!-- 
+	
 	<typeHandlers>
-		<package name="kr.or.dgit.mybatis_sample.typehandler"/>
-	</typeHandlers> -->
+		<package name="kr.or.dgit.it_3st_2team.typehandlers"/>
+	</typeHandlers>
+	
   <environments default="development">
     <environment id="development">
       <transactionManager type="JDBC"/>
@@ -26,7 +27,9 @@
       </dataSource>
     </environment>
   </environments>
+  
 <mappers>
    <mapper resource="kr/or/dgit/it_3st_2team/mappers/EmployeeMapper.xml"/>
- </mappers> 
+   <mapper resource="kr/or/dgit/it_3st_2team/mappers/CustomerMapper.xml"/>
+ </mappers>  
 </configuration>

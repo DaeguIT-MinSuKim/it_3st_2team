@@ -15,6 +15,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class HairManage extends JFrame {
 
@@ -68,8 +70,9 @@ public class HairManage extends JFrame {
 		panel_6.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_8 = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panel_8.getLayout();
+		panel_8.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_6.add(panel_8, BorderLayout.CENTER);
+		panel_8.setLayout(new GridLayout(0, 1, 0, 0));
 
 		JPanel panel_9 = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel_9.getLayout();

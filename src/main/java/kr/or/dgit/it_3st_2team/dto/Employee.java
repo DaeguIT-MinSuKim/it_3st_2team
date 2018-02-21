@@ -25,6 +25,12 @@ public class Employee {
 		this.titleNo = titleNo;
 		this.eTf = eTf;
 	}
+	
+	public Employee(String id, String password) {
+		super();
+		this.id = id;
+		this.password = password;
+	}
 	public int getEmpNo() {
 		return empNo;
 	}

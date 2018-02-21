@@ -8,16 +8,16 @@ public class Sale {
 	private String description;
 	private Date sdate;
 	private Time stime;
-	private Integer cusNo;
-	private Integer empNo;
-	private Integer evnNo;
+	private Customer cusNo;
+	private Employee empNo;
+	private Event evnNo;
 	private Integer sprice;
 
 	public Sale() {
 
 	}
 
-	public Sale(Integer saleNo, String description, Date sdate, Time stime, Integer cusNo, Integer empNo, Integer evnNo,
+	public Sale(Integer saleNo, String description, Date sdate, Time stime, Customer cusNo, Employee empNo, Event evnNo,
 			Integer sprice) {
 		this.saleNo = saleNo;
 		this.description = description;
@@ -61,27 +61,27 @@ public class Sale {
 		this.stime = stime;
 	}
 
-	public Integer getCusNo() {
+	public Customer getCusNo() {
 		return cusNo;
 	}
 
-	public void setCusNo(Integer cusNo) {
+	public void setCusNo(Customer cusNo) {
 		this.cusNo = cusNo;
 	}
 
-	public Integer getEmpNo() {
+	public Employee getEmpNo() {
 		return empNo;
 	}
 
-	public void setEmpNo(Integer empNo) {
+	public void setEmpNo(Employee empNo) {
 		this.empNo = empNo;
 	}
 
-	public Integer getEvnNo() {
+	public Event getEvnNo() {
 		return evnNo;
 	}
 
-	public void setEvnNo(Integer evnNo) {
+	public void setEvnNo(Event evnNo) {
 		this.evnNo = evnNo;
 	}
 

@@ -146,5 +146,6 @@ public class TitleManage extends JFrame {
 		직책관리.add(panel_3, BorderLayout.NORTH);
 		panel_3.setLayout(new BoxLayout(panel_3, BoxLayout.X_AXIS));
 	}
+	
 
 }

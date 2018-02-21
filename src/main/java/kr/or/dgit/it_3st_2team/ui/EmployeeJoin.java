@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.GridBagLayout;
@@ -180,6 +181,7 @@ public class EmployeeJoin extends JFrame {
 		panel_11.add(findtitle);
 		
 		JComboBox 직책찾기 = new JComboBox();
+		직책찾기.setModel(new DefaultComboBoxModel(new String[] {"사장", "실장", "디자이너", "스텝", "인턴"}));
 		직책찾기.setMaximumSize(new Dimension(80, 30));
 		직책찾기.setPreferredSize(new Dimension(25, 21));
 		panel_11.add(직책찾기);
@@ -194,6 +196,7 @@ public class EmployeeJoin extends JFrame {
 		panel_14.add(hoppyday);
 		
 		JComboBox 희망휴무요일찾기 = new JComboBox();
+		희망휴무요일찾기.setModel(new DefaultComboBoxModel(new String[] {"월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"}));
 		희망휴무요일찾기.setMaximumSize(new Dimension(150, 30));
 		희망휴무요일찾기.setToolTipText("희망휴무요일");
 		panel_14.add(희망휴무요일찾기);

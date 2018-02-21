@@ -15,10 +15,13 @@ import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
+import java.awt.FlowLayout;
+import java.awt.CardLayout;
+import java.awt.Dimension;
 
 public class EmployeeJoin extends JFrame {
 
-	private JPanel contentPane;
+	private JPanel 직원회원가입;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -50,24 +53,25 @@ public class EmployeeJoin extends JFrame {
 		initComponents();
 	}
 	private void initComponents() {
+		setTitle("회원가입");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		setBounds(100, 100, 612, 397);
+		직원회원가입 = new JPanel();
+		직원회원가입.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(직원회원가입);
+		직원회원가입.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.CENTER);
+		직원회원가입.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridLayout(1, 2, 0, 0));
 		
 		JPanel panel_2 = new JPanel();
 		panel.add(panel_2);
-		panel_2.setLayout(new GridLayout(6, 1, 0, 0));
+		panel_2.setLayout(new GridLayout(7, 1, 0, 0));
 		
 		JPanel panel_4 = new JPanel();
 		panel_2.add(panel_4);
-		panel_4.setLayout(new GridLayout(0, 2, 0, 0));
+		panel_4.setLayout(new FlowLayout(FlowLayout.LEFT, 15, 10));
 		
 		JLabel empNo = new JLabel("직원번호");
 		empNo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -80,7 +84,7 @@ public class EmployeeJoin extends JFrame {
 		
 		JPanel panel_5 = new JPanel();
 		panel_2.add(panel_5);
-		panel_5.setLayout(new GridLayout(0, 2, 0, 0));
+		panel_5.setLayout(new FlowLayout(FlowLayout.LEFT, 21, 10));
 		
 		JLabel empName = new JLabel("직원명");
 		empName.setHorizontalAlignment(SwingConstants.CENTER);
@@ -93,7 +97,7 @@ public class EmployeeJoin extends JFrame {
 		
 		JPanel panel_6 = new JPanel();
 		panel_2.add(panel_6);
-		panel_6.setLayout(new GridLayout(0, 2, 0, 0));
+		panel_6.setLayout(new FlowLayout(FlowLayout.LEFT, 15, 10));
 		
 		JLabel joinDate = new JLabel("입사일자");
 		joinDate.setHorizontalAlignment(SwingConstants.CENTER);
@@ -106,7 +110,7 @@ public class EmployeeJoin extends JFrame {
 		
 		JPanel panel_7 = new JPanel();
 		panel_2.add(panel_7);
-		panel_7.setLayout(new GridLayout(0, 3, 0, 0));
+		panel_7.setLayout(new FlowLayout(FlowLayout.LEFT, 15, 10));
 		
 		JLabel address = new JLabel("주소");
 		address.setHorizontalAlignment(SwingConstants.CENTER);
@@ -122,7 +126,7 @@ public class EmployeeJoin extends JFrame {
 		
 		JPanel panel_8 = new JPanel();
 		panel_2.add(panel_8);
-		panel_8.setLayout(new GridLayout(0, 3, 0, 0));
+		panel_8.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 		
 		JLabel Id = new JLabel("아이디");
 		Id.setHorizontalAlignment(SwingConstants.CENTER);
@@ -138,7 +142,7 @@ public class EmployeeJoin extends JFrame {
 		
 		JPanel panel_9 = new JPanel();
 		panel_2.add(panel_9);
-		panel_9.setLayout(new GridLayout(0, 2, 0, 0));
+		panel_9.setLayout(new FlowLayout(FlowLayout.LEFT, 27, 10));
 		
 		JLabel password = new JLabel("비밀번호");
 		password.setHorizontalAlignment(SwingConstants.CENTER);
@@ -149,13 +153,9 @@ public class EmployeeJoin extends JFrame {
 		textField_5.setColumns(10);
 		panel_9.add(textField_5);
 		
-		JPanel panel_3 = new JPanel();
-		panel.add(panel_3);
-		panel_3.setLayout(new GridLayout(6, 1, 0, 0));
-		
 		JPanel panel_10 = new JPanel();
-		panel_3.add(panel_10);
-		panel_10.setLayout(new GridLayout(0, 2, 0, 0));
+		panel_2.add(panel_10);
+		panel_10.setLayout(new FlowLayout(FlowLayout.LEFT, 15, 10));
 		
 		JLabel cheackPassword = new JLabel("비밀번호확인");
 		cheackPassword.setHorizontalAlignment(SwingConstants.CENTER);
@@ -166,15 +166,40 @@ public class EmployeeJoin extends JFrame {
 		textField_6.setColumns(10);
 		panel_10.add(textField_6);
 		
+		JPanel panel_3 = new JPanel();
+		panel.add(panel_3);
+		panel_3.setLayout(new GridLayout(6, 1, 0, 0));
+		
 		JPanel panel_11 = new JPanel();
 		panel_3.add(panel_11);
-		panel_11.setLayout(new GridLayout(0, 1, 0, 0));
+		panel_11.setLayout(new BoxLayout(panel_11, BoxLayout.X_AXIS));
+		
+		JLabel findtitle = new JLabel("직책찾기");
+		findtitle.setMaximumSize(new Dimension(100, 15));
+		findtitle.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_11.add(findtitle);
 		
 		JComboBox 직책찾기 = new JComboBox();
+		직책찾기.setMaximumSize(new Dimension(80, 30));
+		직책찾기.setPreferredSize(new Dimension(25, 21));
 		panel_11.add(직책찾기);
 		
+		JPanel panel_14 = new JPanel();
+		panel_3.add(panel_14);
+		panel_14.setLayout(new BoxLayout(panel_14, BoxLayout.X_AXIS));
+		
+		JLabel hoppyday = new JLabel("희망휴무요일");
+		hoppyday.setMaximumSize(new Dimension(100, 15));
+		hoppyday.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_14.add(hoppyday);
+		
+		JComboBox 희망휴무요일찾기 = new JComboBox();
+		희망휴무요일찾기.setMaximumSize(new Dimension(150, 30));
+		희망휴무요일찾기.setToolTipText("희망휴무요일");
+		panel_14.add(희망휴무요일찾기);
+		
 		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, BorderLayout.SOUTH);
+		직원회원가입.add(panel_1, BorderLayout.SOUTH);
 		panel_1.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		JPanel panel_12 = new JPanel();

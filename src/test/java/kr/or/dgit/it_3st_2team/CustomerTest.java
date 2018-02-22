@@ -9,6 +9,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import kr.or.dgit.it_3st_2team.dto.Customer;
 import kr.or.dgit.it_3st_2team.dto.Employee;
 import kr.or.dgit.it_3st_2team.service.CustomerService;
 
@@ -27,21 +28,22 @@ public class CustomerTest {
 	}
 
 	
-	/*
+	
 	 	@Test
 	 	public void test1SelectAllCustomer() {
 		List<Customer> listStd = service.selectAllCustomer();
 		Assert.assertNotNull(listStd);
+		
 		for (Customer cs : listStd) {
 			System.out.println(cs);
 		}
-	}*/
-	/*@Test
+	}
+	@Test
 	public void test2SelectAllEmp() {
 		List<Employee> listStd = service.selectAllEmployee();
 		Assert.assertNotNull(listStd);
 		for (Employee cs : listStd) {
 			System.out.println(cs);
 		}
-	}*/
+	}
 }

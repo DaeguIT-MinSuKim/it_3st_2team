@@ -91,12 +91,13 @@ public class LoginFrame extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 
-		if (e.getSource() == btnNewButton) {
+		if (e.getSource() == btnLogin) {
 			actionPerformedBtnNewButton(e);
 		}
 	}
 
 	protected void actionPerformedBtnNewButton(ActionEvent e) {
+		System.out.println("로그인시도");
 		String id = tfId.getText().trim();
 		String pw = tfPw.getText().trim();
 		Employee employee = new Employee();

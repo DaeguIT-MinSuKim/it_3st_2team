@@ -15,7 +15,7 @@
 		<association property="titleNo" resultMap="kr.or.dgit.it_3st_2team.dao.TitleDao.TitleResult"/>
 	</resultMap>
 	
-	<select id="selectEmpByLoginId" parameterType="Employee" resultMap="employeeResult">
+	<select id="selectEmpByLoginId" parameterType="Employee" resultMap="employeeResultAddTitle">
 		select id,password from employee where id=#{id}
 	</select>
 </mapper>

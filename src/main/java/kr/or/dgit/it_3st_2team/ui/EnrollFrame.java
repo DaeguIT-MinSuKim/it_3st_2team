@@ -35,6 +35,7 @@ public class EnrollFrame extends JFrame implements ActionListener {
 	private JPanel pnlCase1;
 	private JRadioButton rdbtnNewRadioButton_1;
 	private JTextField tfPrice;
+	private JButton btnSearch;
 
 	/**
 	 * Launch the application.
@@ -118,7 +119,8 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		JLabel lblName = new JLabel("customer :");
 		pnl1_3.add(lblName);
 		
-		JButton btnSearch = new JButton("Search");
+		btnSearch = new JButton("Search");
+		btnSearch.addActionListener(this);
 		btnSearch.setFocusable(false);
 		pnl1_3.add(btnSearch);
 		
@@ -218,6 +220,9 @@ public class EnrollFrame extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnSearch) {
+			actionPerformedBtnSearch(e);
+		}
 		if (e.getSource() == rdbtnNewRadioButton_1) {
 			actionPerformedRdbtnNewRadioButton_1(e);
 		}
@@ -241,5 +246,9 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		EnrollSearchCase2 case2 = new EnrollSearchCase2();
 		pnlCase1.removeAll();
 		pnlCase1.add(case2);
+	}
+	protected void actionPerformedBtnSearch(ActionEvent e) {
+		EnrollFrameSearchCustomer searchCustomer = new EnrollFrameSearchCustomer();
+		searchCustomer.setVisible(true);
 	}
 }

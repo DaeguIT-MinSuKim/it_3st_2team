@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.dgit.it_3st_2team.dao.EmployeeDao">
-
-	<resultMap id="employeeResult" type="Employee">
-
+	<!-- <resultMap id="employeeResult" type="Employee">
 		<resultMap id="employeeResult" type="Employee">
 
 
@@ -15,7 +13,6 @@
 			<result property="password" column="epassword" />
 			<result property="titleNo" column="title_no" />
 			<result property="eTf" column="e_tf" />
-			<collection property=titleNo resultMap="title_no" />
 		</resultMap>
 
 		<resultMap id="employeeResultAddTitle" type="Employee"
@@ -28,7 +25,5 @@
 			resultMap="employeeResultAddTitle">
 			select id,password from employee where id=#{id}
 
-		</select>
-
-	</select>
+		</select> -->
 </mapper>

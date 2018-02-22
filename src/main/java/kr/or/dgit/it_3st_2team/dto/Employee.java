@@ -1,7 +1,6 @@
 package kr.or.dgit.it_3st_2team.dto;
 
 import java.util.Date;
-import java.util.List;
 
 public class Employee {
 	private int empNo;

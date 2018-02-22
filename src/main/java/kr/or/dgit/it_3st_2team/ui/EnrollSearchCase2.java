@@ -18,7 +18,7 @@ public class EnrollSearchCase2 extends JPanel {
 		setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblNewLabel = new JLabel("고객별 검색");
-		add(lblNewLabel);
+		add(lblNewLabel, BorderLayout.WEST);
 	}
 
 }

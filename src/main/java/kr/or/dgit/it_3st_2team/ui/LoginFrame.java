@@ -15,6 +15,11 @@ import javax.swing.border.EmptyBorder;
 import kr.or.dgit.it_3st_2team.dto.Employee;
 import kr.or.dgit.it_3st_2team.service.EmployeeService;
 
+
+
+@SuppressWarnings("serial")
+
+
 public class LoginFrame extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
@@ -91,12 +96,13 @@ public class LoginFrame extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 
-		if (e.getSource() == btnNewButton) {
+		if (e.getSource() == btnLogin) {
 			actionPerformedBtnNewButton(e);
 		}
 	}
 
 	protected void actionPerformedBtnNewButton(ActionEvent e) {
+		System.out.println("로그인시도");
 		String id = tfId.getText().trim();
 		String pw = tfPw.getText().trim();
 		Employee employee = new Employee();
@@ -113,9 +119,9 @@ public class LoginFrame extends JFrame implements ActionListener {
 
 		if (employee.getPassword().equals(searchEmployee.getPassword())) {
 			System.out.println("로그인 성공");
-		} else {
-			System.out.println("비밀번호가 틀렸습니");
-		}
+		}else {
+			System.out.println("비밀번호가 틀렸습니다");
+		} 
 
 	}
 }

@@ -2,22 +2,20 @@ package kr.or.dgit.it_3st_2team.ui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
-import java.awt.FlowLayout;
-import javax.swing.JTable;
 import java.awt.GridLayout;
-import javax.swing.JSpinner;
-import javax.swing.JComboBox;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JTextField;
 
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+
+@SuppressWarnings("serial")
 public class SearchAddressFrame extends JFrame {
 
 	private JPanel contentPane;

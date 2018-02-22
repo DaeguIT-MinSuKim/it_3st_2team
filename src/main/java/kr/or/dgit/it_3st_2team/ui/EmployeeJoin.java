@@ -1,27 +1,26 @@
 package kr.or.dgit.it_3st_2team.ui;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.GridLayout;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.SwingConstants;
-import java.awt.FlowLayout;
-import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
+import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+@SuppressWarnings("serial")
 public class EmployeeJoin extends JFrame {
 
-	private JPanel 직원회원가입;
+	private JPanel empjoin;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -56,13 +55,13 @@ public class EmployeeJoin extends JFrame {
 		setTitle("회원가입");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 612, 397);
-		직원회원가입 = new JPanel();
-		직원회원가입.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(직원회원가입);
-		직원회원가입.setLayout(new BorderLayout(0, 0));
+		empjoin = new JPanel();
+		empjoin.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(empjoin);
+		empjoin.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
-		직원회원가입.add(panel, BorderLayout.CENTER);
+		empjoin.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridLayout(1, 2, 0, 0));
 		
 		JPanel panel_2 = new JPanel();
@@ -179,10 +178,11 @@ public class EmployeeJoin extends JFrame {
 		findtitle.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_11.add(findtitle);
 		
-		JComboBox 직책찾기 = new JComboBox();
-		직책찾기.setMaximumSize(new Dimension(80, 30));
-		직책찾기.setPreferredSize(new Dimension(25, 21));
-		panel_11.add(직책찾기);
+		JComboBox empfind = new JComboBox();
+		empfind.setModel(new DefaultComboBoxModel(new String[] {"사장", "실장", "디자이너", "스텝", "인턴"}));
+		empfind.setMaximumSize(new Dimension(80, 30));
+		empfind.setPreferredSize(new Dimension(25, 21));
+		panel_11.add(empfind);
 		
 		JPanel panel_14 = new JPanel();
 		panel_3.add(panel_14);
@@ -193,13 +193,14 @@ public class EmployeeJoin extends JFrame {
 		hoppyday.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_14.add(hoppyday);
 		
-		JComboBox 희망휴무요일찾기 = new JComboBox();
-		희망휴무요일찾기.setMaximumSize(new Dimension(150, 30));
-		희망휴무요일찾기.setToolTipText("희망휴무요일");
-		panel_14.add(희망휴무요일찾기);
+		JComboBox hday = new JComboBox();
+		hday.setModel(new DefaultComboBoxModel(new String[] {"월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"}));
+		hday.setMaximumSize(new Dimension(150, 30));
+		hday.setToolTipText("희망휴무요일");
+		panel_14.add(hday);
 		
 		JPanel panel_1 = new JPanel();
-		직원회원가입.add(panel_1, BorderLayout.SOUTH);
+		empjoin.add(panel_1, BorderLayout.SOUTH);
 		panel_1.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		JPanel panel_12 = new JPanel();

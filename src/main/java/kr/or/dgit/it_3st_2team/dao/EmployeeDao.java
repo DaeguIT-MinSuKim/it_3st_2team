@@ -4,6 +4,6 @@ import java.util.List;
 import kr.or.dgit.it_3st_2team.dto.Employee;
 
 public interface EmployeeDao {
-	List<EmployeeDao> selectAllEmployee();
+	List<Employee> selectAllEmployee();
 	Employee selectEmpByLoginId(Employee id);
 }

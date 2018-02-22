@@ -1,6 +1,7 @@
 package kr.or.dgit.it_3st_2team.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class Employee {
 	private int empNo;
@@ -12,11 +13,14 @@ public class Employee {
 	private Title titleNo;
 	private int eOff;
 	private Boolean eTf;
+
 	public Employee() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	private Employee(int empNo, String empName, Date joinDate, String addr, String id, String epassword, Title titleNo, int eOff, Boolean eTf) {
+
+	private Employee(int empNo, String empName, Date joinDate, String addr, String id, String epassword, Title titleNo,
+			int eOff, Boolean eTf) {
 		super();
 		this.empNo = empNo;
 		this.empName = empName;
@@ -28,6 +32,19 @@ public class Employee {
 		this.eOff = eOff;
 		this.eTf = eTf;
 	}
+
+	public Employee(String id, String password) {
+		super();
+		this.id = id;
+		this.epassword = password;
+	}
+
+	private Employee(String empName, Title titleNo) {
+		super();
+		this.empName = empName;
+		this.titleNo = titleNo;
+	}
+
 	public int getEmpNo() {
 		return empNo;
 	}
@@ -76,6 +93,14 @@ public class Employee {
 		this.epassword = epassword;
 	}
 
+	public String getPassword() {
+		return epassword;
+	}
+
+	public void setPassword(String password) {
+		this.epassword = password;
+	}
+
 	public Title getTitleNo() {
 		return titleNo;
 	}
@@ -103,6 +128,7 @@ public class Employee {
 	@Override
 	public String toString() {
 		return String.format(
+
 				"Employee [empNo=%s, empName=%s, joinDate=%s, addr=%s, id=%s, epassword=%s, titleNo=%s, eOff=%s, eTf=%s]",
 				empNo, empName, joinDate, addr, id, epassword, titleNo, eOff, eTf);
 	}

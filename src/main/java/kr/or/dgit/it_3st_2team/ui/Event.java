@@ -1,27 +1,27 @@
 package kr.or.dgit.it_3st_2team.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
+
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.BoxLayout;
-import java.awt.FlowLayout;
-import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import java.awt.Dimension;
-import java.awt.Font;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import java.awt.Color;
 
+@SuppressWarnings("serial")
 public class Event extends JFrame {
 
-	private JPanel 이벤트관리;
+	private JPanel EventManage;
 	private JTable table;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -53,13 +53,13 @@ public class Event extends JFrame {
 		setTitle("이벤트등록");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 406, 374);
-		이벤트관리 = new JPanel();
-		이벤트관리.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(이벤트관리);
-		이벤트관리.setLayout(new BorderLayout(0, 0));
+		EventManage = new JPanel();
+		EventManage.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(EventManage);
+		EventManage.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
-		이벤트관리.add(panel, BorderLayout.CENTER);
+		EventManage.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JPanel panel_5 = new JPanel();
@@ -140,7 +140,7 @@ public class Event extends JFrame {
 		panel.add(table);
 		
 		JPanel panel_1 = new JPanel();
-		이벤트관리.add(panel_1, BorderLayout.SOUTH);
+		EventManage.add(panel_1, BorderLayout.SOUTH);
 		panel_1.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		JPanel panel_2 = new JPanel();
@@ -160,7 +160,7 @@ public class Event extends JFrame {
 		panel_4.add(btnNewButton_2);
 		
 		JPanel panel_3 = new JPanel();
-		이벤트관리.add(panel_3, BorderLayout.NORTH);
+		EventManage.add(panel_3, BorderLayout.NORTH);
 		panel_3.setLayout(new BoxLayout(panel_3, BoxLayout.X_AXIS));
 	}
 

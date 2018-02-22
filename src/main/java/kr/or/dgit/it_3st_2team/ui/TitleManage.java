@@ -18,9 +18,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 
+@SuppressWarnings("serial")
 public class TitleManage extends JFrame {
 
-	private JPanel 직책관리;
+	private JPanel titlemanage;
 	private JTable table;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -52,13 +53,13 @@ public class TitleManage extends JFrame {
 		setTitle("직책등록 및 관리");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 406, 374);
-		직책관리 = new JPanel();
-		직책관리.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(직책관리);
-		직책관리.setLayout(new BorderLayout(0, 0));
+		titlemanage = new JPanel();
+		titlemanage.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(titlemanage);
+		titlemanage.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();
-		직책관리.add(panel, BorderLayout.CENTER);
+		titlemanage.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
 
 		JPanel panel_5 = new JPanel();
@@ -123,7 +124,7 @@ public class TitleManage extends JFrame {
 		panel.add(table);
 
 		JPanel panel_1 = new JPanel();
-		직책관리.add(panel_1, BorderLayout.SOUTH);
+		titlemanage.add(panel_1, BorderLayout.SOUTH);
 		panel_1.setLayout(new GridLayout(0, 2, 0, 0));
 
 		JPanel panel_2 = new JPanel();
@@ -143,7 +144,7 @@ public class TitleManage extends JFrame {
 		panel_4.add(btnNewButton_2);
 
 		JPanel panel_3 = new JPanel();
-		직책관리.add(panel_3, BorderLayout.NORTH);
+		titlemanage.add(panel_3, BorderLayout.NORTH);
 		panel_3.setLayout(new BoxLayout(panel_3, BoxLayout.X_AXIS));
 	}
 	

@@ -1,6 +1,7 @@
 package kr.or.dgit.it_3st_2team.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -16,11 +17,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import java.awt.Color;
 
+@SuppressWarnings("serial")
 public class HairManage extends JFrame {
 
-	private JPanel 헤어등록관리;
+	private JPanel hairaddmanage;
 	private JTable table;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -52,13 +53,13 @@ public class HairManage extends JFrame {
 		setTitle("헤어등록 및 관리");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 406, 374);
-		헤어등록관리 = new JPanel();
-		헤어등록관리.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(헤어등록관리);
-		헤어등록관리.setLayout(new BorderLayout(0, 0));
+		hairaddmanage = new JPanel();
+		hairaddmanage.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(hairaddmanage);
+		hairaddmanage.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();
-		헤어등록관리.add(panel, BorderLayout.CENTER);
+		hairaddmanage.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
 
 		JPanel panel_5 = new JPanel();
@@ -123,7 +124,7 @@ public class HairManage extends JFrame {
 		panel.add(table);
 
 		JPanel panel_1 = new JPanel();
-		헤어등록관리.add(panel_1, BorderLayout.SOUTH);
+		hairaddmanage.add(panel_1, BorderLayout.SOUTH);
 		panel_1.setLayout(new GridLayout(0, 2, 0, 0));
 
 		JPanel panel_2 = new JPanel();
@@ -143,7 +144,7 @@ public class HairManage extends JFrame {
 		panel_4.add(btnNewButton_2);
 
 		JPanel panel_3 = new JPanel();
-		헤어등록관리.add(panel_3, BorderLayout.NORTH);
+		hairaddmanage.add(panel_3, BorderLayout.NORTH);
 		panel_3.setLayout(new BoxLayout(panel_3, BoxLayout.X_AXIS));
 	}
 

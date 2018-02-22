@@ -1,7 +1,7 @@
 package kr.or.dgit.it_3st_2team.dto;
 
 public class Event {
-	private Integer evnNo;
+	private int evnNo;
 	private String evnName;
 	private Float discount;
 

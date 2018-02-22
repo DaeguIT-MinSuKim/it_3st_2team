@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -22,6 +23,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import kr.or.dgit.it_3st_2team.dto.Employee;
+import kr.or.dgit.it_3st_2team.service.CustomerService;
+
 @SuppressWarnings("serial")
 public class CustomerJPanel extends JPanel implements ActionListener {
 	private JTextField tfNo;
@@ -35,12 +39,13 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 	private JTextField tfSearch;
 	private JTable table;
 	private JTextField tfAge;
-
+	
+	private CustomerService service;
 	/**
 	 * Create the panel.
 	 */
 	public CustomerJPanel() {
-
+		service = new CustomerService();
 		initComponents();
 		
 	}
@@ -115,14 +120,20 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 		lblEmp.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(lblEmp);
 		
-		JComboBox cmbEmp = new JComboBox();
-		panel_1.add(cmbEmp);
 		
-		/*List<Employee> list = service.selectAllEmployee();
+		
+		List<Employee> list = service.selectAllEmployee();
 		Employee [] items = new Employee[list.size()];
 		System.out.println(items);
+
 		list.toArray(items);
-		DefaultComboBoxModel<Employee> cModel = new DefaultComboBoxModel<>(items);*/
+		DefaultComboBoxModel<Employee> cModel = new DefaultComboBoxModel<>(items);
+		
+		
+		JComboBox cmbEmp = new JComboBox();
+		panel_1.add(cmbEmp);
+		cmbEmp.setModel(cModel);
+		
 		
 		
 		JPanel panel_6 = new JPanel();

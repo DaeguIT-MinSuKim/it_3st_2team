@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.dgit.it_3st_2team.dao.CustomerDao">
+	<resultMap id="customerResult" type="Customer">
+		<id property="cusNo" column="cus_no"/>
+		<result property="cusName" column="cus_name"/>
+		<result property="birth" column="birth"/>
+		<result property="age" column="age"/>
+		<result property="joinDate" column="join_date"/>
+		<result property="addr" column="addr"/>
+		<result property="cTf" column="c_tf"/>
+	</resultMap>
 
+	<resultMap id="customerResultAddEmp" type="Customer" extends="customerResult">
+		<association property="empNo" resultMap="kr.or.dgit.it_3st_2team.dao.EmployeeDao.employeeResult"></association>
+	</resultMap>
+	
 	<sql id="selectSql">
 		select cus_no, cus_name,birth,age,join_date,phone,addr,emp_no,c_tf
 		from customer

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.dgit.it_3st_2team.mappers.EventMapper">
+	<resultMap id="eventResult" type="Event">
+		<id property="evnNo" column="evn_no"/>
+		<result property="evnName" column="evn_name"/>
+		<result property="discount" column="discount"/>
+	</resultMap>
+</mapper>

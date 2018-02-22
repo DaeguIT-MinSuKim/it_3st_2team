@@ -1,6 +1,7 @@
 package kr.or.dgit.it_3st_2team.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class Employee {
 	private int empNo;
@@ -8,20 +9,20 @@ public class Employee {
 	private Date joinDate;
 	private String addr;
 	private String id;
-	private String password;
-	private Title titleNo;
+	private String epassword;
+	private List<Title> titleNo;
 	private Boolean eTf;
 	
 	public Employee() {
 	}
-	public Employee(int empNo, String empName, Date joinDate, String addr, String id, String password, Title titleNo,
+	public Employee(int empNo, String empName, Date joinDate, String addr, String id, String password, List<Title> titleNo,
 			Boolean eTf) {
 		this.empNo = empNo;
 		this.empName = empName;
 		this.joinDate = joinDate;
 		this.addr = addr;
 		this.id = id;
-		this.password = password;
+		this.epassword = password;
 		this.titleNo = titleNo;
 		this.eTf = eTf;
 	}
@@ -29,11 +30,11 @@ public class Employee {
 	public Employee(String id, String password) {
 		super();
 		this.id = id;
-		this.password = password;
+		this.epassword = password;
 	}
 	
 	
-	private Employee(String empName, Title titleNo) {
+	private Employee(String empName, List<Title> titleNo) {
 		super();
 		this.empName = empName;
 		this.titleNo = titleNo;
@@ -69,15 +70,15 @@ public class Employee {
 		this.id = id;
 	}
 	public String getPassword() {
-		return password;
+		return epassword;
 	}
 	public void setPassword(String password) {
-		this.password = password;
+		this.epassword = password;
 	}
-	public Title getTitleNo() {
+	public List<Title> getTitleNo() {
 		return titleNo;
 	}
-	public void setTitleNo(Title titleNo) {
+	public void setTitleNo(List<Title> titleNo) {
 		this.titleNo = titleNo;
 	}
 	public Boolean geteTf() {
@@ -90,7 +91,7 @@ public class Employee {
 	public String toString() {
 		return String.format(
 				"Employee [empNo=%s, empName=%s, joinDate=%s, addr=%s, id=%s, password=%s, titleNo=%s, eTf=%s]", empNo,
-				empName, joinDate, addr, id, password, titleNo, eTf);
+				empName, joinDate, addr, id, epassword, titleNo, eTf);
 	}
 	
 	

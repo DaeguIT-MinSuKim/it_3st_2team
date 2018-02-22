@@ -31,6 +31,13 @@ public class Employee {
 		this.id = id;
 		this.password = password;
 	}
+	
+	
+	private Employee(String empName, Title titleNo) {
+		super();
+		this.empName = empName;
+		this.titleNo = titleNo;
+	}
 	public int getEmpNo() {
 		return empNo;
 	}

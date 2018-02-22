@@ -7,7 +7,16 @@
 		from customer
 	</sql>
 	
+	<sql id="selectEmployee">
+		select emp_name,t.title_name  from employee e join title t on e.title_no=t.title_no
+	</sql>
+	
 	<select id="selectAllCustomer" resultType="Customer">
 		<include refid="selectSql"/>
 	</select>
+	
+	<select id="selectAllEmployee" resultType="Employee">
+		<include refid="selectEmployee"/>
+	</select>
+	
 </mapper>

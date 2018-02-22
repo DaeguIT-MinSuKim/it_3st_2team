@@ -7,7 +7,7 @@
 	</resultMap>
 
 
-	<resultMap id="employeeWitheoffResult" type="Employee" extends="employeeResult">
+	<resultMap id="employeeResultAddEoff" type="Employee" extends="employeeResult">
 	<id property="empNo" column="emp_no"/>
 		<result property="empName" column="emp_name"/>
 		<result property="joinDate" column="join_date"/>

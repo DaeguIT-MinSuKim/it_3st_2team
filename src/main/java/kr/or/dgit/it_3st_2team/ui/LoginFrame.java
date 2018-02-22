@@ -12,14 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-<<<<<<< HEAD
-=======
-import kr.or.dgit.it_3st_2team.dto.Employee;
-
-import org.junit.Assert;
-
-import kr.or.dgit.it_3st_2team.dao.EmployeeDao;
->>>>>>> refs/remotes/origin/master
 import kr.or.dgit.it_3st_2team.dto.Employee;
 import kr.or.dgit.it_3st_2team.service.EmployeeService;
 
@@ -121,13 +113,10 @@ public class LoginFrame extends JFrame implements ActionListener {
 
 		if (employee.getPassword().equals(searchEmployee.getPassword())) {
 			System.out.println("로그인 성공");
-<<<<<<< HEAD
+
 		}else {
 			System.out.println("비밀번호가 틀렸습니다");
-=======
-		} else {
-			System.out.println("비밀번호가 틀렸습니");
->>>>>>> refs/remotes/origin/master
+
 		}
 
 	}

@@ -1,47 +1,42 @@
 package kr.or.dgit.it_3st_2team.dto;
 
 public class Event {
-	private Integer evnNo;
+	private int evnNo;
 	private String evnName;
-	private Float discount;
-
+	private float discount;
+	
 	public Event() {
-
+		super();
+		// TODO Auto-generated constructor stub
 	}
-
-	public Event(Integer evnNo, String evnName, Float discount) {
+	public Event(int evnNo, String evnName, float discount) {
+		super();
 		this.evnNo = evnNo;
 		this.evnName = evnName;
 		this.discount = discount;
 	}
-
-	public Integer getEvnNo() {
+	public int getEvnNo() {
 		return evnNo;
 	}
-
-	public void setEvnNo(Integer evnNo) {
+	public void setEvnNo(int evnNo) {
 		this.evnNo = evnNo;
 	}
-
 	public String getEvnName() {
 		return evnName;
 	}
-
 	public void setEvnName(String evnName) {
 		this.evnName = evnName;
 	}
-
-	public Float getDiscount() {
+	public float getDiscount() {
 		return discount;
 	}
-
-	public void setDiscount(Float discount) {
+	public void setDiscount(float discount) {
 		this.discount = discount;
 	}
-
 	@Override
 	public String toString() {
-		return String.format("Event [evnNo=%s, evnName=%s, discount=%s]", evnNo, evnName, discount);
+		return "Event [evnNo=" + evnNo + ", evnName=" + evnName + ", discount=" + discount + "]";
 	}
-
+	
+	
 }

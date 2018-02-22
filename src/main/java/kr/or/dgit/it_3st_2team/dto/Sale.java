@@ -1,103 +1,83 @@
 package kr.or.dgit.it_3st_2team.dto;
 
-import java.sql.Time;
 import java.util.Date;
 
 public class Sale {
-	private Integer saleNo;
+	private int saleNo;
 	private String description;
-	private Date sdate;
-	private Time stime;
-	private Customer cusNo;
-	private Employee empNo;
-	private Event evnNo;
-	private Integer sprice;
-
+	private Date sDate;
+	private Date sTime;
+	private int cusNo;
+	private int empNo;
+	private int evnNo;
+	private int sPrice;
 	public Sale() {
-
+		super();
+		// TODO Auto-generated constructor stub
 	}
-
-	public Sale(Integer saleNo, String description, Date sdate, Time stime, Customer cusNo, Employee empNo, Event evnNo,
-			Integer sprice) {
+	public Sale(int saleNo, String description, Date sDate, Date sTime, int cusNo, int empNo, int evnNo, int sPrice) {
+		super();
 		this.saleNo = saleNo;
 		this.description = description;
-		this.sdate = sdate;
-		this.stime = stime;
+		this.sDate = sDate;
+		this.sTime = sTime;
 		this.cusNo = cusNo;
 		this.empNo = empNo;
 		this.evnNo = evnNo;
-		this.sprice = sprice;
+		this.sPrice = sPrice;
 	}
-
-	public Integer getSaleNo() {
+	public int getSaleNo() {
 		return saleNo;
 	}
-
-	public void setSaleNo(Integer saleNo) {
+	public void setSaleNo(int saleNo) {
 		this.saleNo = saleNo;
 	}
-
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	public Date getSdate() {
-		return sdate;
+	public Date getsDate() {
+		return sDate;
 	}
-
-	public void setSdate(Date sdate) {
-		this.sdate = sdate;
+	public void setsDate(Date sDate) {
+		this.sDate = sDate;
 	}
-
-	public Time getStime() {
-		return stime;
+	public Date getsTime() {
+		return sTime;
 	}
-
-	public void setStime(Time stime) {
-		this.stime = stime;
+	public void setsTime(Date sTime) {
+		this.sTime = sTime;
 	}
-
-	public Customer getCusNo() {
+	public int getCusNo() {
 		return cusNo;
 	}
-
-	public void setCusNo(Customer cusNo) {
+	public void setCusNo(int cusNo) {
 		this.cusNo = cusNo;
 	}
-
-	public Employee getEmpNo() {
+	public int getEmpNo() {
 		return empNo;
 	}
-
-	public void setEmpNo(Employee empNo) {
+	public void setEmpNo(int empNo) {
 		this.empNo = empNo;
 	}
-
-	public Event getEvnNo() {
+	public int getEvnNo() {
 		return evnNo;
 	}
-
-	public void setEvnNo(Event evnNo) {
+	public void setEvnNo(int evnNo) {
 		this.evnNo = evnNo;
 	}
-
-	public Integer getSprice() {
-		return sprice;
+	public int getsPrice() {
+		return sPrice;
 	}
-
-	public void setSprice(Integer sprice) {
-		this.sprice = sprice;
+	public void setsPrice(int sPrice) {
+		this.sPrice = sPrice;
 	}
-
 	@Override
 	public String toString() {
 		return String.format(
-				"Sale [saleNo=%s, description=%s, sdate=%s, stime=%s, cusNo=%s, empNo=%s, evnNo=%s, sprice=%s]", saleNo,
-				description, sdate, stime, cusNo, empNo, evnNo, sprice);
+				"Sale [saleNo=%s, description=%s, sDate=%s, sTime=%s, cusNo=%s, empNo=%s, evnNo=%s, sPrice=%s]", saleNo,
+				description, sDate, sTime, cusNo, empNo, evnNo, sPrice);
 	}
-
 }

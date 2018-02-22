@@ -26,13 +26,13 @@ public class EmployeeTest {
 		service = null;
 	}
 
-	@Test
+	/*@Test
 	public void test1SelectAllEmployee() {
 		List<Employee> listStd = service.selectAllEmployee();
 		Assert.assertNotNull(listStd);
 		for (Employee cs : listStd) {
 			System.out.println(cs);
 		}
-	}
+	}*/
 	
 }*/

@@ -4,9 +4,9 @@
 	<resultMap id="saleResult" type="Sale">
 		<id property="saleNo" column="sale_no"/>
 		<result property="description" column="description"/>
-		<result property="sdate" column="sDate"/>
-		<result property="stime" column="sTime"/>
-		<result property="sprice" column="sPrice"/>
+		<result property="sdate" column="sdate"/>
+		<result property="stime" column="stime"/>
+		<result property="sprice" column="sprice"/>
 	</resultMap>
 	
 	<resultMap id="saleResultAddOthers" type="Sale" extends="saleResult">
@@ -18,6 +18,4 @@
 	<select id="selectMaxSaleNo" resultType="int">
 		select max(sale_no) from sale
 	</select>
-	
-	
 </mapper>

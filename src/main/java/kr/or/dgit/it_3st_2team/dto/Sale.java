@@ -15,8 +15,7 @@ public class Sale { //Foreign key에 대한 변수타입 수정 kim 2018-02-22
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Sale(int saleNo, String description, Date sDate, Date sTime, Customer cusNo, Employee empNo, Event evnNo,
-			int sPrice) {
+	public Sale(int saleNo, String description, Date sDate, Date sTime, Customer cusNo, Employee empNo, Event evnNo, int sPrice) {
 		super();
 		this.saleNo = saleNo;
 		this.description = description;

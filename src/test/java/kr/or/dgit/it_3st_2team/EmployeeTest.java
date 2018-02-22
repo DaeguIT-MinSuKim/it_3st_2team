@@ -1,4 +1,4 @@
-/*package kr.or.dgit.it_3st_2team;
+package kr.or.dgit.it_3st_2team;
 
 import java.util.List;
 
@@ -34,4 +34,5 @@ public class EmployeeTest {
 			System.out.println(cs);
 		}
 	}*/
+}
 

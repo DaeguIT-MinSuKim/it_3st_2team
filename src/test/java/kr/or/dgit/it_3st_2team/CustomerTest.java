@@ -36,12 +36,12 @@ public class CustomerTest {
 			System.out.println(cs);
 		}
 	}*/
-	@Test
+	/*@Test
 	public void test2SelectAllEmp() {
 		List<Employee> listStd = service.selectAllEmployee();
 		Assert.assertNotNull(listStd);
 		for (Employee cs : listStd) {
 			System.out.println(cs);
 		}
-	}
+	}*/
 }

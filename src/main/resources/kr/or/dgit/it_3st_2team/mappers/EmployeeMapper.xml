@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.dgit.it_3st_2team.dao.EmployeeDao">
-	<resultMap id="employeeResult" type="Employee">
+	<!-- <resultMap id="employeeResult" type="Employee">
 		<id property="empNo" column="emp_no"/>
 		<result property="empName" column="emp_name"/>
 		<result property="joinDate" column="join_date"/>
@@ -9,10 +9,10 @@
 		<result property="id" column="id"/>
 		<result property="password" column="password"/>
 		<result property="titleNo" column="title_no"/>
-		<result property="eTf" column="e_ft"/>
+		<result property="eTf" column="e_tf"/>
 	</resultMap>
 	
 	<select id="selectEmpByLoginId" parameterType="Employee" resultMap="employeeResult">
 		select id,password from employee where id=#{id}
-	</select>
+	</select>  -->
 </mapper>

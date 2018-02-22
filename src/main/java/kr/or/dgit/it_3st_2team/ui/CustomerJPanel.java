@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -40,8 +41,11 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 	public CustomerJPanel() {
 
 		initComponents();
+		
 	}
 	private void initComponents() {
+		
+		
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
@@ -68,6 +72,8 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 		tfNo = new JTextField();
 		panel_1.add(tfNo);
 		tfNo.setColumns(10);
+		tfNo.setEditable(false);
+		tfNo.setFocusable(false);
 		
 		JLabel lblName = new JLabel("고객이름");
 		lblName.setHorizontalAlignment(SwingConstants.CENTER);
@@ -84,6 +90,9 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 		tfJoin = new JTextField();
 		tfJoin.setColumns(10);
 		panel_1.add(tfJoin);
+		tfJoin.setEditable(false);
+		getJoinDate();
+		
 		
 		JLabel lblBirth = new JLabel("생년월일");
 		lblBirth.setHorizontalAlignment(SwingConstants.CENTER);
@@ -100,13 +109,20 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 		tfAge = new JTextField();
 		panel_1.add(tfAge);
 		tfAge.setColumns(10);
-		
+		tfAge.setEditable(false);
 		JLabel lblEmp = new JLabel("담당직원");
 		lblEmp.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(lblEmp);
 		
 		JComboBox cmbEmp = new JComboBox();
 		panel_1.add(cmbEmp);
+		
+		/*List<Employee> list = service.selectAllEmployee();
+		Employee [] items = new Employee[list.size()];
+		System.out.println(items);
+		list.toArray(items);
+		DefaultComboBoxModel<Employee> cModel = new DefaultComboBoxModel<>(items);*/
+		
 		
 		JPanel panel_6 = new JPanel();
 		panel_3.add(panel_6, BorderLayout.WEST);
@@ -121,7 +137,7 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 		panel_4.add(lblPhone1);
 		
 		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"010", "011"}));
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"010"}));
 		
 		panel_4.add(comboBox_1);
 		
@@ -160,6 +176,9 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 		
 		JButton btnNewButton_1 = new JButton("등록");
 		panel_7.add(btnNewButton_1);
+		
+		JButton btnNewButton_3 = new JButton("수정");
+		panel_7.add(btnNewButton_3);
 		
 		JButton btnNewButton_2 = new JButton("취소");
 		panel_7.add(btnNewButton_2);
@@ -206,6 +225,15 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 			}
 		));
 		scrollPane.setViewportView(table);
+	}
+	private void getJoinDate() {
+		Calendar now = Calendar.getInstance();
+		int year = now.get(Calendar.YEAR);
+		int month = now.get(Calendar.MONTH)+1;
+		int day = now.get(Calendar.DAY_OF_MONTH);
+		//now.set(year,month,day);
+		tfJoin.setText(toString().format("%s-%s-%s",year,month,day));
+		
 	}
 
 	public void actionPerformed(ActionEvent arg0) {

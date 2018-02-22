@@ -7,15 +7,15 @@ public class Sale {
 	private String description;
 	private Date sDate;
 	private Date sTime;
-	private int cusNo;
-	private int empNo;
-	private int evnNo;
+	private Customer cusNo;
+	private Employee empNo;
+	private Event evnNo;
 	private int sPrice;
 	public Sale() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Sale(int saleNo, String description, Date sDate, Date sTime, int cusNo, int empNo, int evnNo, int sPrice) {
+	public Sale(int saleNo, String description, Date sDate, Date sTime, Customer cusNo, Employee empNo, Event evnNo, int sPrice) {
 		super();
 		this.saleNo = saleNo;
 		this.description = description;
@@ -50,22 +50,22 @@ public class Sale {
 	public void setsTime(Date sTime) {
 		this.sTime = sTime;
 	}
-	public int getCusNo() {
+	public Customer getCusNo() {
 		return cusNo;
 	}
-	public void setCusNo(int cusNo) {
+	public void setCusNo(Customer cusNo) {
 		this.cusNo = cusNo;
 	}
-	public int getEmpNo() {
+	public Employee getEmpNo() {
 		return empNo;
 	}
-	public void setEmpNo(int empNo) {
+	public void setEmpNo(Employee empNo) {
 		this.empNo = empNo;
 	}
-	public int getEvnNo() {
+	public Event getEvnNo() {
 		return evnNo;
 	}
-	public void setEvnNo(int evnNo) {
+	public void setEvnNo(Event evnNo) {
 		this.evnNo = evnNo;
 	}
 	public int getsPrice() {

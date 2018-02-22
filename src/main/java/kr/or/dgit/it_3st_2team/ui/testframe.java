@@ -1,4 +1,4 @@
-package kr.or.dgit.it_3st_2team.dto;
+package kr.or.dgit.it_3st_2team.ui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;

@@ -16,8 +16,7 @@ public class Employee {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Employee(int empNo, String empName, Date joinDate, String addr, String id, String epassword, Title titleNo,
-			int eOff, Boolean eTf) {
+	private Employee(int empNo, String empName, Date joinDate, String addr, String id, String epassword, Title titleNo, int eOff, Boolean eTf) {
 		super();
 		this.empNo = empNo;
 		this.empName = empName;
@@ -32,57 +31,75 @@ public class Employee {
 	public int getEmpNo() {
 		return empNo;
 	}
+
 	public void setEmpNo(int empNo) {
 		this.empNo = empNo;
 	}
+
 	public String getEmpName() {
 		return empName;
 	}
+
 	public void setEmpName(String empName) {
 		this.empName = empName;
 	}
+
 	public Date getJoinDate() {
 		return joinDate;
 	}
+
 	public void setJoinDate(Date joinDate) {
 		this.joinDate = joinDate;
 	}
+
 	public String getAddr() {
 		return addr;
 	}
+
 	public void setAddr(String addr) {
 		this.addr = addr;
 	}
+
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
+
 	public String getEpassword() {
 		return epassword;
 	}
+
 	public void setEpassword(String epassword) {
 		this.epassword = epassword;
 	}
+
 	public Title getTitleNo() {
 		return titleNo;
 	}
+
 	public void setTitleNo(Title titleNo) {
 		this.titleNo = titleNo;
 	}
+
 	public int geteOff() {
 		return eOff;
 	}
+
 	public void seteOff(int eOff) {
 		this.eOff = eOff;
 	}
+
 	public Boolean geteTf() {
 		return eTf;
 	}
+
 	public void seteTf(Boolean eTf) {
 		this.eTf = eTf;
 	}
+
 	@Override
 	public String toString() {
 		return String.format(

@@ -2,28 +2,20 @@ package kr.or.dgit.it_3st_2team.ui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import kr.or.dgit.it_3st_2team.dto.Employee;
-
-import org.junit.Assert;
-
-import kr.or.dgit.it_3st_2team.dao.EmployeeDao;
-import kr.or.dgit.it_3st_2team.dto.Employee;
 import kr.or.dgit.it_3st_2team.service.EmployeeService;
 
-import javax.swing.JTextField;
-import java.awt.GridLayout;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import java.awt.Dimension;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
+@SuppressWarnings("serial")
 public class LoginFrame extends JFrame implements ActionListener {
 
 	private JPanel contentPane;

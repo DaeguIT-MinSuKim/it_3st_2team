@@ -21,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+@SuppressWarnings("serial")
 public class CustomerJPanel extends JPanel implements ActionListener {
 	private JTextField tfNo;
 	private JTextField tfName;

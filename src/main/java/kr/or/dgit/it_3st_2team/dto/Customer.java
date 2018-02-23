@@ -89,7 +89,8 @@ public class Customer {
 				"Customer [cusNo=%s, cusName=%s, birth=%s, age=%s, joinDate=%s, phone=%s, addr=%s, empNo=%s, cTf=%s]",
 				cusNo, cusName, birth, age, joinDate, phone, addr, empNo, cTf);
 	}
-	
-	
-	
+	public Object[] toArray() {
+		return new Object[] {cusNo, cusName};
+	}
+
 }

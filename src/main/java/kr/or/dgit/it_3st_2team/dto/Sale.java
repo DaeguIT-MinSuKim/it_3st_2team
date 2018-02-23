@@ -2,12 +2,12 @@ package kr.or.dgit.it_3st_2team.dto;
 
 import java.util.Date;
 
-public class Sale {
+public class Sale { //Foreign key에 대한 변수타입 수정 kim 2018-02-22
 	private int saleNo;
 	private String description;
 	private Date sDate;
 	private Date sTime;
-	private Customer cusNo;
+	private Customer cusNo; 
 	private Employee empNo;
 	private Event evnNo;
 	private int sPrice;
@@ -80,4 +80,5 @@ public class Sale {
 				"Sale [saleNo=%s, description=%s, sDate=%s, sTime=%s, cusNo=%s, empNo=%s, evnNo=%s, sPrice=%s]", saleNo,
 				description, sDate, sTime, cusNo, empNo, evnNo, sPrice);
 	}
+	
 }

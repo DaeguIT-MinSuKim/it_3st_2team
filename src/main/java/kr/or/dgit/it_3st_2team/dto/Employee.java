@@ -1,6 +1,7 @@
 package kr.or.dgit.it_3st_2team.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class Employee {
 	private int empNo;
@@ -12,8 +13,10 @@ public class Employee {
 	private Title title;
 	private int eOff;
 	private Boolean eTf;
-	
+
 	public Employee() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	private Employee(int empNo, String empName, Date joinDate, String addr, String id, String epassword, Title title,
@@ -28,6 +31,18 @@ public class Employee {
 		this.title = title;
 		this.eOff = eOff;
 		this.eTf = eTf;
+	}
+
+	public Employee(String id, String password) {
+		super();
+		this.id = id;
+		this.epassword = password;
+	}
+
+	private Employee(String empName, Title titleNo) {
+		super();
+		this.empName = empName;
+		this.title = titleNo;
 	}
 
 	public int getEmpNo() {
@@ -78,6 +93,14 @@ public class Employee {
 		this.epassword = epassword;
 	}
 
+	public String getPassword() {
+		return epassword;
+	}
+
+	public void setPassword(String password) {
+		this.epassword = password;
+	}
+
 	public Title getTitleNo() {
 		return title;
 	}
@@ -105,9 +128,8 @@ public class Employee {
 	@Override
 	public String toString() {
 		return String.format(
+
 				"Employee [empNo=%s, empName=%s, joinDate=%s, addr=%s, id=%s, epassword=%s, titleNo=%s, eOff=%s, eTf=%s]",
 				empNo, empName, joinDate, addr, id, epassword, title, eOff, eTf);
 	}
-
-	
 }

@@ -26,16 +26,16 @@ insert into title values
 
 
 insert into employee values
-(1,'영은수','2016-02-08',null,'idmaster','psmaster',1,0,1),
-(2,'김은수','2016-03-08',null,'idemp1','psemp1',2,1,1),
-(3,'한여진','2016-04-18',null,'idemp2','psemp2',2,2,1),
-(4,'배두나','2016-05-08',null,'idemp3','psemp3',2,3,1),
-(5,'황시목','2016-06-18',null,'idemp4','psemp4',3,4,1),
-(6,'조승우','2016-07-08',null,'idemp5','psemp5',3,5,1),
-(7,'서동재','2016-08-18',null,'idemp6','psemp6',3,6,1),
-(8,'이준혁','2016-09-08',null,'idemp7','psemp7',3,1,1),
-(9,'이창준','2016-10-18',null,'idemp8','psemp8',4,2,1),
-(10,'유재명','2016-11-08',null,'idemp9','psemp9',4,3,1);
+(1,'영은수','2016-02-08',null,'idmaster','pwmaster',1,0,1),
+(2,'김은수','2016-03-08',null,'idemp1','pwemp1',2,1,1),
+(3,'한여진','2016-04-18',null,'idemp2','pwemp2',2,2,1),
+(4,'배두나','2016-05-08',null,'idemp3','pwemp3',2,3,1),
+(5,'황시목','2016-06-18',null,'idemp4','pwemp4',3,4,1),
+(6,'조승우','2016-07-08',null,'idemp5','pwemp5',3,5,1),
+(7,'서동재','2016-08-18',null,'idemp6','pwemp6',3,6,1),
+(8,'이준혁','2016-09-08',null,'idemp7','pwemp7',3,1,1),
+(9,'이창준','2016-10-18',null,'idemp8','pwemp8',4,2,1),
+(10,'유재명','2016-11-08',null,'idemp9','pwemp9',4,3,1);
 
 
 insert into customer(cus_no,cus_name,birth,age,join_date,phone,emp_no,c_tf) values

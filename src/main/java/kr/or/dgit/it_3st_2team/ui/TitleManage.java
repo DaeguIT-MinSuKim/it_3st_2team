@@ -1,15 +1,18 @@
 package kr.or.dgit.it_3st_2team.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.Color;
-import java.awt.Container;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -17,166 +20,214 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import kr.or.dgit.it_3st_2team.dto.Title;
+import kr.or.dgit.it_3st_2team.service.TitleService;
 
 @SuppressWarnings("serial")
 public class TitleManage extends JFrame implements ActionListener {
-	Container cp;
-	protected JTable table;
-	TextField tftitleno, tftitlename;
-	Button btnAdd, btnDel, btnMod;
 
-	private void initComponents() {
-		getContentPane().setLayout(new BorderLayout(0, 0));
+	private static final AbstractButton tftitleno = null;
+	private JPanel contentPane;
+	private JTable table;
+	private TextField Titleno;
+	private TextField Titlename;
+	int row = -1;
 
-		JScrollPane scrollPane = new JScrollPane();
-		getContentPane().add(scrollPane, BorderLayout.CENTER);
-
-		table = new JTable();
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane.setViewportView(table);
-	}
+	private String title[] = { "직책번호", "직책명" };
 
 	JScrollPane jsp;
 	DefaultTableModel model;
-	JTable table1;
 
-	String[][] data = { { "1", "사장" }, { "2", "실장" }, { "3", "디자이너" }, { "4", "스텝" } };
+	private JButton btnAdd;
+	private JButton btnDel;
+	private JButton btnMod;
 
-	String title[] = { "직책번호", "직책명" };
-
-	int row = -1;
-
-	public TitleManage(String title) {
-		super(title);
-		cp = this.getContentPane();
-		this.setDesign();
-
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setBounds(300, 100, 400, 400);
-		cp.setBackground(new Color(255, 255, 200));
-		this.setVisible(true);
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					TitleManage frame = new TitleManage();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
-	public void setDesign() {
-		cp.setLayout(new BorderLayout());
-		// 탑패널 생성
-		JPanel pTop = new JPanel();
+	/**
+	 * Create the frame.
+	 */
+	public TitleManage() {
+		initComponents();
+	}
 
-		/// 텍스트필트 추가시작
-		tftitleno = new TextField(5);
-		pTop.add(new JLabel("직책번호"));
-		pTop.add(tftitleno);
+	private void initComponents() {
+		setTitle("직원현황");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 708, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(0, 0));
 
-		tftitlename = new TextField(5);
-		pTop.add(new JLabel("직책명"));
-		pTop.add(tftitlename);
+		JPanel panel = new JPanel();
+		contentPane.add(panel, BorderLayout.CENTER);
+		panel.setLayout(new BorderLayout(0, 0));
 
-		cp.add("North", pTop);
+		JScrollPane scrollPane = new JScrollPane();
+		panel.add(scrollPane, BorderLayout.CENTER);
 
-		JPanel pBottom = new JPanel();
-
-		btnAdd = new Button("추가");
-		btnDel = new Button("삭제");
-		btnMod = new Button("수정");
-
-		btnAdd.addActionListener(this);
-		btnDel.addActionListener(this);
-		btnMod.addActionListener(this);
-
-		pBottom.add(btnAdd);
-		pBottom.add(btnDel);
-		pBottom.add(btnMod);
-
-		cp.add("South", pBottom);
+		List<Title> lists = null;
+		TitleService service = new TitleService();
+		lists = service.selectAllTitle();
+		Object[][] data = getRows(lists);
 
 		model = new DefaultTableModel(data, title);
-		table1 = new JTable(model);
-		jsp = new JScrollPane(table1);
-		cp.add("Center", jsp);
+		table = new JTable(model);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPane.setViewportView(table);
 
-		table1.setSelectionBackground(Color.yellow); // 테이블에서 선택시 색 변하게 하는 방법
-		table1.setSelectionForeground(Color.MAGENTA); // 테이블에서 선택시 글자색 변하게 하는 방법
+		table.setSelectionBackground(Color.yellow);
+		table.setSelectionForeground(Color.MAGENTA);
 
-		table1.addMouseListener(new TableSelect());
+		table.addMouseListener(new TableSelect());
 
+		JPanel panel_1 = new JPanel();
+		contentPane.add(panel_1, BorderLayout.NORTH);
+		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		JPanel panel_2 = new JPanel();
+		panel_1.add(panel_2);
+
+		JLabel lbltitleno = new JLabel("직원번호");
+		panel_2.add(lbltitleno);
+
+		Titleno = new TextField(5);
+		panel_2.add(Titleno);
+		
+		JLabel lbltitlename = new JLabel("직책명");
+		panel_2.add(lbltitlename);
+
+		Titlename = new TextField(5);
+		panel_2.add(Titlename);
+
+		JPanel pBottom = new JPanel();
+		contentPane.add(pBottom, BorderLayout.SOUTH);
+
+		btnAdd = new JButton("추가");
+		btnAdd.addActionListener(this);
+		pBottom.add(btnAdd);
+
+		btnDel = new JButton("삭제");
+		btnDel.addActionListener(this);
+		pBottom.add(btnDel);
+
+		btnMod = new JButton("수정");
+		btnMod.addActionListener(this);
+		pBottom.add(btnMod);
 	}
 
-	public static void main(String[] args) {
-
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		String[] str = new String[2];
-		Object ob = e.getSource();
-
-		if (ob == btnAdd) {
-			// 입력체크
-			if (tftitleno.getText().equals("")) // 주소를 비교하는 것이므로 equals로 비교한다. ==로 하면 안될때가 있다
-			{
-				JOptionPane.showMessageDialog(this, "상품명을 입력해주세요");
-				tftitleno.requestFocus();
-				return;
-			}
-
-			if (tftitlename.getText().equals("")) // 주소를 비교하는 것이므로 equals로 비교한다. ==로 하면 안될때가 있다
-			{
-				JOptionPane.showMessageDialog(this, "수량을 입력해주세요");
-				tftitlename.requestFocus();
-				return;
-			}
-			str[0] = tftitleno.getText();
-			str[1] = tftitlename.getText();
-
-		} else if (ob == btnDel) // 삭제 버튼을 누를때
-		{
-			if (row == -1) {
-				JOptionPane.showMessageDialog(this, "먼저 삭제할 행을 선택해주세요");
-
-				return;
-			}
-
-			else {
-				JOptionPane.showConfirmDialog(this, "를 삭제할까요?", "삭제", JOptionPane.YES_NO_OPTION,
-						JOptionPane.QUESTION_MESSAGE);
-
-				model.removeRow(row);
-				row = -1;
-				this.clearData();
-
-			}
-		} else if (ob == btnMod) {
-
-			if (row == -1) {
-				JOptionPane.showConfirmDialog(this, "먼저 수정할 행을 선택해주세요", "수정확인", JOptionPane.INFORMATION_MESSAGE);
-
-				return;
-			}
-			model.setValueAt(tftitleno.getText(), row, 0);
-			model.setValueAt(tftitlename.getText(), row, 1);
+	private Object[][] getRows(List<Title> lists) {
+		Object[][] rows = null;
+		rows = new Object[lists.size()][];
+		for (int i = 0; i < lists.size(); i++) {
+			rows[i] =  lists.get(i).toArray();
 		}
-
+		return rows;
 	}
 
 	public void clearData() {
 
-		tftitleno.setText(""); // 텍스트필드 창을 지운다.
-		tftitlename.setText("");
-		tftitleno.requestFocus(); // tfSang 텍스트 필드로 커서를 가져온다.
+		Titleno.setText(""); // 텍스트필드 창을 지운다.
+		Titlename.setText("");
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnAdd) {
+			actionPerformedBtnAdd(e);
+		}
+		if (e.getSource() == btnDel) {
+			actionPerformedBtnDel(e);
+		}
+		if (e.getSource() == btnMod) {
+			actionPerformedBtnMod(e);
+		}
+	}
+
+	private void actionPerformedBtnMod(ActionEvent e) {
+
+		if (row == -1) {
+			JOptionPane.showConfirmDialog(this, "먼저 수정할 행을 선택해주세요", "수정확인", JOptionPane.INFORMATION_MESSAGE);
+
+			return;
+		}
+		model.setValueAt(Titleno.getText(), row, 0);
+		model.setValueAt(Titlename.getText(), row, 1);
+
+	}
+
+	private void actionPerformedBtnDel(ActionEvent e) {
+		if (row == -1) {
+			JOptionPane.showMessageDialog(this, "먼저 삭제할 행을 선택해주세요");
+
+			return;
+		}
+
+		else {
+			int b = JOptionPane.showConfirmDialog(this, "데이터를 삭제할까요?", "삭제", JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE);
+			if (b == 0) {
+				model.removeRow(row);
+				row = -1;
+				this.clearData();
+			} else {
+
+			}
+		}
+
+	}
+
+	protected void actionPerformedBtnAdd(ActionEvent e) {
+		String[] str = new String[6];
+		Object ob = e.getSource();
+		if (Titleno.getText().equals("")) 
+		{
+			JOptionPane.showMessageDialog(this, "직책번호를 입력해주세요");
+			Titleno.requestFocus();
+			return;
+		}
+		if (Titlename.getText().equals("")) 
+		{
+			JOptionPane.showMessageDialog(this, "직책명을 입력해주세요");
+			Titlename.requestFocus();
+			return;
+		}
+
+		str[0] = Titleno.getText();
+		str[1] = Titlename.getText();
+
+
+		model.addRow(str);
+
 	}
 
 	class TableSelect extends MouseAdapter {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			row = table1.getSelectedRow(); // 테이블에서 선택된 행의 값을 row에 저장한다.
+			row = table.getSelectedRow(); // 테이블에서 선택된 행의 값을 row에 저장한다.
 
 			// 행번호와 행의 데이터 텍스트 필드에 출력하기
-			tftitleno.setText((String) table1.getValueAt(row, 0));
-			tftitlename.setText((String) table1.getValueAt(row, 1));
+			Titleno.setText((String) table.getValueAt(row, 0));
+			Titlename.setText((String) table.getValueAt(row, 1));
 		}
 
 	}
-
 }

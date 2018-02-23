@@ -22,6 +22,7 @@ public class EmployeeService {
 		}
 	}
 	public Employee selectEmployeeByLoginId(Employee emp) {
+		log.debug("selectEmployeeByLoginId()");
 		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
 			EmployeeDao employeeDao = sqlSession.getMapper(EmployeeDao.class);
 			return employeeDao.selectEmpByLoginId(emp);
@@ -29,10 +30,18 @@ public class EmployeeService {
 	}
 	
 	public List<Employee>selectEmployeeAddTitle(){
+		log.debug("selectEmployeeAddTitle()");
 		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
 			EmployeeDao employeeDao = sqlSession.getMapper(EmployeeDao.class);
 			return sqlSession.selectList(namespace + "selectTitleName");
 		}
 		
+	}
+	public List<Employee> selecteNowEmplyoee() {
+		log.debug("selecteNowEmplyoee()");
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			EmployeeDao employeeDao = sqlSession.getMapper(EmployeeDao.class);
+			return sqlSession.selectList(namespace + "selecteNowEmplyoee");
+		}
 	}
 }

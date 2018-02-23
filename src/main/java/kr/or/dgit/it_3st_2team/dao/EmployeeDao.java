@@ -6,7 +6,10 @@ import kr.or.dgit.it_3st_2team.dto.Employee;
 
 public interface EmployeeDao {
 	List<Employee> selectAllEmployee();
+
 	Employee selectEmpByLoginId(Employee id);
-	
-	List<Employee>selectTitleName();
+
+	List<Employee> selecteNowEmplyoee();
+
+	List<Employee> selectTitleName();
 }

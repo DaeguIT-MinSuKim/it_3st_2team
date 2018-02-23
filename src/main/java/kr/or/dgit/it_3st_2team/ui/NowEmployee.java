@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
@@ -22,19 +23,24 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import kr.or.dgit.it_3st_2team.dto.Employee;
+import kr.or.dgit.it_3st_2team.service.EmployeeService;
+
 @SuppressWarnings("serial")
 public class NowEmployee extends JFrame implements ActionListener {
 
 	private static final AbstractButton tftitleno = null;
 	private JPanel contentPane;
 	private JTable table;
-	private TextField titleno;
+	private TextField empno;
 	private TextField empname;
 	private TextField joindate;
 	private TextField id;
 	private TextField epassword;
 	private TextField titlename;
 	int row = -1;
+	
+	private String title[] = { "직책번호", "이름", "입사일", "아이디", "패스워드", "직책명" };
 
 	JScrollPane jsp;
 	DefaultTableModel model;
@@ -81,11 +87,14 @@ public class NowEmployee extends JFrame implements ActionListener {
 
 		JScrollPane scrollPane = new JScrollPane();
 		panel.add(scrollPane, BorderLayout.CENTER);
+		
+		List<Employee> lists = null;
+		EmployeeService service = new EmployeeService();
+		lists = service.selecteNowEmplyoee();
+		Object[][] data = getRows(lists);
 
-		String[][] data = { { "1", "김민", "2018-08-20", "emp1", "paw1", "사장" },
-				{ "2", "김민유", "2018-08-25", "emp2", "paw2", "디자이너" } };
-
-		String title[] = { "직책번호", "이름", "입사일", "아이디", "패스워드", "직책명" };
+	
+	
 
 		model = new DefaultTableModel(data, title);
 		table = new JTable(model);
@@ -104,11 +113,11 @@ public class NowEmployee extends JFrame implements ActionListener {
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2);
 
-		JLabel lbltitleno = new JLabel("직책번호");
+		JLabel lbltitleno = new JLabel("직원번호");
 		panel_2.add(lbltitleno);
 
-		titleno = new TextField(5);
-		panel_2.add(titleno);
+		empno = new TextField(5);
+		panel_2.add(empno);
 
 		JLabel lblname = new JLabel("이름");
 		panel_2.add(lblname);
@@ -156,15 +165,25 @@ public class NowEmployee extends JFrame implements ActionListener {
 		pBottom.add(btnMod);
 	}
 
+	@SuppressWarnings("unchecked")
+	private Object[][] getRows(List<Employee> lists) {
+		Object[][] rows=null;
+		rows=new Object[lists.size()][];
+		for(int i=0; i<lists.size(); i++) {
+			rows[i]=((List<Employee>) lists.get(i)).toArray();
+		}
+		return rows;
+	}
+
 	public void clearData() {
 
-		titleno.setText(""); // 텍스트필드 창을 지운다.
+		empno.setText(""); // 텍스트필드 창을 지운다.
 		titlename.setText("");
 		empname.setText("");
 		joindate.setText("");
 		id.setText("");
 		epassword.setText("");
-		titleno.requestFocus(); // tfSang 텍스트 필드로 커서를 가져온다.
+		empno.requestFocus(); // tfSang 텍스트 필드로 커서를 가져온다.
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -186,7 +205,7 @@ public class NowEmployee extends JFrame implements ActionListener {
 
 			return;
 		}
-		model.setValueAt(titleno.getText(), row, 0);
+		model.setValueAt(empno.getText(), row, 0);
 		model.setValueAt(empname.getText(), row, 1);
 		model.setValueAt(joindate.getText(), row, 2);
 		model.setValueAt(id.getText(), row, 3);
@@ -219,43 +238,43 @@ public class NowEmployee extends JFrame implements ActionListener {
 	protected void actionPerformedBtnAdd(ActionEvent e) {
 		String[] str = new String[6];
 		Object ob = e.getSource();
-		if (titleno.getText().equals("")) // titleno를 비교하는 것이므로 equals로 비교한다. ==로 하면 안될때가 있다
+		if (empno.getText().equals("")) // titleno를 비교하는 것이므로 equals로 비교한다.
 		{
 			JOptionPane.showMessageDialog(this, "직책번호를 입력해주세요");
-			titleno.requestFocus();
+			empno.requestFocus();
 			return;
 		}
-		if (empname.getText().equals("")) // empname를 비교하는 것이므로 equals로 비교한다. ==로 하면 안될때가 있다
+		if (empname.getText().equals("")) // empname를 비교하는 것이므로 equals로 비교한다.
 		{
 			JOptionPane.showMessageDialog(this, "이름을 입력해주세요");
 			empname.requestFocus();
 			return;
 		}
-		if (joindate.getText().equals("")) // joindate를 비교하는 것이므로 equals로 비교한다. ==로 하면 안될때가 있다
+		if (joindate.getText().equals("")) // joindate를 비교하는 것이므로 equals로 비교한다.
 		{
 			JOptionPane.showMessageDialog(this, "입사일을 입력해주세요");
 			joindate.requestFocus();
 			return;
 		}
-		if (id.getText().equals("")) // id를 비교하는 것이므로 equals로 비교한다. ==로 하면 안될때가 있다
+		if (id.getText().equals("")) // id를 비교하는 것이므로 equals로 비교한다. 
 		{
 			JOptionPane.showMessageDialog(this, "아이디를 입력해주세요");
 			id.requestFocus();
 			return;
 		}
-		if (epassword.getText().equals("")) // password를 비교하는 것이므로 equals로 비교한다. ==로 하면 안될때가 있다
+		if (epassword.getText().equals("")) // epassword를 비교하는 것이므로 equals로 비교한다.
 		{
 			JOptionPane.showMessageDialog(this, "비밀번호를 입력해주세요");
 			epassword.requestFocus();
 			return;
 		}
-		if (titlename.getText().equals("")) // titlename를 비교하는 것이므로 equals로 비교한다. ==로 하면 안될때가 있다
+		if (titlename.getText().equals("")) // titlename를 비교하는 것이므로 equals로 비교한다.
 		{
 			JOptionPane.showMessageDialog(this, "직책명을 입력해주세요");
 			titlename.requestFocus();
 			return;
 		}
-		str[0] = titleno.getText();
+		str[0] = empno.getText();
 		str[1] = empname.getText();
 		str[2] = joindate.getText();
 		str[3] = id.getText();
@@ -273,7 +292,7 @@ public class NowEmployee extends JFrame implements ActionListener {
 			row = table.getSelectedRow(); // 테이블에서 선택된 행의 값을 row에 저장한다.
 
 			// 행번호와 행의 데이터 텍스트 필드에 출력하기
-			titleno.setText((String) table.getValueAt(row, 0));
+			empno.setText((String) table.getValueAt(row, 0));
 			empname.setText((String) table.getValueAt(row, 1));
 			joindate.setText((String) table.getValueAt(row, 2));
 			id.setText((String) table.getValueAt(row, 3));

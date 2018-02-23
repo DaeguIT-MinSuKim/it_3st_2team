@@ -5,4 +5,10 @@
 		<id property="titleNo" column="title_no"/>
 		<result property="titleName" column="title_name"/>
 	</resultMap>
+	
+	<select id="selectTitle" 
+		resultMap="TitleResult">
+		select title_no,title_name from title
+
+	</select>
 </mapper>

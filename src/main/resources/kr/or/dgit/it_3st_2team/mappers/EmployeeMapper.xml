@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.or.dgit.it_3st_2team.dao.EmployeeDao">
-
-
- 	
-  	<resultMap id="EmployeeResult" type="Employee">
+<mapper namespace="kr.or.dgit.it_3st_2team.dao.EmployeeDao">	
+  	<resultMap id="employeeResult" type="Employee">
 		<id property="empNo" column="emp_no"/>
 		<result property="empName" column="emp_name"/>
 		<result property="joinDate" column="join_date"/>
@@ -15,7 +12,16 @@
 		<result property="eTf" column="e_tf"/>
 	</resultMap> 
 
-	<resultMap type="Employee" id="EmployeeAddTitle" extends="EmployeeResult">
+	<!-- resulttypeempnameno -->
+	 <resultMap type="Employee" id="empNoNameResult">
+		<id property="empNo" column="emp_no"/>
+		<result property="empName" column="emp_name"/>
+	</resultMap>
+	
+	
+	
+
+	<resultMap type="Employee" id="EmployeeAddTitle" extends="employeeResult">
 		<association property="title" resultMap="kr.or.dgit.it_3st_2team.dao.TitleDao.TitleResult" />
 	</resultMap>
 	

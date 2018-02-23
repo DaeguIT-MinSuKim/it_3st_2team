@@ -31,4 +31,18 @@ public class CustomerService {
 			return sqlSession.selectList(namespace + "selectAllEmployee");
 		}
 	}
+	public List<Customer> SelectAllCustomerEmpName(){
+		log.debug("SelectAllCustomerEmpName()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			return sqlSession.selectList(namespace + "SelectAllCustomerEmpName");
+		}
+	}
+	public int inSertCustomer(Customer customer) {
+		log.debug("inSertCustomer()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			int res = sqlSession.insert(namespace + "inSertCustomer",customer);
+			sqlSession.commit();
+			return res;
+		}
+	}
 }

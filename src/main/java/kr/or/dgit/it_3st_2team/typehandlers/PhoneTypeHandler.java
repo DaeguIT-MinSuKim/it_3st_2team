@@ -1,4 +1,4 @@
-package kr.or.dgit.it_3st_2team.dto.typehandlers;
+package kr.or.dgit.it_3st_2team.typehandlers;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;

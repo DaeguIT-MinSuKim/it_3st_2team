@@ -10,6 +10,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -30,6 +32,7 @@ import javax.swing.table.TableColumnModel;
 
 import kr.or.dgit.it_3st_2team.dto.Customer;
 import kr.or.dgit.it_3st_2team.dto.Employee;
+import kr.or.dgit.it_3st_2team.dto.PhoneNumber;
 import kr.or.dgit.it_3st_2team.service.CustomerService;
 import kr.or.dgit.it_3st_2team.service.EmployeeService;
 
@@ -39,9 +42,9 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 	private JTextField tfName;
 	private JTextField tfBirth;
 	private JTextField tfJoin;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_4;
+	private JTextField tfphone2;
+	private JTextField tfphone3;
+	private JTextField tfaddr;
 	private JButton btnNewButton;
 	private JTextField tfSearch;
 	private JTable table;
@@ -51,6 +54,9 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 	
 	private CustomerService cservice;
 	private EmployeeService eservice;
+	private JButton btnNewButton_1;
+	private JComboBox cmbEmp;
+	private JComboBox cmbphone1;
 	/**
 	 * Create the panel.
 	 */
@@ -147,7 +153,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		lists.toArray(items);	
 		DefaultComboBoxModel<SimpleEmp> cModel = new DefaultComboBoxModel<>(items);
 				
-		JComboBox cmbEmp = new JComboBox();
+		cmbEmp = new JComboBox();
 		panel_1.add(cmbEmp);
 		cmbEmp.setModel(cModel);
 		
@@ -168,25 +174,25 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		lblPhone1.setHorizontalAlignment(SwingConstants.LEFT);
 		panel_4.add(lblPhone1);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"010"}));
+		cmbphone1 = new JComboBox();
+		cmbphone1.setModel(new DefaultComboBoxModel(new String[] {"010"}));
 		
-		panel_4.add(comboBox_1);
+		panel_4.add(cmbphone1);
 		
 		
 		JLabel lblPhone2 = new JLabel("-");
 		panel_4.add(lblPhone2);
 		
-		textField = new JTextField();
-		panel_4.add(textField);
-		textField.setColumns(5);
+		tfphone2 = new JTextField();
+		panel_4.add(tfphone2);
+		tfphone2.setColumns(5);
 		
 		JLabel lblPhone3 = new JLabel("-");
 		panel_4.add(lblPhone3);
 		
-		textField_1 = new JTextField();
-		panel_4.add(textField_1);
-		textField_1.setColumns(5);
+		tfphone3 = new JTextField();
+		panel_4.add(tfphone3);
+		tfphone3.setColumns(5);
 		
 		JLabel lblNewLabel = new JLabel("                     ");
 		panel_4.add(lblNewLabel);
@@ -198,9 +204,9 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		JLabel lblAddr = new JLabel("주소");
 		panel_5.add(lblAddr);
 		
-		textField_4 = new JTextField();
-		panel_5.add(textField_4);
-		textField_4.setColumns(25);
+		tfaddr = new JTextField();
+		panel_5.add(tfaddr);
+		tfaddr.setColumns(25);
 		
 		btnNewButton = new JButton("주소 찾기");
 		btnNewButton.addActionListener(this);
@@ -209,7 +215,8 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		JPanel panel_7 = new JPanel();
 		panel_6.add(panel_7, BorderLayout.SOUTH);
 		
-		JButton btnNewButton_1 = new JButton("등록");
+		btnNewButton_1 = new JButton("등록");
+		btnNewButton_1.addActionListener(this);
 		panel_7.add(btnNewButton_1);
 		
 		JButton btnNewButton_3 = new JButton("수정");
@@ -280,6 +287,9 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == btnNewButton_1) {
+			actionPerformedBtnNewButton_1(arg0);
+		}
 		if (arg0.getSource() == btnNewButton) {
 			actionPerformedBtnNewButton(arg0);
 		}
@@ -394,4 +404,45 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		}
 	}
 
+	protected void actionPerformedBtnNewButton_1(ActionEvent arg0) {
+		
+		int tfno = Integer.parseInt(tfNo.getText().trim());
+		String tfname = tfName.getText();
+		
+		Calendar jDate = GregorianCalendar.getInstance();	
+		String jdate = tfJoin.getText();
+		String[] jd = jdate.split("-");
+		int jdyear = Integer.parseInt(jd[0]);
+		int jdmonth = Integer.parseInt(jd[1]);
+		int jdday = Integer.parseInt(jd[2]);
+		jDate.set(jdyear, jdmonth,jdday);
+		
+		Calendar jBirth = GregorianCalendar.getInstance();
+		String jbirth = tfBirth.getText();
+		String[] jdr = jbirth.split("-");
+		int jdryear = Integer.parseInt(jd[0]);
+		int jdrmonth = Integer.parseInt(jd[1]);
+		int jdrday = Integer.parseInt(jd[2]);
+		jBirth.set(jdryear, jdrmonth,jdrday);
+		
+		
+		int age = Integer.parseInt(tfAge.getText());
+		
+		/*index로 직원번호가져오기 확인*/
+		int emp = cmbEmp.getSelectedIndex()+1;
+		
+		String phone1 = (String) cmbphone1.getSelectedItem();
+		String phone2 = tfphone2.getText();
+		String phone3 = tfphone3.getText();
+		String phone =phone1+phone2+phone3;
+		
+		
+		String addr = tfaddr.getText();
+		
+		
+		Customer ctm = new Customer
+				(tfno,tfname,jBirth.getTime(),age,jDate.getTime(),new PhoneNumber(phone),addr,new Employee(emp),true);
+		cservice.inSertCustomer(ctm);
+		System.out.println(ctm);
+	}
 }

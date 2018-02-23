@@ -51,12 +51,12 @@
 	</select> 
 	
 	<!-- insert customer -->
-<!-- 	<sql id="inSertCustomerSql">
-		insert into customer(cus_no,cus_name,birth,age,join_date,phone,addr,emp_no,c_tf) values
-			(#{cusNo},#{cusName},#{birth},#{age},#{joinDate},#{phone},#{addr},#{emp},#{cTf})
+	<sql id="inSertCustomerSql">
+		insert into customer(cus_no,cus_name,birth,age,join_date,phone,addr,emp_no,c_tf) 
+		values(#{cusNo},#{cusName},#{birth},#{age},#{joinDate},#{phoneNumber},#{addr},#{emp.empNo},#{cTf})
 	</sql>
 	
 	<insert id="inSertCustomer" parameterType="Customer">
 		<include refid="inSertCustomerSql"></include>
-	</insert> -->
+	</insert> 
 </mapper>

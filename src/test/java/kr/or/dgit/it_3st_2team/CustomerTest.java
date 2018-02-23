@@ -53,7 +53,7 @@ public class CustomerTest {
 		}
 	}*/
 
-	/*@Test
+	@Test
 	public void test3SelectAllCustomerEmpName() {
 		List<Customer> listStd = service.SelectAllCustomerEmpName();
 		Assert.assertNotNull(listStd);
@@ -61,7 +61,7 @@ public class CustomerTest {
 		for (Customer cs : listStd) {
 			System.out.println(cs);
 		}
-	}*/
+	}
 
 	@Test
 	public void test5inSertCustomer() {
@@ -70,10 +70,13 @@ public class CustomerTest {
 		Customer ctm = new Customer();
 		ctm.setCusNo(13);
 		ctm.setCusName("dddd");
-		ctm.setBirth(new Date());
+		ctm.setBirth(newDate.getTime());
+		ctm.setJoinDate(newDate.getTime());
+		ctm.setPhoneNumber(new PhoneNumber("010-0000-0000"));
 		ctm.setAge(15);
 		ctm.setAddr("대구관ㅇㅁㅇ");
-		ctm.setEmpNo(new Employee(4));
+		ctm.setEmp(new Employee(4));
+		ctm.setcTf(true);
 		int res = service.inSertCustomer(ctm);
 		Assert.assertEquals(1, res);
 	}

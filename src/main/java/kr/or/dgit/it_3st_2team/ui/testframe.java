@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
+
 public class testframe extends JFrame implements ActionListener {
 
 	private JPanel contentPane;

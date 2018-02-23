@@ -28,10 +28,16 @@ public class EmployeeTest {
 
 	@Test
 	public void selectTitleName() {
-		List<Employee> listStd = service.selectEmployeeAddTitle();
-		Assert.assertNotNull(listStd);
-		for (Employee cs : listStd) {
-			System.out.println(cs);
-		}
+		/*
+		 * @Test public void test1SelectAllEmployee() { List<Employee> listStd =
+		 * service.selectAllEmployee(); Assert.assertNotNull(listStd); for (Employee cs
+		 * : listStd) { System.out.println(cs); } }
+		 */
+		/*
+		 * @Test public void selectTitleName(){ >>>>>>> branch 'master' of
+		 * https://github.com/DaeguIT-MinSuKim/it_3st_2team.git List<Employee> listStd =
+		 * service.selectEmployeeAddTitle(); Assert.assertNotNull(listStd); for
+		 * (Employee cs : listStd) { System.out.println(cs); } }
+		 */
 	}
 }

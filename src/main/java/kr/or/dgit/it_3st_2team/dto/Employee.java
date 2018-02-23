@@ -44,6 +44,11 @@ public class Employee {
 		this.title = titleNo;
 	}
 
+	public Employee(int empNo) {
+		super();
+		this.empNo = empNo;
+	}
+
 	public int getEmpNo() {
 		return empNo;
 	}

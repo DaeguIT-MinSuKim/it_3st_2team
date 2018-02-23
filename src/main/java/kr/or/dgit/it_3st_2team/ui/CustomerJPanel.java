@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -22,14 +24,17 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
+import kr.or.dgit.it_3st_2team.dto.Customer;
 import kr.or.dgit.it_3st_2team.dto.Employee;
 import kr.or.dgit.it_3st_2team.service.CustomerService;
 import kr.or.dgit.it_3st_2team.service.EmployeeService;
 
 @SuppressWarnings("serial")
-public class CustomerJPanel extends JPanel implements ActionListener {
+public class CustomerJPanel extends JPanel implements ActionListener, KeyListener{
 	private JTextField tfNo;
 	private JTextField tfName;
 	private JTextField tfBirth;
@@ -41,6 +46,8 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 	private JTextField tfSearch;
 	private JTable table;
 	private JTextField tfAge;
+	private List<Customer> cList = new ArrayList<>();
+	
 	
 	private CustomerService cservice;
 	private EmployeeService eservice;
@@ -55,6 +62,7 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 	}
 	private void initComponents() {
 		
+		cList = cservice.SelectAllCustomerEmpName();
 		
 		setLayout(new BorderLayout(0, 0));
 		
@@ -79,19 +87,25 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 		lblNo.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(lblNo);
 		
+		
+		int no = cList.size()+1;
 		tfNo = new JTextField();
+		tfNo.setFocusable(false);
 		panel_1.add(tfNo);
 		tfNo.setColumns(10);
 		tfNo.setEditable(false);
-		tfNo.setFocusable(false);
+		tfNo.setText(toString().format("%s", no));
 		
 		JLabel lblName = new JLabel("고객이름");
 		lblName.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(lblName);
 		
 		tfName = new JTextField();
+		tfName.addKeyListener(this);
 		tfName.setColumns(10);
 		panel_1.add(tfName);
+		
+		
 		
 		JLabel lblJoin = new JLabel("가입일자");
 		lblJoin.setHorizontalAlignment(SwingConstants.CENTER);
@@ -109,6 +123,7 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 		panel_1.add(lblBirth);
 		
 		tfBirth = new JTextField();
+		tfBirth.addKeyListener(this);
 		tfBirth.setColumns(10);
 		panel_1.add(tfBirth);
 		
@@ -129,13 +144,9 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 		List<Employee> list = eservice.selectEmployeeAddTitle();
 		List<SimpleEmp> lists = transToString(list);
 		SimpleEmp [] items = new SimpleEmp[list.size()];
-		//System.out.println(items);
-		
-		lists.toArray(items);
-		
+		lists.toArray(items);	
 		DefaultComboBoxModel<SimpleEmp> cModel = new DefaultComboBoxModel<>(items);
-		
-		
+				
 		JComboBox cmbEmp = new JComboBox();
 		panel_1.add(cmbEmp);
 		cmbEmp.setModel(cModel);
@@ -149,6 +160,9 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 		JPanel panel_4 = new JPanel();
 		panel_6.add(panel_4, BorderLayout.WEST);
 		panel_4.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JLabel lblNewLabel_1 = new JLabel("                 ");
+		panel_4.add(lblNewLabel_1);
 		
 		JLabel lblPhone1 = new JLabel("전화번호");
 		lblPhone1.setHorizontalAlignment(SwingConstants.LEFT);
@@ -173,6 +187,9 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 		textField_1 = new JTextField();
 		panel_4.add(textField_1);
 		textField_1.setColumns(5);
+		
+		JLabel lblNewLabel = new JLabel("                     ");
+		panel_4.add(lblNewLabel);
 		
 		JPanel panel_5 = new JPanel();
 		panel_6.add(panel_5, BorderLayout.CENTER);
@@ -227,6 +244,9 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 		JButton btnAll = new JButton("모든고객보기");
 		panel_9.add(btnAll);
 		
+		JButton btnNewButton_4 = new JButton("고객 탈퇴");
+		panel_9.add(btnNewButton_4);
+		
 		JPanel panel_10 = new JPanel();
 		panel_11.add(panel_10);
 		panel_10.setLayout(new BorderLayout(0, 0));
@@ -235,13 +255,11 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 		panel_10.add(scrollPane);
 		
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"번호", "이름", "생년월일", "나이", "가입일자", "연락처", "주소", "담당직원"
-			}
-		));
+		
+		table.setModel(new DefaultTableModel(getObj(cList),getColumNames()));
+		NonEditableModel  Nemodel = new NonEditableModel(getObj(cList),getColumNames());
+		table.setModel(Nemodel);
+		setAlignWidth();
 		scrollPane.setViewportView(table);
 	}
 	private List<SimpleEmp> transToString(List<Employee> list) {
@@ -291,4 +309,89 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 			return String.format("%s(%s)", empName, titleName);
 		}
 	}
+
+	public void keyPressed(KeyEvent e) {
+		if (e.getSource() == tfName) {
+			if(e.getKeyChar()==KeyEvent.VK_ENTER) {
+				keyPressedTfName(e);
+				return;
+			}			
+		}	
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			keyPressedTfBirth(e);
+		}
+	}
+	public void keyReleased(KeyEvent e) {
+	}
+	public void keyTyped(KeyEvent e) {
+	}
+	protected void keyPressedTfName(KeyEvent e) {
+		tfName.setFocusable(false);
+		tfJoin.setFocusable(false);
+	
+	}
+	protected void keyPressedTfBirth(KeyEvent e) {
+		Calendar now = Calendar.getInstance();
+		int year = now.get(Calendar.YEAR);
+		String birth = tfBirth.getText(); 
+		String[] b =birth.split("-");
+		int bb= Integer.parseInt(b[0]);
+		
+		int age = year-bb;
+		
+		tfAge.setText(toString().format("%s", age));
+	}
+	
+	public void setAlignWidth() {
+		// 셀의 너비와 정렬
+		tableCellAlign(SwingConstants.CENTER, 0, 1, 2, 3, 4,5,6,7);
+	//	tableCellAlign(SwingConstants.RIGHT, 4);
+		tableCellWidth(100, 200, 350, 100, 350, 300,500,150);
+	}
+
+	protected void tableCellAlign(int align, int... idx) {
+		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+		dtcr.setHorizontalAlignment(align);
+
+		TableColumnModel model = table.getColumnModel();
+		for (int i = 0; i < idx.length; i++) {
+			model.getColumn(idx[i]).setCellRenderer(dtcr);
+		}
+	}
+
+	protected void tableCellWidth(int... width) {
+		TableColumnModel model = table.getColumnModel();
+		for (int i = 0; i < width.length; i++) {
+			model.getColumn(i).setPreferredWidth(width[i]);
+		}
+	}
+	
+	
+	public String[] getColumNames() {
+		return new String[] {"번호", "이름", "생년월일", "나이", "가입일자", "연락처", "주소", "담당직원"};
+	}
+	
+	private Object[][] getObj(List<Customer> cList) {
+		Object[][] rows = null;
+
+		rows = new Object[cList.size()][];
+		for (int i = 0; i < cList.size(); i++) {
+			Customer cm = cList.get(i);
+		
+			rows[i] = cm.toArraySelectAllCustomer();
+		}
+		return rows;
+
+	}
+	class NonEditableModel extends DefaultTableModel {
+		public NonEditableModel(Object[][] data, Object[] columnNames) {
+			super(data, columnNames);
+		}
+
+		@Override
+		public boolean isCellEditable(int row, int column) {
+			return false;
+		}
+	}
+
 }

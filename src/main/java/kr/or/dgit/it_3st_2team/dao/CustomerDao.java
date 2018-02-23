@@ -8,4 +8,9 @@ import kr.or.dgit.it_3st_2team.dto.Employee;
 public interface CustomerDao {
 	List<Customer> selectAllCustomer();
 	List<Employee> selectAllEmployee();
+	/*select customerAll*/
+	List<Customer> SelectAllCustomerEmpName();
+	
+	/*insert customer*/
+	int inSertCustomer(Customer customer);
 }

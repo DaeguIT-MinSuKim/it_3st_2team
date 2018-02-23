@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="kr.or.dgit.it_3st_2team.dao.EmployeeDao">
 	<resultMap id="EmployeeResult" type="Employee">
 		<id property="empNo" column="emp_no" />
@@ -12,47 +13,76 @@
 		<result property="eTf" column="e_tf" />
 	</resultMap>
 
-	<resultMap type="Employee" id="EmployeeAddTitle" extends="EmployeeResult">
-		<association property="title"
-			resultMap="kr.or.dgit.it_3st_2team.dao.TitleDao.TitleResult" />
-	</resultMap>
+	<mapper namespace="kr.or.dgit.it_3st_2team.dao.EmployeeDao">
+		<resultMap id="employeeResult" type="Employee">
+			<id property="empNo" column="emp_no" />
+			<result property="empName" column="emp_name" />
+			<result property="joinDate" column="join_date" />
+			<result property="addr" column="addr" />
+			<result property="id" column="id" />
+			<result property="epassword" column="epassword" />
+			<result property="eOff" column="eoff" />
+			<result property="eTf" column="e_tf" />
+		</resultMap>
 
-	<sql id="JoinEmpTitleNameSql">
-		select e.title_no , e.emp_no, e.emp_name,t.title_name from
-		employee e join
-		title t on e.title_no=t.title_no
-	</sql>
+		<resultMap type="Employee" id="EmployeeAddTitle" extends="EmployeeResult">
+			<association property="title"
+				resultMap="kr.or.dgit.it_3st_2team.dao.TitleDao.TitleResult" />
+		</resultMap>
+		<resultMap type="Employee" id="empNoNameResult">
+			<id property="empNo" column="emp_no" />
+			<result property="empName" column="emp_name" />
+		</resultMap>
 
-	<select id="selectTitleName" resultMap="EmployeeAddTitle">
-		<include refid="JoinEmpTitleNameSql"></include>
-	</select>
 
 
-	<resultMap id="employeeResult" type="Employee">
-		<id property="empNo" column="emp_no" />
-		<result property="empName" column="emp_name" />
-		<result property="joinDate" column="join_date" />
-		<result property="addr" column="addr" />
-		<result property="id" column="id" />
-		<result property="password" column="epassword" />
-		<result property="eTf" column="e_tf" />
-	</resultMap>
 
-	<resultMap id="employeeResultAddTitle" type="Employee"
-		extends="employeeResult">
-		<association property="titleNo"
-			resultMap="kr.or.dgit.it_3st_2team.dao.TitleDao.TitleResult" />
-	</resultMap>
+		<resultMap type="Employee" id="EmployeeAddTitle" extends="employeeResult">
+			<association property="title"
+				resultMap="kr.or.dgit.it_3st_2team.dao.TitleDao.TitleResult" />
+		</resultMap>
 
-	<select id="selectEmpByLoginId" parameterType="Employee"
-		resultMap="employeeResultAddTitle">
-		select id,password from employee where id=#{id}
+		<sql id="JoinEmpTitleNameSql">
+			select e.title_no , e.emp_no, e.emp_name,t.title_name
+			from
+			employee e join
+			title t on e.title_no=t.title_no
+		</sql>
 
-	</select>
-	
-	<select id="selecteNowEmplyoee" parameterType="Employee" resultMap="employeeResultAddTitle">
-		select e.emp_no , e.emp_name,e.join_date,id,password,t.title_name from employee e join Title t on e.title_no=t.title_no
-	</select>
-	
-	
-</mapper>
+		<select id="selectTitleName" resultMap="EmployeeAddTitle">
+			<include refid="JoinEmpTitleNameSql"></include>
+		</select>
+
+
+		<resultMap id="employeeResult" type="Employee">
+			<id property="empNo" column="emp_no" />
+			<result property="empName" column="emp_name" />
+			<result property="joinDate" column="join_date" />
+			<result property="addr" column="addr" />
+			<result property="id" column="id" />
+			<result property="password" column="epassword" />
+			<result property="eTf" column="e_tf" />
+		</resultMap>
+
+		<resultMap id="employeeResultAddTitle" type="Employee"
+			extends="employeeResult">
+			<association property="titleNo"
+				resultMap="kr.or.dgit.it_3st_2team.dao.TitleDao.TitleResult" />
+		</resultMap>
+
+		<select id="selectEmpByLoginId" parameterType="Employee"
+			resultMap="employeeResultAddTitle">
+			select id,password from employee where id=#{id}
+
+		</select>
+
+		<select id="selecteNowEmplyoee" parameterType="Employee"
+			resultMap="employeeResultAddTitle">
+			select e.emp_no ,
+			e.emp_name,e.join_date,id,password,t.title_name from
+			employee e join
+			Title t on e.title_no=t.title_no
+		</select>
+
+
+	</mapper>

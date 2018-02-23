@@ -1,5 +1,6 @@
 package kr.or.dgit.it_3st_2team.dto;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Customer {
@@ -8,9 +9,10 @@ public class Customer {
 	private Date birth;
 	private int age;
 	private Date joinDate;
-	private PhoneNumber phone;
+	private PhoneNumber phoneNumber;
 	private String addr;
-	private Employee empNo;
+	/*private Employee empNo;*/
+	private Employee emp;
 	private Boolean cTf;
 	public Customer() {
 		super();
@@ -24,9 +26,9 @@ public class Customer {
 		this.birth = birth;
 		this.age = age;
 		this.joinDate = joinDate;
-		this.phone = phone;
+		this.phoneNumber = phone;
 		this.addr = addr;
-		this.empNo = empNo;
+		this.emp = empNo;
 		this.cTf = cTf;
 	}
 	public int getCusNo() {
@@ -59,11 +61,18 @@ public class Customer {
 	public void setJoinDate(Date joinDate) {
 		this.joinDate = joinDate;
 	}
-	public PhoneNumber getPhone() {
-		return phone;
+	
+	public PhoneNumber getPhoneNumber() {
+		return phoneNumber;
 	}
-	public void setPhone(PhoneNumber phone) {
-		this.phone = phone;
+	public void setPhoneNumber(PhoneNumber phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	public Employee getEmp() {
+		return emp;
+	}
+	public void setEmp(Employee emp) {
+		this.emp = emp;
 	}
 	public String getAddr() {
 		return addr;
@@ -72,10 +81,10 @@ public class Customer {
 		this.addr = addr;
 	}
 	public Employee getEmpNo() {
-		return empNo;
+		return emp;
 	}
 	public void setEmpNo(Employee empNo) {
-		this.empNo = empNo;
+		this.emp = empNo;
 	}
 	public Boolean getcTf() {
 		return cTf;
@@ -87,10 +96,17 @@ public class Customer {
 	public String toString() {
 		return String.format(
 				"Customer [cusNo=%s, cusName=%s, birth=%s, age=%s, joinDate=%s, phone=%s, addr=%s, empNo=%s, cTf=%s]",
-				cusNo, cusName, birth, age, joinDate, phone, addr, empNo, cTf);
+				cusNo, cusName, birth, age, joinDate, phoneNumber, addr, emp, cTf);
 	}
 	public Object[] toArray() {
 		return new Object[] {cusNo, cusName};
 	}
-
+	public Object[] toArraySelectAllCustomer() {
+		return new Object[] {cusNo,cusName,dateToString(birth),age,dateToString(joinDate),phoneNumber,addr,emp.getEmpName()};		
+	}
+	
+	public String dateToString(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		return sdf.format(date);
+	}
 }

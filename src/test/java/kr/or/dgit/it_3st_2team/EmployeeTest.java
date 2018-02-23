@@ -34,5 +34,13 @@ public class EmployeeTest {
 			System.out.println(cs);
 		}
 	}*/
+	/*@Test
+	public void selectTitleName(){
+		List<Employee> listStd = service.selectEmployeeAddTitle();
+		Assert.assertNotNull(listStd);
+		for (Employee cs : listStd) {
+			System.out.println(cs);
+		}
+	}*/
 }
 

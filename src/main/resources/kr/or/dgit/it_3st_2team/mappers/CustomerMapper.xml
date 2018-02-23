@@ -7,12 +7,13 @@
 		<result property="birth" column="birth"/>
 		<result property="age" column="age"/>
 		<result property="joinDate" column="join_date"/>
+		<result property="phoneNumber" column="phone"/> 
 		<result property="addr" column="addr"/>
 		<result property="cTf" column="c_tf"/>
 	</resultMap>
 
 	<resultMap id="customerResultAddEmp" type="Customer" extends="customerResult">
-		<association property="empNo" resultMap="kr.or.dgit.it_3st_2team.dao.EmployeeDao.employeeResult"></association>
+		<association property="emp" resultMap="kr.or.dgit.it_3st_2team.dao.EmployeeDao.employeeResult"></association>
 	</resultMap>
 	
 	<sql id="selectSql">
@@ -28,8 +29,34 @@
 		<include refid="selectSql"/>
 	</select>
 	
+	
+	
 	<select id="selectAllEmployee" resultType="Employee">
 		<include refid="selectEmployee"/>
 	</select> 
 	
+	<!-- select Allcustomer, empname -->
+	
+	 <resultMap id="CustomerAddEmpName" type="Customer" extends="customerResult">
+		<association property="emp" resultMap="kr.or.dgit.it_3st_2team.dao.EmployeeDao.empNoNameResult"></association>
+	</resultMap> 
+	
+	<sql id="SelectCustomerSql">
+		select c.cus_no,c.cus_name,c.birth,c.age,c.join_date,c.phone,c.addr,e.emp_name 
+		from customer c join employee e on c.emp_no=e.emp_no
+		order by cus_no
+	</sql>
+	<select id="SelectAllCustomerEmpName" resultMap="CustomerAddEmpName">
+		<include refid="SelectCustomerSql"/>
+	</select> 
+	
+	<!-- insert customer -->
+<!-- 	<sql id="inSertCustomerSql">
+		insert into customer(cus_no,cus_name,birth,age,join_date,phone,addr,emp_no,c_tf) values
+			(#{cusNo},#{cusName},#{birth},#{age},#{joinDate},#{phone},#{addr},#{emp},#{cTf})
+	</sql>
+	
+	<insert id="inSertCustomer" parameterType="Customer">
+		<include refid="inSertCustomerSql"></include>
+	</insert> -->
 </mapper>

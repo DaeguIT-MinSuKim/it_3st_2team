@@ -62,7 +62,7 @@ public class CustomerTest {
 			System.out.println(cs);
 		}
 	}*/
-
+ 
 /*	@Test
 	public void test5inSertCustomer() {
 		Calendar newDate = GregorianCalendar.getInstance();

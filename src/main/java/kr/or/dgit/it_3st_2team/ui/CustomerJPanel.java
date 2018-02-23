@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -25,6 +26,7 @@ import javax.swing.table.DefaultTableModel;
 
 import kr.or.dgit.it_3st_2team.dto.Employee;
 import kr.or.dgit.it_3st_2team.service.CustomerService;
+import kr.or.dgit.it_3st_2team.service.EmployeeService;
 
 @SuppressWarnings("serial")
 public class CustomerJPanel extends JPanel implements ActionListener {
@@ -40,12 +42,14 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 	private JTable table;
 	private JTextField tfAge;
 	
-	private CustomerService service;
+	private CustomerService cservice;
+	private EmployeeService eservice;
 	/**
 	 * Create the panel.
 	 */
 	public CustomerJPanel() {
-		service = new CustomerService();
+		cservice = new CustomerService();
+		eservice = new EmployeeService();
 		initComponents();
 		
 	}
@@ -122,12 +126,14 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 		
 		
 		
-		List<Employee> list = service.selectAllEmployee();
-		Employee [] items = new Employee[list.size()];
-		System.out.println(items);
-
-		list.toArray(items);
-		DefaultComboBoxModel<Employee> cModel = new DefaultComboBoxModel<>(items);
+		List<Employee> list = eservice.selectEmployeeAddTitle();
+		List<SimpleEmp> lists = transToString(list);
+		SimpleEmp [] items = new SimpleEmp[list.size()];
+		//System.out.println(items);
+		
+		lists.toArray(items);
+		
+		DefaultComboBoxModel<SimpleEmp> cModel = new DefaultComboBoxModel<>(items);
 		
 		
 		JComboBox cmbEmp = new JComboBox();
@@ -238,6 +244,13 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 		));
 		scrollPane.setViewportView(table);
 	}
+	private List<SimpleEmp> transToString(List<Employee> list) {
+		List<SimpleEmp> result = new ArrayList<>();
+		for(Employee e : list) {
+			result.add(new SimpleEmp(e.getEmpNo(), e.getEmpName(), e.getTitleNo().getTitleName()));
+		}
+		return result;
+	}
 	private void getJoinDate() {
 		Calendar now = Calendar.getInstance();
 		int year = now.get(Calendar.YEAR);
@@ -254,5 +267,28 @@ public class CustomerJPanel extends JPanel implements ActionListener {
 		}
 	}
 	protected void actionPerformedBtnNewButton(ActionEvent arg0) {
+	}
+	
+	private class SimpleEmp{
+		int empNo;
+		String empName;
+		String titleName;
+		
+		private SimpleEmp(int empNo, String empName, String titleName) {
+			super();
+			this.empNo = empNo;
+			this.empName = empName;
+			this.titleName = titleName;
+		}
+
+		public int getEmpNo() {
+			return empNo;
+		}
+
+
+		@Override
+		public String toString() {
+			return String.format("%s(%s)", empName, titleName);
+		}
 	}
 }

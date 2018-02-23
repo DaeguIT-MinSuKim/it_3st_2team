@@ -16,20 +16,30 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-import org.junit.rules.TestName;
-
-
+@SuppressWarnings("serial")
 public class TitleManage extends JFrame implements ActionListener {
 	Container cp;
-	JTable table;
+	protected JTable table;
 	TextField tftitleno, tftitlename;
 	Button btnAdd, btnDel, btnMod;
 
+	private void initComponents() {
+		getContentPane().setLayout(new BorderLayout(0, 0));
+
+		JScrollPane scrollPane = new JScrollPane();
+		getContentPane().add(scrollPane, BorderLayout.CENTER);
+
+		table = new JTable();
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPane.setViewportView(table);
+	}
+
 	JScrollPane jsp;
 	DefaultTableModel model;
-	JTable table2;
+	JTable table1;
 
 	String[][] data = { { "1", "사장" }, { "2", "실장" }, { "3", "디자이너" }, { "4", "스텝" } };
 
@@ -81,24 +91,24 @@ public class TitleManage extends JFrame implements ActionListener {
 		cp.add("South", pBottom);
 
 		model = new DefaultTableModel(data, title);
-		table2 = new JTable(model);
-		jsp = new JScrollPane(table2);
+		table1 = new JTable(model);
+		jsp = new JScrollPane(table1);
 		cp.add("Center", jsp);
 
-		table2.setSelectionBackground(Color.yellow); // 테이블에서 선택시 색 변하게 하는 방법
-		table2.setSelectionForeground(Color.MAGENTA); // 테이블에서 선택시 글자색 변하게 하는 방법
+		table1.setSelectionBackground(Color.yellow); // 테이블에서 선택시 색 변하게 하는 방법
+		table1.setSelectionForeground(Color.MAGENTA); // 테이블에서 선택시 글자색 변하게 하는 방법
 
-		table2.addMouseListener(new TableSelect());
+		table1.addMouseListener(new TableSelect());
 
 	}
 
 	public static void main(String[] args) {
-		new TestName();
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String[] str = new String[4];
+		String[] str = new String[2];
 		Object ob = e.getSource();
 
 		if (ob == btnAdd) {
@@ -160,11 +170,11 @@ public class TitleManage extends JFrame implements ActionListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			row = table2.getSelectedRow(); // 테이블에서 선택된 행의 값을 row에 저장한다.
+			row = table1.getSelectedRow(); // 테이블에서 선택된 행의 값을 row에 저장한다.
 
 			// 행번호와 행의 데이터 텍스트 필드에 출력하기
-			tftitleno.setText((String) table2.getValueAt(row, 0));
-			tftitlename.setText((String) table2.getValueAt(row, 1));
+			tftitleno.setText((String) table1.getValueAt(row, 0));
+			tftitlename.setText((String) table1.getValueAt(row, 1));
 		}
 
 	}

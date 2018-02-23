@@ -9,7 +9,7 @@ public class Employee {
 	private String addr;
 	private String id;
 	private String epassword;
-	private Title titleNo;
+	private Title title;
 	private int eOff;
 	private Boolean eTf;
 
@@ -18,7 +18,7 @@ public class Employee {
 		// TODO Auto-generated constructor stub
 	}
 
-	private Employee(int empNo, String empName, Date joinDate, String addr, String id, String epassword, Title titleNo,
+	private Employee(int empNo, String empName, Date joinDate, String addr, String id, String epassword, Title title,
 			int eOff, Boolean eTf) {
 		super();
 		this.empNo = empNo;
@@ -27,7 +27,7 @@ public class Employee {
 		this.addr = addr;
 		this.id = id;
 		this.epassword = epassword;
-		this.titleNo = titleNo;
+		this.title = title;
 		this.eOff = eOff;
 		this.eTf = eTf;
 	}
@@ -41,7 +41,7 @@ public class Employee {
 	private Employee(String empName, Title titleNo) {
 		super();
 		this.empName = empName;
-		this.titleNo = titleNo;
+		this.title = titleNo;
 	}
 
 	public int getEmpNo() {
@@ -101,11 +101,11 @@ public class Employee {
 	}
 
 	public Title getTitleNo() {
-		return titleNo;
+		return title;
 	}
 
-	public void setTitleNo(Title titleNo) {
-		this.titleNo = titleNo;
+	public void setTitleNo(Title title) {
+		this.title = title;
 	}
 
 	public int geteOff() {
@@ -129,6 +129,6 @@ public class Employee {
 		return String.format(
 
 				"Employee [empNo=%s, empName=%s, joinDate=%s, addr=%s, id=%s, epassword=%s, titleNo=%s, eOff=%s, eTf=%s]",
-				empNo, empName, joinDate, addr, id, epassword, titleNo, eOff, eTf);
+				empNo, empName, joinDate, addr, id, epassword, title, eOff, eTf);
 	}
 }

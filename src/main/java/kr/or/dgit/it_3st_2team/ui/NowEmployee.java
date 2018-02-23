@@ -1,22 +1,47 @@
 package kr.or.dgit.it_3st_2team.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
-public class NowEmployee extends JFrame {
+public class NowEmployee extends JFrame implements ActionListener {
 
+	private static final AbstractButton tftitleno = null;
 	private JPanel contentPane;
 	private JTable table;
+	private TextField titleno;
+	private TextField empname;
+	private TextField joindate;
+	private TextField id;
+	private TextField epassword;
+	private TextField titlename;
+	int row = -1;
+
+	JScrollPane jsp;
+	DefaultTableModel model;
+
+	private JButton btnAdd;
+	private JButton btnDel;
+	private JButton btnMod;
 
 	/**
 	 * Launch the application.
@@ -40,42 +65,221 @@ public class NowEmployee extends JFrame {
 	public NowEmployee() {
 		initComponents();
 	}
+
 	private void initComponents() {
 		setTitle("직원현황");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 548, 300);
+		setBounds(100, 100, 708, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
+
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BorderLayout(0, 0));
-		
-		JPanel panel_3 = new JPanel();
-		panel.add(panel_3, BorderLayout.CENTER);
-		panel_3.setLayout(new GridLayout(0, 1, 0, 0));
-		
-		table = new JTable();
-		panel_3.add(table);
-		
+
+		JScrollPane scrollPane = new JScrollPane();
+		panel.add(scrollPane, BorderLayout.CENTER);
+
+		String[][] data = { { "1", "김민", "2018-08-20", "emp1", "paw1", "사장" },
+				{ "2", "김민유", "2018-08-25", "emp2", "paw2", "디자이너" } };
+
+		String title[] = { "직책번호", "이름", "입사일", "아이디", "패스워드", "직책명" };
+
+		model = new DefaultTableModel(data, title);
+		table = new JTable(model);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPane.setViewportView(table);
+
+		table.setSelectionBackground(Color.yellow);
+		table.setSelectionForeground(Color.MAGENTA);
+
+		table.addMouseListener(new TableSelect());
+
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.NORTH);
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
+
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2);
-		
-		JButton btnNewButton = new JButton("등록");
-		panel_2.add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("삭제");
-		panel_2.add(btnNewButton_1);
-		
-		JPanel panel_4 = new JPanel();
-		contentPane.add(panel_4, BorderLayout.EAST);
-		panel_4.setLayout(new GridLayout(5, 0, 0, 0));
+
+		JLabel lbltitleno = new JLabel("직책번호");
+		panel_2.add(lbltitleno);
+
+		titleno = new TextField(5);
+		panel_2.add(titleno);
+
+		JLabel lblname = new JLabel("이름");
+		panel_2.add(lblname);
+
+		empname = new TextField(5);
+		panel_2.add(empname);
+
+		JLabel lbljoindate = new JLabel("입사일");
+		panel_2.add(lbljoindate);
+
+		joindate = new TextField(5);
+		panel_2.add(joindate);
+
+		JLabel lblid = new JLabel("아이디");
+		panel_2.add(lblid);
+
+		id = new TextField(5);
+		panel_2.add(id);
+
+		JLabel lblepassword = new JLabel("패스워드");
+		panel_2.add(lblepassword);
+
+		epassword = new TextField(5);
+		panel_2.add(epassword);
+
+		JLabel lbltitlename = new JLabel("직책명");
+		panel_2.add(lbltitlename);
+
+		titlename = new TextField(5);
+		panel_2.add(titlename);
+
+		JPanel pBottom = new JPanel();
+		contentPane.add(pBottom, BorderLayout.SOUTH);
+
+		btnAdd = new JButton("추가");
+		btnAdd.addActionListener(this);
+		pBottom.add(btnAdd);
+
+		btnDel = new JButton("삭제");
+		btnDel.addActionListener(this);
+		pBottom.add(btnDel);
+
+		btnMod = new JButton("수정");
+		btnMod.addActionListener(this);
+		pBottom.add(btnMod);
 	}
 
+	public void clearData() {
+
+		titleno.setText(""); // 텍스트필드 창을 지운다.
+		titlename.setText("");
+		empname.setText("");
+		joindate.setText("");
+		id.setText("");
+		epassword.setText("");
+		titleno.requestFocus(); // tfSang 텍스트 필드로 커서를 가져온다.
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnAdd) {
+			actionPerformedBtnAdd(e);
+		}
+		if (e.getSource() == btnDel) {
+			actionPerformedBtnDel(e);
+		}
+		if (e.getSource() == btnMod) {
+			actionPerformedBtnMod(e);
+		}
+	}
+
+	private void actionPerformedBtnMod(ActionEvent e) {
+
+		if (row == -1) {
+			JOptionPane.showConfirmDialog(this, "먼저 수정할 행을 선택해주세요", "수정확인", JOptionPane.INFORMATION_MESSAGE);
+
+			return;
+		}
+		model.setValueAt(titleno.getText(), row, 0);
+		model.setValueAt(empname.getText(), row, 1);
+		model.setValueAt(joindate.getText(), row, 2);
+		model.setValueAt(id.getText(), row, 3);
+		model.setValueAt(epassword.getText(), row, 4);
+		model.setValueAt(titlename.getText(), row, 5);
+
+	}
+
+	private void actionPerformedBtnDel(ActionEvent e) {
+		if (row == -1) {
+			JOptionPane.showMessageDialog(this, "먼저 삭제할 행을 선택해주세요");
+
+			return;
+		}
+
+		else {
+			int b = JOptionPane.showConfirmDialog(this, "데이터를 삭제할까요?", "삭제", JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE);
+			if (b==0) {
+				model.removeRow(row);
+				row = -1;
+				this.clearData();
+			} else {
+				
+			}
+		}
+
+	}
+
+	protected void actionPerformedBtnAdd(ActionEvent e) {
+		String[] str = new String[6];
+		Object ob = e.getSource();
+		if (titleno.getText().equals("")) // titleno를 비교하는 것이므로 equals로 비교한다. ==로 하면 안될때가 있다
+		{
+			JOptionPane.showMessageDialog(this, "직책번호를 입력해주세요");
+			titleno.requestFocus();
+			return;
+		}
+		if (empname.getText().equals("")) // empname를 비교하는 것이므로 equals로 비교한다. ==로 하면 안될때가 있다
+		{
+			JOptionPane.showMessageDialog(this, "이름을 입력해주세요");
+			empname.requestFocus();
+			return;
+		}
+		if (joindate.getText().equals("")) // joindate를 비교하는 것이므로 equals로 비교한다. ==로 하면 안될때가 있다
+		{
+			JOptionPane.showMessageDialog(this, "입사일을 입력해주세요");
+			joindate.requestFocus();
+			return;
+		}
+		if (id.getText().equals("")) // id를 비교하는 것이므로 equals로 비교한다. ==로 하면 안될때가 있다
+		{
+			JOptionPane.showMessageDialog(this, "아이디를 입력해주세요");
+			id.requestFocus();
+			return;
+		}
+		if (epassword.getText().equals("")) // password를 비교하는 것이므로 equals로 비교한다. ==로 하면 안될때가 있다
+		{
+			JOptionPane.showMessageDialog(this, "비밀번호를 입력해주세요");
+			epassword.requestFocus();
+			return;
+		}
+		if (titlename.getText().equals("")) // titlename를 비교하는 것이므로 equals로 비교한다. ==로 하면 안될때가 있다
+		{
+			JOptionPane.showMessageDialog(this, "직책명을 입력해주세요");
+			titlename.requestFocus();
+			return;
+		}
+		str[0] = titleno.getText();
+		str[1] = empname.getText();
+		str[2] = joindate.getText();
+		str[3] = id.getText();
+		str[4] = epassword.getText();
+		str[5] = titlename.getText();
+
+		model.addRow(str);
+
+	}
+
+	class TableSelect extends MouseAdapter {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			row = table.getSelectedRow(); // 테이블에서 선택된 행의 값을 row에 저장한다.
+
+			// 행번호와 행의 데이터 텍스트 필드에 출력하기
+			titleno.setText((String) table.getValueAt(row, 0));
+			empname.setText((String) table.getValueAt(row, 1));
+			joindate.setText((String) table.getValueAt(row, 2));
+			id.setText((String) table.getValueAt(row, 3));
+			epassword.setText((String) table.getValueAt(row, 4));
+			titlename.setText((String) table.getValueAt(row, 5));
+		}
+
+	}
 }

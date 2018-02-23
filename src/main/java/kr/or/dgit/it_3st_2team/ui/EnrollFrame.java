@@ -1,28 +1,46 @@
 package kr.or.dgit.it_3st_2team.ui;
 
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
+import javax.swing.AbstractListModel;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import kr.or.dgit.it_3st_2team.dto.Customer;
+import kr.or.dgit.it_3st_2team.dto.Event;
+import kr.or.dgit.it_3st_2team.dto.Hair;
 import kr.or.dgit.it_3st_2team.dto.Sale;
+import kr.or.dgit.it_3st_2team.service.CustomerService;
+import kr.or.dgit.it_3st_2team.service.EventService;
+import kr.or.dgit.it_3st_2team.service.HairService;
 import kr.or.dgit.it_3st_2team.service.SaleService;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
 
 public class EnrollFrame extends JFrame implements ActionListener {
 
@@ -37,6 +55,10 @@ public class EnrollFrame extends JFrame implements ActionListener {
 	private JRadioButton rdbtnNewRadioButton_1;
 	private JTextField tfPrice;
 	private JButton btnSearch;
+	private JComboBox<String> cmbEvent;
+	private HashMap<String, Float> mapEvent;
+	private HashMap<String, Integer> mapHair;
+	private JList<String> listHair;
 
 	/**
 	 * Launch the application.
@@ -145,17 +167,18 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		JLabel lblHair = new JLabel("hair service :");
 		pnl1_4_1.add(lblHair);
 		
-		JList list = new JList();
-		list.setModel(new AbstractListModel() {
-			String[] values = new String[] {"커트", "드라이", "샴푸", "펌", "매직", "트리트먼트", "앰플", "기타"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		pnl1_4_1.add(list);
+		
+		HairService hairService = new HairService();
+		List<Hair> hairList = hairService.SelectAllHair();
+		mapHair = new HashMap<>();
+		for(Hair h:hairList) {
+			mapHair.put(h.getHairName(), h.getPrice());
+		}
+		String[] hairNames = new String[mapHair.size()];
+		mapHair.keySet().toArray(hairNames);
+		listHair = new JList(hairNames);
+		listHair.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		pnl1_4_1.add(listHair);
 		
 		JPanel pnl1_5 = new JPanel();
 		pnl1.add(pnl1_5);
@@ -164,7 +187,20 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		JLabel lblEvent = new JLabel("이벤트 :");
 		pnl1_5.add(lblEvent);
 		
-		JComboBox cmbEvent = new JComboBox();
+		cmbEvent = new JComboBox();
+		EventService eventService = new EventService();
+		List<Event> eventList = eventService.selectAllEvent();
+		mapEvent = new HashMap<>();
+
+		for(Event e:eventList) {
+			mapEvent.put(e.getEvnName(), e.getDiscount());
+		}
+		
+		String[] eventNames = new String[mapEvent.size()];
+		mapEvent.keySet().toArray(eventNames);
+		
+		cmbEvent.setModel(new DefaultComboBoxModel(eventNames));
+		cmbEvent.addActionListener(this);
 		pnl1_5.add(cmbEvent);
 		
 		JLabel lblDiscount = new JLabel("할인율 : ");
@@ -179,6 +215,7 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		pnl1_5.add(lblPrice);
 		
 		tfPrice = new JTextField();
+		tfPrice.setEditable(false);
 		pnl1_5.add(tfPrice);
 		tfPrice.setColumns(10);
 		
@@ -218,11 +255,21 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		ButtonGroup group = new ButtonGroup();
 		group.add(rdbtnNewRadioButton);
 		group.add(rdbtnNewRadioButton_1);
+	
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == cmbEvent) {
+			String selectedEventName = cmbEvent.getSelectedItem().toString();
+			Float discount = mapEvent.get(selectedEventName);
+			tfDiscount.setText(Float.toString(discount));
+			String selectedHairName = listHair.getSelectedValue();
+			int price = mapHair.get(selectedHairName);
+			price = (int) Math.ceil(price-(price*discount));
+			tfPrice.setText(Integer.toString(price));
+		}
 		if (e.getSource() == btnSearch) {
-			actionPerformedBtnSearch(e);
+			new DialogEx();
 		}
 		if (e.getSource() == rdbtnNewRadioButton_1) {
 			actionPerformedRdbtnNewRadioButton_1(e);
@@ -248,8 +295,98 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		pnlCase1.removeAll();
 		pnlCase1.add(case2);
 	}
-	protected void actionPerformedBtnSearch(ActionEvent e) {
-		EnrollFrameSearchCustomer searchCustomer = new EnrollFrameSearchCustomer();
-		searchCustomer.setVisible(true);
+	
+	public class DialogEx extends JFrame{
+		private MyModalDialog dialog;
+		
+		public DialogEx() {
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			dialog = new MyModalDialog(this, "고객검색");
+			dialog.setVisible(true);
+		}
+	}
+	
+	class MyModalDialog extends JDialog{
+		
+		private JPanel contentPane = new JPanel();
+		private JTable table;
+		private JScrollPane scollPane;
+		private String[] columnType= {"고객번호","고객명"};
+		private NonEditableModel model;
+		private JTextField tf = new JTextField(10);
+		private JButton okButton = new JButton("ok");
+		
+		public MyModalDialog(JFrame frame, String title) {
+			super(frame, title);
+			setBounds(100, 100, 450 ,300);
+			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+			setContentPane(contentPane);
+			contentPane.setLayout(new FlowLayout(FlowLayout.CENTER));
+			List<Customer> lists = null;
+			CustomerService service = new CustomerService();
+			lists = service.selectAllCustomer();
+			Object[][] data = getRows(lists);
+			model = new NonEditableModel(data, columnType);
+			table = new JTable(model);
+			scollPane = new JScrollPane(table);
+			
+			contentPane.add(tf);
+			contentPane.add(okButton);
+			contentPane.add(table);
+			
+			table.setPreferredScrollableViewportSize(new Dimension(300, 500));
+			table.setFillsViewportHeight(true);
+			
+			okButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					setVisible(false);
+					//tfSelectedCus.setText(getInput());	
+				}
+			});
+			
+			table.addMouseListener(new MyMouseListener());
+		}
+		public String getInput() {
+			if(tf.getText().length()==0) {
+				return null;
+			}else {
+				return tf.getText();
+			}
+		}
+		
+		private class MyMouseListener extends MouseAdapter{
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount()==1) { //더블클릭 처리안됨 khj
+					int row = table.getSelectedRow();
+					System.out.println(model.getValueAt(row, 1));
+					String str = model.getValueAt(row, 1).toString();
+					tfSelectedCus.setText(str);
+					
+				}
+			}
+		}
+	}
+	
+	public Object[][] getRows(List<Customer> list){
+		Object[][] rows=null;
+		rows=new Object[list.size()][];
+		for(int i=0; i<list.size(); i++) {
+			rows[i]=list.get(i).toArray();
+		}
+		return rows;
+	}
+	
+	class NonEditableModel extends DefaultTableModel{
+		public NonEditableModel(Object[][] data, Object[] columnNames) {
+			super(data, columnNames);
+		}
+
+		@Override
+		public boolean isCellEditable(int row, int column) {
+			return false;
+		}
+		
 	}
 }

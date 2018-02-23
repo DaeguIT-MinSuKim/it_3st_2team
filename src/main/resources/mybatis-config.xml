@@ -33,5 +33,7 @@
    <mapper resource="kr/or/dgit/it_3st_2team/mappers/CustomerMapper.xml"/>
    <mapper resource="kr/or/dgit/it_3st_2team/mappers/TitleMapper.xml"/>
    <mapper resource="kr/or/dgit/it_3st_2team/mappers/SaleMapper.xml"/>
+   <mapper resource="kr/or/dgit/it_3st_2team/mappers/EventMapper.xml"/>
+   <mapper resource="kr/or/dgit/it_3st_2team/mappers/HairMapper.xml"/>
 </mappers>  
 </configuration>

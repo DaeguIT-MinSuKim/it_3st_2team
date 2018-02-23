@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.dgit.it_3st_2team.dao.HairDao">
+
+	<resultMap id="hairResult" type="Hair">
+		<id property="hairNo" column="hair_no"/>
+		<result property="hairName" column="hair_name"/>
+		<result property="price" column="price"/>
+	</resultMap>
+	
+	<select id="selectAllHair" resultMap="hairResult">
+		select hair_no, hair_name, price from hair;
+	</select>
+
+</mapper>

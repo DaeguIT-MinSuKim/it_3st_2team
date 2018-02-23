@@ -63,7 +63,7 @@ public class CustomerTest {
 		}
 	}*/
 
-	@Test
+/*	@Test
 	public void test5inSertCustomer() {
 		Calendar newDate = GregorianCalendar.getInstance();
 		newDate.set(1990, 2, 15);
@@ -76,6 +76,6 @@ public class CustomerTest {
 		ctm.setEmpNo(new Employee(4));
 		int res = service.inSertCustomer(ctm);
 		Assert.assertEquals(1, res);
-	}
+	}*/
 
 }

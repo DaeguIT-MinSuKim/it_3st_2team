@@ -21,5 +21,20 @@ public class TitleService {
 		}
 
 	}
+	public List<Title> insertTitle() {
+		log.debug("insertTitle()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			 TitleDao TitleDao = sqlSession.getMapper(TitleDao.class);
+			return TitleDao.selectTitle();
+		}
+
+	}
+	public int insertTitle(Title title) {
+		log.debug("insertTitle()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			 TitleDao TitleDao = sqlSession.getMapper(TitleDao.class);
+			return TitleDao.insertTitle();
+		}
+	}
 
 }

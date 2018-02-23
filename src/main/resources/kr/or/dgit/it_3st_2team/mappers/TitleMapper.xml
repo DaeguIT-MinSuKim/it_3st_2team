@@ -2,13 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.dgit.it_3st_2team.dao.TitleDao">
 	<resultMap id="TitleResult" type="Title">
-		<id property="titleNo" column="title_no"/>
-		<result property="titleName" column="title_name"/>
+		<id property="titleNo" column="title_no" />
+		<result property="titleName" column="title_name" />
 	</resultMap>
-	
-	<select id="selectTitle" 
-		resultMap="TitleResult">
-		select title_no,title_name from title
 
+	<select id="selectTitle" resultMap="TitleResult">
+		select title_no,title_name
+		from title
 	</select>
+	
+	<insert id="insertTitle" parameterType="Title">
+		insert into Title(title_No,title_Name)
+		values(#{title_No},#{title_Name})
+	</insert>
+	
+	
 </mapper>

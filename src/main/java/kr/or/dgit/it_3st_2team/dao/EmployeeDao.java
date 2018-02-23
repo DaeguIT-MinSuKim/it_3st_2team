@@ -12,4 +12,7 @@ public interface EmployeeDao {
 	List<Employee> selecteNowEmplyoee();
 
 	List<Employee> selectTitleName();
+	
+	 List<Employee>insertStudent();
+	
 }

@@ -165,12 +165,11 @@ public class NowEmployee extends JFrame implements ActionListener {
 		pBottom.add(btnMod);
 	}
 
-	@SuppressWarnings("unchecked")
 	private Object[][] getRows(List<Employee> lists) {
 		Object[][] rows=null;
 		rows=new Object[lists.size()][];
 		for(int i=0; i<lists.size(); i++) {
-			rows[i]=((List<Employee>) lists.get(i)).toArray();
+			rows[i]=lists.get(i).toArray();
 		}
 		return rows;
 	}
@@ -292,12 +291,12 @@ public class NowEmployee extends JFrame implements ActionListener {
 			row = table.getSelectedRow(); // 테이블에서 선택된 행의 값을 row에 저장한다.
 
 			// 행번호와 행의 데이터 텍스트 필드에 출력하기
-			empno.setText((String) table.getValueAt(row, 0));
-			empname.setText((String) table.getValueAt(row, 1));
-			joindate.setText((String) table.getValueAt(row, 2));
-			id.setText((String) table.getValueAt(row, 3));
-			epassword.setText((String) table.getValueAt(row, 4));
-			titlename.setText((String) table.getValueAt(row, 5));
+			empno.setText( table.getValueAt(row, 0).toString());
+			empname.setText(table.getValueAt(row, 1).toString());
+			joindate.setText( table.getValueAt(row, 2).toString());
+			id.setText( table.getValueAt(row, 3).toString());
+			epassword.setText(table.getValueAt(row, 4).toString());
+			titlename.setText(table.getValueAt(row, 5).toString());
 		}
 
 	}

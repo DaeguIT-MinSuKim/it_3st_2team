@@ -111,7 +111,7 @@ public class TitleManage extends JFrame implements ActionListener {
 
 		Titleno = new TextField(5);
 		panel_2.add(Titleno);
-		
+
 		JLabel lbltitlename = new JLabel("직책명");
 		panel_2.add(lbltitlename);
 
@@ -138,7 +138,7 @@ public class TitleManage extends JFrame implements ActionListener {
 		Object[][] rows = null;
 		rows = new Object[lists.size()][];
 		for (int i = 0; i < lists.size(); i++) {
-			rows[i] =  lists.get(i).toArray();
+			rows[i] = lists.get(i).toArray();
 		}
 		return rows;
 	}
@@ -187,24 +187,20 @@ public class TitleManage extends JFrame implements ActionListener {
 				model.removeRow(row);
 				row = -1;
 				this.clearData();
-			} else {
-
 			}
 		}
 
 	}
 
 	protected void actionPerformedBtnAdd(ActionEvent e) {
-		String[] str = new String[6];
+		String[] str = new String[2];
 		Object ob = e.getSource();
-		if (Titleno.getText().equals("")) 
-		{
+		if (Titleno.getText().equals("")) {
 			JOptionPane.showMessageDialog(this, "직책번호를 입력해주세요");
 			Titleno.requestFocus();
 			return;
 		}
-		if (Titlename.getText().equals("")) 
-		{
+		if (Titlename.getText().equals("")) {
 			JOptionPane.showMessageDialog(this, "직책명을 입력해주세요");
 			Titlename.requestFocus();
 			return;
@@ -212,7 +208,6 @@ public class TitleManage extends JFrame implements ActionListener {
 
 		str[0] = Titleno.getText();
 		str[1] = Titlename.getText();
-
 
 		model.addRow(str);
 
@@ -223,9 +218,11 @@ public class TitleManage extends JFrame implements ActionListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			row = table.getSelectedRow(); // 테이블에서 선택된 행의 값을 row에 저장한다.
-
+			
+			System.out.println(table.getValueAt(row , 0));
+			Titleno.setText(table.getValueAt(row , 0).toString());
 			// 행번호와 행의 데이터 텍스트 필드에 출력하기
-			Titleno.setText((String) table.getValueAt(row, 0));
+			//Titleno.setText( (String) table.getValueAt(row , 0));
 			Titlename.setText((String) table.getValueAt(row, 1));
 		}
 

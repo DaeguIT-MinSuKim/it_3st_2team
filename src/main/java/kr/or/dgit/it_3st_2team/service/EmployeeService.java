@@ -44,4 +44,15 @@ public class EmployeeService {
 			return sqlSession.selectList(namespace + "selecteNowEmplyoee");
 		}
 	}
+	
+	public List<Employee> insertStudent() {
+		log.debug("insertStudent()");
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			EmployeeDao employeeDao = sqlSession.getMapper(EmployeeDao.class);
+			return sqlSession.selectList(namespace + "insertStudent");
+		}
+	}
+	
+	
+	
 }

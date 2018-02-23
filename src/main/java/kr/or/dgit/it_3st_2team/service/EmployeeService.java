@@ -28,5 +28,11 @@ public class EmployeeService {
 		}
 	}
 	
-
+	public List<Employee>selectEmployeeAddTitle(){
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			EmployeeDao employeeDao = sqlSession.getMapper(EmployeeDao.class);
+			return sqlSession.selectList(namespace + "selectTitleName");
+		}
+		
+	}
 }

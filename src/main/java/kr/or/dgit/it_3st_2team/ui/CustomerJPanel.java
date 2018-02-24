@@ -570,11 +570,10 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 			if(s) {
 				cmbEmp.setSelectedIndex(i);
 				return;
+			}else {
+				cmbEmp.setSelectedIndex(0);
 			}
 		}
-		/*직원없을시 cmbEmp.setSelectedIndex(0);맞추기*/
-		
-
 	}
 	
 	protected void do_cmbEmp_actionPerformed(ActionEvent e) {

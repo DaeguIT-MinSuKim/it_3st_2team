@@ -31,10 +31,11 @@ public class CustomerService {
 			return sqlSession.selectList(namespace + "selectAllEmployee");
 		}
 	}
-	public List<Customer> SelectAllCustomerEmpName(){
+	
+	public List<Customer> SelectAllCustomerEmpName(Customer customer){
 		log.debug("SelectAllCustomerEmpName()");
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
-			return sqlSession.selectList(namespace + "SelectAllCustomerEmpName");
+			return sqlSession.selectList(namespace + "SelectAllCustomerEmpName",customer);
 		}
 	}
 	public int inSertCustomer(Customer customer) {
@@ -49,6 +50,12 @@ public class CustomerService {
 		log.debug("SelectWhereCusId()");
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
 			return sqlSession.selectList(namespace + "SelectWhereCusId",customer);
+		}
+	}
+	public int  cusomerSizeNo() {
+		log.debug("cusomerSizeNo()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			return sqlSession.selectOne(namespace + "cusomerSizeNo");
 		}
 	}
 }

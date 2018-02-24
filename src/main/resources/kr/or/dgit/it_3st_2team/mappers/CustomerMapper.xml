@@ -22,7 +22,15 @@
 	
 	<sql id="selectSql">
 		select cus_no, cus_name,birth,age,join_date,phone,addr,emp_no,c_tf
-		from customer
+		from customer 
+	</sql>
+	
+	<sql id="wherecTfSql">
+		<where>
+			<if test="cTf != null">
+				c_tf = #{cTf} order by cus_no desc
+			</if>
+		</where>
 	</sql>
 	
 	<sql id="whereCusnoSql">
@@ -37,17 +45,23 @@
 		select emp_name,t.title_name  from employee e join title t on e.title_no=t.title_no
 	</sql> 
 	
-	<select id="selectAllCustomer" resultType="Customer">
+	 <select id="selectAllCustomer" resultType="Customer">
 		<include refid="selectSql"/>
-	</select>
-	
+	</select> 
+
 	
 	
 	<select id="selectAllEmployee" resultType="Employee">
 		<include refid="selectEmployee"/>
 	</select> 
 
-	
+	<!-- select customer size -->
+	<sql id="cusomerSizeSql">
+		select count(*) from customer
+	</sql>
+	<select id="cusomerSizeNo" resultType="int">
+		<include refid="cusomerSizeSql"></include>
+	</select>
 	
 	<!-- select Allcustomer, empname -->
 	
@@ -58,10 +72,11 @@
 	<sql id="SelectCustomerSql">
 		select c.cus_no,c.cus_name,c.birth,c.age,c.join_date,c.phone,c.addr,e.emp_name 
 		from customer c join employee e on c.emp_no=e.emp_no
-		order by cus_no
 	</sql>
+
 	<select id="SelectAllCustomerEmpName" resultMap="CustomerAddEmpName">
 		<include refid="SelectCustomerSql"/>
+		<include refid="wherecTfSql"/>
 	</select> 
 	
 	<!-- select Wherecusid -->

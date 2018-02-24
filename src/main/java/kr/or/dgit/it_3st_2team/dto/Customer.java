@@ -32,6 +32,10 @@ public class Customer {
 		this.cTf = cTf;
 	}
 	
+	public Customer(Boolean cTf) {
+		super();
+		this.cTf = cTf;
+	}
 	public Customer(int cusNo) {
 		super();
 		this.cusNo = cusNo;

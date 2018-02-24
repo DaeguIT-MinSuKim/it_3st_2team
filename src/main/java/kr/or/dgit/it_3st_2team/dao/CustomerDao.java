@@ -9,10 +9,12 @@ public interface CustomerDao {
 	List<Customer> selectAllCustomer();
 	List<Employee> selectAllEmployee();
 	/*select customerAll*/
-	List<Customer> SelectAllCustomerEmpName();
-	
+	List<Customer> SelectAllCustomerEmpName(Customer customer);
 	/*insert customer*/
 	int inSertCustomer(Customer customer);
 	
 	List<Customer>SelectWhereCusId(Customer customer);
+	
+	/*select CusomerSize*/
+	int cusomerSizeNo();
 }

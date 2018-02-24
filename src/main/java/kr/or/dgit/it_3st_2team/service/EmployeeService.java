@@ -29,11 +29,11 @@ public class EmployeeService {
 		}
 	}
 	
-	public List<Employee>selectEmployeeAddTitle(){
+	public List<Employee>selectEmployeeAddTitle(Employee emp){
 		log.debug("selectEmployeeAddTitle()");
 		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
 			EmployeeDao employeeDao = sqlSession.getMapper(EmployeeDao.class);
-			return sqlSession.selectList(namespace + "selectTitleName");
+			return sqlSession.selectList(namespace + "selectTitleName",emp);
 		}
 		
 	}
@@ -53,6 +53,12 @@ public class EmployeeService {
 		}
 	}
 	
-	
+	public int selectEmpNo(Employee emp) {
+		log.debug("selectEmpNo()");
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			EmployeeDao employeeDao = sqlSession.getMapper(EmployeeDao.class);
+			return sqlSession.selectOne(namespace + "selectEmpNo",emp);
+		}
+	}
 	
 }

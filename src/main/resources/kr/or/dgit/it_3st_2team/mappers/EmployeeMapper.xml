@@ -17,9 +17,22 @@
 		<id property="empNo" column="emp_no" />
 	</resultMap>
 	
+	<!-- select empno -->
+	<sql id="selectEmpNoSql">
+		select emp_no from employee
+	</sql>
+	<sql id="whereCusnoSql">
+		<where>
+			<if test="empName != null">
+				emp_name = #{empName}
+			</if>
+		</where>
+	</sql>
 	
-	
-	
+	<select id="selectEmpNo" resultType="int">
+		<include refid="selectEmpNoSql"/>
+		<include refid="whereCusnoSql"/>
+	</select>
 	
 		<resultMap type="Employee" id="empNoNameResult">
 			<id property="empNo" column="emp_no" />
@@ -37,9 +50,18 @@
 			employee e join
 			title t on e.title_no=t.title_no
 		</sql>
+		
+		<sql id="whereeTfSql">
+		<where>
+			<if test="eTf != null">
+				e_tf = #{eTf} 
+			</if>
+		</where>
+	</sql>
 
 		<select id="selectTitleName" resultMap="EmployeeAddTitle">
 			<include refid="JoinEmpTitleNameSql"></include>
+			<include refid="whereeTfSql"></include>
 		</select>
 
 

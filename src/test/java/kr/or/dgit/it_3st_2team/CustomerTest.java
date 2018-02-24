@@ -55,6 +55,16 @@ public class CustomerTest {
 	}*/
 
 /*	@Test
+	public void test3SelectAllCustomerEmpName() {
+		Customer cus = new Customer(true);
+		List<Customer> listStd = service.SelectAllCustomerEmpName(cus);
+		Assert.assertNotNull(listStd);
+
+		for (Customer cs : listStd) {
+			System.out.println(cs);
+		}
+	}*/
+/*	@Test
 	public void test5inSertCustomer() {
 		Calendar newDate = GregorianCalendar.getInstance();
 		newDate.set(1990, 2, 15);
@@ -71,7 +81,7 @@ public class CustomerTest {
 		int res = service.inSertCustomer(ctm);
 		Assert.assertEquals(1, res);
 	}*/
-	@Test
+	/*@Test
 	public void test6SelectWhereCusId() {
 		
 		List<Customer> listStd = service.SelectWhereCusId(new Customer(1));
@@ -79,5 +89,5 @@ public class CustomerTest {
 
 		System.out.println(listStd);
 
-	}
+	}*/
 }

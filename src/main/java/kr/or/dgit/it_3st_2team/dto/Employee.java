@@ -37,11 +37,21 @@ public class Employee {
 		this.id = id;
 		this.epassword = password;
 	}
+	
+	public Employee(Boolean eTf) {
+		super();
+		this.eTf = eTf;
+	}
 
 	private Employee(String empName, Title titleNo) {
 		super();
 		this.empName = empName;
 		this.title = titleNo;
+	}
+
+	public Employee(String empName) {
+		super();
+		this.empName = empName;
 	}
 
 	public Employee(int empNo) {

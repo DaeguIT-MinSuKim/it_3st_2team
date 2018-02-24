@@ -13,7 +13,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.regex.Matcher;
 
+import javax.naming.RefAddr;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -53,7 +55,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 	private JTable table;
 	private JTextField tfAge;
 	private List<Customer> cList = new ArrayList<>();
-	
+	private int cmbEmpNo;
 	
 	private CustomerService cservice;
 	private EmployeeService eservice;
@@ -63,6 +65,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 	private JScrollPane scrollPane;
 	private JButton btnCancel;
 	private JButton btnUpdate;
+	private List<Employee> list;
 	/**
 	 * Create the panel.
 	 */
@@ -73,8 +76,8 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		
 	}
 	private void initComponents() {
+		cList = cservice.SelectAllCustomerEmpName(new Customer(true));
 		
-		cList = cservice.SelectAllCustomerEmpName();
 		
 		setLayout(new BorderLayout(0, 0));
 		
@@ -153,13 +156,15 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		
 		
 		
-		List<Employee> list = eservice.selectEmployeeAddTitle();
+		list = eservice.selectEmployeeAddTitle(new Employee(true));
 		List<SimpleEmp> lists = transToString(list);
 		SimpleEmp [] items = new SimpleEmp[list.size()];
 		lists.toArray(items);	
 		DefaultComboBoxModel<SimpleEmp> cModel = new DefaultComboBoxModel<>(items);
 				
 		cmbEmp = new JComboBox();
+		cmbEmp.addActionListener(this);
+		cmbEmp.addMouseListener(this);
 		panel_1.add(cmbEmp);
 		cmbEmp.setModel(cModel);
 		
@@ -287,7 +292,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		tfaddr.setText("");
 	}
 	private void addtfNo() {
-		int no = cList.size()+1;
+		int no = cservice.cusomerSizeNo()+1;
 		tfNo.setText(toString().format("%s", no));
 	}
 	private void showTables() {
@@ -316,6 +321,9 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == cmbEmp) {
+			do_cmbEmp_actionPerformed(e);
+		}
 		if (e.getSource() == btnUpdate) {
 			do_btnUpdate_actionPerformed(e);
 		}
@@ -345,6 +353,12 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		String empName;
 		String titleName;
 		
+		
+		public SimpleEmp() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
+
 		private SimpleEmp(int empNo, String empName, String titleName) {
 			super();
 			this.empNo = empNo;
@@ -358,6 +372,18 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 
 		
 	
+
+		public void setEmpName(String empName) {
+			this.empName = empName;
+		}
+
+		public String getEmpName() {
+			return empName;
+		}
+
+		public String getTitleName() {
+			return titleName;
+		}
 
 		@Override
 		public String toString() {
@@ -477,9 +503,6 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		
 		int age = Integer.parseInt(tfAge.getText());
 		
-		/*index로 직원번호가져오기 확인*/
-		int emp = cmbEmp.getSelectedIndex()+1;
-		
 		String phone1 = (String) cmbphone1.getSelectedItem();
 		String phone2 = tfphone2.getText();
 		String phone3 = tfphone3.getText();
@@ -490,11 +513,11 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		
 		
 		Customer ctm = new Customer
-				(tfno,tfname,jBirth.getTime(),age,jDate.getTime(),new PhoneNumber(phone),addr,new Employee(emp),true);
+				(tfno,tfname,jBirth.getTime(),age,jDate.getTime(),new PhoneNumber(phone),addr,new Employee(cmbEmpNo),true);
 		cservice.inSertCustomer(ctm);
 		JOptionPane.showMessageDialog(null, "고객이 등록 되었습니다.");
 		
-		cList = cservice.SelectAllCustomerEmpName();
+		cList = cservice.SelectAllCustomerEmpName(new Customer(true));
 		showTables();
 		addtfNo();		
 		clear();
@@ -503,6 +526,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		clear();
 	}
 	public void mouseClicked(MouseEvent arg0) {
+	
 		if (arg0.getSource() == table) {
 			do_table_mouseClicked(arg0);
 		}
@@ -522,12 +546,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 	
 		int row = table.getSelectedRow();
 		int cusno = (int) (table.getValueAt(row, 0));
-	
-		List<Customer> cus = cservice.SelectWhereCusId(new Customer(cusno));		
-		Employee cmbemp = cus.get(0).getEmp();
-		int ce = cmbemp.getEmpNo();
-		cmbEmp.setSelectedIndex(ce-1);
-		
+
 		String ph = toString().format("%s", table.getValueAt(row, 5));
 		String[] ph1 = ph.split("-");
 		
@@ -541,11 +560,28 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		tfphone2.setText(toString().format("%s", ph1[1]));
 		tfphone3.setText(toString().format("%s", ph1[2]));
 		
+		btnAdd.setText("수정");		
+		
+		Object updateempname = table.getValueAt(row, 7);
+		String st = null;
+		for(int i =0;i<list.size();i++) {
+			st = list.get(i).getEmpName();
+			Boolean s =st.equals(updateempname);		
+			if(s) {
+				cmbEmp.setSelectedIndex(i);
+				return;
+			}
+		}
+		/*직원없을시 cmbEmp.setSelectedIndex(0);맞추기*/
+		
+
+	}
 	
-		btnAdd.setText("수정");
-		
-		
-		
-	
+	protected void do_cmbEmp_actionPerformed(ActionEvent e) {
+		/*추가할때*/
+		String em = toString().format("%s",cmbEmp.getSelectedItem());
+		String aem = em.substring(0, 3);
+		Employee emp = new Employee(aem);
+		cmbEmpNo = eservice.selectEmpNo(emp);
 	}
 }

@@ -1,43 +1,29 @@
 package kr.or.dgit.it_3st_2team.ui;
 
-import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
-import javax.swing.AbstractListModel;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 
-import kr.or.dgit.it_3st_2team.dto.Customer;
 import kr.or.dgit.it_3st_2team.dto.Event;
 import kr.or.dgit.it_3st_2team.dto.Hair;
-import kr.or.dgit.it_3st_2team.dto.Sale;
-import kr.or.dgit.it_3st_2team.service.CustomerService;
 import kr.or.dgit.it_3st_2team.service.EventService;
 import kr.or.dgit.it_3st_2team.service.HairService;
 import kr.or.dgit.it_3st_2team.service.SaleService;
@@ -50,15 +36,16 @@ public class EnrollFrame extends JFrame implements ActionListener {
 	private JTextField tfTime;
 	private JTextField tfSelectedCus;
 	private JTextField tfDiscount;
-	private JRadioButton rdbtnNewRadioButton;
-	private JPanel pnlCase1;
-	private JRadioButton rdbtnNewRadioButton_1;
 	private JTextField tfPrice;
-	private JButton btnSearch;
+	private JButton btnSearchCus;
 	private JComboBox<String> cmbEvent;
 	private HashMap<String, Float> mapEvent;
 	private HashMap<String, Integer> mapHair;
 	private JList<String> listHair;
+	private JTable table;
+	private JTextField tfSelectedEmp;
+	private JButton btnSearchEmp;
+	private JButton btnAdd;
 
 	/**
 	 * Launch the application.
@@ -104,12 +91,11 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		
 		tfNo = new JTextField();
 		tfNo.setEditable(false);
-		tfNo.setEnabled(false);
 		tfNo.setFocusable(false);
 		pnl1_1.add(tfNo);
 		tfNo.setColumns(10);
 		int orderNum=-1;
-		Sale sale = new Sale();
+		//Sale sale = new Sale();
 		SaleService service = new SaleService();
 		orderNum=service.getPresentSaleNo()+1;
 		tfNo.setText(Integer.toString(orderNum));
@@ -122,8 +108,14 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		pnl1_2.add(lblDate);
 		
 		tfDate = new JTextField();
+		tfDate.setEditable(false);
 		tfDate.setColumns(10);
 		pnl1_2.add(tfDate);
+		Calendar now = Calendar.getInstance();
+		int year = now.get(Calendar.YEAR);
+		int month = now.get(Calendar.MONTH)+1;
+		int day = now.get(Calendar.DAY_OF_MONTH);
+		tfDate.setText(toString().format("%s-%s-%s",year,month,day));
 		
 		JLabel lblNewLabel_5 = new JLabel("");
 		pnl1_2.add(lblNewLabel_5);
@@ -132,8 +124,12 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		pnl1_2.add(lblTime);
 		
 		tfTime = new JTextField();
+		tfTime.setEditable(false);
 		tfTime.setColumns(10);
 		pnl1_2.add(tfTime);
+		int hour = now.get(Calendar.HOUR);
+		int minute = now.get(Calendar.MINUTE);
+		tfTime.setText(toString().format("%s:%s",hour,minute));
 		
 		JPanel pnl1_3 = new JPanel();
 		pnl1.add(pnl1_3);
@@ -142,12 +138,12 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		JLabel lblName = new JLabel("customer :");
 		pnl1_3.add(lblName);
 		
-		btnSearch = new JButton("Search");
-		btnSearch.addActionListener(this);
-		btnSearch.setFocusable(false);
-		pnl1_3.add(btnSearch);
+		btnSearchCus = new JButton("찾기");
+		btnSearchCus.addActionListener(this);
+		btnSearchCus.setFocusable(false);
+		pnl1_3.add(btnSearchCus);
 		
-		JLabel lblSelectedCus = new JLabel("선택된 고객 :");
+		JLabel lblSelectedCus = new JLabel("선택한 고객 :");
 		pnl1_3.add(lblSelectedCus);
 		
 		tfSelectedCus = new JTextField();
@@ -155,6 +151,25 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		tfSelectedCus.setFocusable(false);
 		pnl1_3.add(tfSelectedCus);
 		tfSelectedCus.setColumns(10);
+		
+		JPanel pnl1_7 = new JPanel();
+		pnl1.add(pnl1_7);
+		pnl1_7.setLayout(new GridLayout(0, 5, 0, 0));
+		
+		JLabel lblNewLabel = new JLabel("직원명 :");
+		pnl1_7.add(lblNewLabel);
+		
+		btnSearchEmp = new JButton("찾기");
+		btnSearchEmp.addActionListener(this);
+		pnl1_7.add(btnSearchEmp);
+		
+		JLabel lblNewLabel_1 = new JLabel("선택한 직원 :");
+		pnl1_7.add(lblNewLabel_1);
+		
+		tfSelectedEmp = new JTextField();
+		tfSelectedEmp.setEditable(false);
+		pnl1_7.add(tfSelectedEmp);
+		tfSelectedEmp.setColumns(10);
 		
 		JPanel pnl1_4 = new JPanel();
 		pnl1.add(pnl1_4);
@@ -187,7 +202,7 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		JLabel lblEvent = new JLabel("이벤트 :");
 		pnl1_5.add(lblEvent);
 		
-		cmbEvent = new JComboBox();
+		cmbEvent = new JComboBox<String>();
 		EventService eventService = new EventService();
 		List<Event> eventList = eventService.selectAllEvent();
 		mapEvent = new HashMap<>();
@@ -224,8 +239,9 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		fl_pnl1_6.setAlignment(FlowLayout.RIGHT);
 		pnl1.add(pnl1_6);
 		
-		JButton btnNewButton_2 = new JButton("add");
-		pnl1_6.add(btnNewButton_2);
+		btnAdd = new JButton("add");
+		btnAdd.addActionListener(this);
+		pnl1_6.add(btnAdd);
 		
 		JButton btnNewButton_3 = new JButton("cancel");
 		pnl1_6.add(btnNewButton_3);
@@ -234,31 +250,22 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		contentPane.add(pnl2);
 		pnl2.setLayout(new BoxLayout(pnl2, BoxLayout.X_AXIS));
 		
-		JPanel panel_11 = new JPanel();
-		pnl2.add(panel_11);
-		panel_11.setLayout(new GridLayout(0, 7, 0, 0));
-		
-		JLabel lblNewLabel_6 = new JLabel("검색기준 :");
-		panel_11.add(lblNewLabel_6);
-		
-		rdbtnNewRadioButton = new JRadioButton("기간별");
-		rdbtnNewRadioButton.addActionListener(this);
-		panel_11.add(rdbtnNewRadioButton);
-		
-		rdbtnNewRadioButton_1 = new JRadioButton("고객별");
-		rdbtnNewRadioButton_1.addActionListener(this);
-		panel_11.add(rdbtnNewRadioButton_1);
-		
-		pnlCase1 = new JPanel();
-		contentPane.add(pnlCase1);
-		
-		ButtonGroup group = new ButtonGroup();
-		group.add(rdbtnNewRadioButton);
-		group.add(rdbtnNewRadioButton_1);
+		table = new JTable();
+		pnl2.add(table);
 	
 	}
-
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnAdd) {
+			actionPerformedBtnAdd(e);
+		}
+		if (e.getSource() == btnSearchEmp) {
+			EmployeeSearchUI empUi = new EmployeeSearchUI(this);
+			empUi.setVisible(true);
+		}
+		if (e.getSource() == btnSearchCus) {
+			CustomerSearchUI cusUi = new CustomerSearchUI(this);
+			cusUi.setVisible(true);
+		}
 		if (e.getSource() == cmbEvent) {
 			String selectedEventName = cmbEvent.getSelectedItem().toString();
 			Float discount = mapEvent.get(selectedEventName);
@@ -268,36 +275,26 @@ public class EnrollFrame extends JFrame implements ActionListener {
 			price = (int) Math.ceil(price-(price*discount));
 			tfPrice.setText(Integer.toString(price));
 		}
-		if (e.getSource() == btnSearch) {
-			new DialogEx();
-		}
-		if (e.getSource() == rdbtnNewRadioButton_1) {
-			actionPerformedRdbtnNewRadioButton_1(e);
-		}
-		if (e.getSource() == rdbtnNewRadioButton) {
-			actionPerformedRdbtnNewRadioButton(e);
-		}
 	}
-	protected void actionPerformedRdbtnNewRadioButton(ActionEvent e) {
-		Container cp = getContentPane();
-		cp.revalidate();
-		cp.repaint();
-		cp.invalidate();
-		EnrollSearchCase1 case1 = new EnrollSearchCase1();
-		pnlCase1.removeAll();
-		pnlCase1.add(case1);
-	}
-	protected void actionPerformedRdbtnNewRadioButton_1(ActionEvent e) {
-		Container cp = getContentPane();
-		cp.revalidate();
-		cp.repaint();
-		EnrollSearchCase2 case2 = new EnrollSearchCase2();
-		pnlCase1.removeAll();
-		pnlCase1.add(case2);
+
+	public void setTfSelectedCus(String cusName) {
+		tfSelectedCus.setText(cusName);
 	}
 	
-	public class DialogEx extends JFrame{
+	public void setTfSelectedEmp(String empName) {
+		tfSelectedEmp.setText(empName);
+	}
+	
+
+/*	public class DialogEx extends JFrame{
 		private MyModalDialog dialog;
+
+		public DialogEx(String title) throws HeadlessException {
+			super(title);
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			dialog = new MyModalDialog(this, title);
+			dialog.setVisible(true);
+		}
 		
 		public DialogEx() {
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -311,7 +308,8 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		private JPanel contentPane = new JPanel();
 		private JTable table;
 		private JScrollPane scollPane;
-		private String[] columnType= {"고객번호","고객명"};
+		//private String[] columnType= {"고객번호","고객명"};
+		private String[] columnType;
 		private NonEditableModel model;
 		private JTextField tf = new JTextField(10);
 		private JButton okButton = new JButton("ok");
@@ -322,11 +320,23 @@ public class EnrollFrame extends JFrame implements ActionListener {
 			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 			setContentPane(contentPane);
 			contentPane.setLayout(new FlowLayout(FlowLayout.CENTER));
-			List<Customer> lists = null;
-			CustomerService service = new CustomerService();
-			lists = service.selectAllCustomer();
-			Object[][] data = getRows(lists);
-			model = new NonEditableModel(data, columnType);
+			if(title.equals("고객검색")) {
+				columnType = new String[] {"고객번호","고객명"};
+				List<Customer> lists = null;
+				CustomerService service = new CustomerService();
+				lists = service.selectAllCustomer();
+				Object[][] data = getRows(lists);
+				model = new NonEditableModel(data, columnType);
+			}
+			else if(title.equals("직원검색")) {
+				columnType = new String[] {"직원번호","직원명"};
+				List<Employee> lists = null;
+				EmployeeService service = new EmployeeService();
+				lists = service.selectAllEmployee();
+				Object[][] data = getRows(lists);
+				model = new NonEditableModel(data, columnType);
+			}
+			
 			table = new JTable(model);
 			scollPane = new JScrollPane(table);
 			
@@ -388,5 +398,7 @@ public class EnrollFrame extends JFrame implements ActionListener {
 			return false;
 		}
 		
+	}*/
+	protected void actionPerformedBtnAdd(ActionEvent e) {
 	}
 }

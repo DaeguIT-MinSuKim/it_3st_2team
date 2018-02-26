@@ -53,4 +53,8 @@
 			select id,password from employee where id=#{id}
 
 		</select> -->
+		
+	<select id="selectAllEmployee" resultType="Employee">
+		select emp_no, emp_name from employee;
+	</select>
 </mapper>

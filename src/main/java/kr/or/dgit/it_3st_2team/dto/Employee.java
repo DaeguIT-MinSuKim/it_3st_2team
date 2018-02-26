@@ -137,4 +137,8 @@ public class Employee {
 				"Employee [empNo=%s, empName=%s, joinDate=%s, addr=%s, id=%s, epassword=%s, titleNo=%s, eOff=%s, eTf=%s]",
 				empNo, empName, joinDate, addr, id, epassword, title, eOff, eTf);
 	}
+	
+	public Object[] toArray() {
+		return new Object[] {empNo, empName};
+	}
 }

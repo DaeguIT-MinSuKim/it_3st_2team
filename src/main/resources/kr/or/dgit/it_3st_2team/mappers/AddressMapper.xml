@@ -33,7 +33,7 @@
 	<!-- select doro -->
 	
 	<sql id="SelectDoroSql">
-		select zipcode,sido,sigungu,doro from address
+		select distinct(zipcode),sido,sigungu,doro from address
 	</sql>
 	
 	<sql id="whereDoroSql">

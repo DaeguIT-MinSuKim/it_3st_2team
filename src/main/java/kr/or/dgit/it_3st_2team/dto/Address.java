@@ -1,7 +1,7 @@
 package kr.or.dgit.it_3st_2team.dto;
 
 public class Address {
-	private char zipcode;
+	private String zipcode;
 	private String sido;
 	private String sigungu;
 	private String doro;
@@ -10,7 +10,7 @@ public class Address {
 	
 	public Address() {
 	}
-	private Address(char zipcode, String sido, String sigungu, String doro, int building1, String building2) {
+	private Address(String zipcode, String sido, String sigungu, String doro, int building1, String building2) {
 		this.zipcode = zipcode;
 		this.sido = sido;
 		this.sigungu = sigungu;
@@ -23,10 +23,10 @@ public class Address {
 		super();
 		this.sido = sido;
 	}
-	public char getZipcode() {
+	public String getZipcode() {
 		return zipcode;
 	}
-	public void setZipcode(char zipcode) {
+	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
 	}
 	public String getSido() {
@@ -65,5 +65,7 @@ public class Address {
 				sido, sigungu, doro, building1, building2);
 	}
 	
-	
+	public Object[]toArray() {
+		return new Object[] {zipcode,sido+" "+sigungu+" "+doro};
+	}
 }

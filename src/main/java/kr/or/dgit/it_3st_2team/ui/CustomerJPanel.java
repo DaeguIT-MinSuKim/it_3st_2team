@@ -19,6 +19,7 @@ import javax.naming.RefAddr;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -73,7 +74,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 	private JButton btnDelete;
 	private JButton btnSearch;
 	private JButton btnAll;
-
+	private JFrame jf;
 	/**
 	 * Create the panel.
 	 */
@@ -254,7 +255,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		tfSearch = new JTextField();
 		panel_9.add(tfSearch);
 		tfSearch.setColumns(10);
-
+	
 		btnSearch = new JButton("고객찾기");
 		btnSearch.addActionListener(this);
 		panel_9.add(btnSearch);
@@ -378,7 +379,22 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 	}
 
 	protected void actionPerformedBtnNewButton(ActionEvent arg0) {
+		jf = new AddressJFrame(this);
+		jf.setVisible(true);
+		//pack();
 	}
+	
+	
+
+	public JTextField getTfaddr() {
+		return tfaddr;
+	}
+	
+	public void setTfaddr(String addr) {
+		tfaddr.setText(addr);
+	}
+
+
 
 	private class SimpleEmp {
 		int empNo;
@@ -463,7 +479,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		// 셀의 너비와 정렬
 		tableCellAlign(SwingConstants.CENTER, 0, 1, 2, 3, 4, 5, 6, 7);
 		// tableCellAlign(SwingConstants.RIGHT, 4);
-		tableCellWidth(100, 200, 350, 100, 350, 300, 500, 150);
+		tableCellWidth(100, 200, 350, 100, 350, 300, 700, 150);
 	}
 
 	protected void tableCellAlign(int align, int... idx) {

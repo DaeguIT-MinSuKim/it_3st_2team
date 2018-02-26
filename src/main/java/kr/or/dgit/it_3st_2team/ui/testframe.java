@@ -2,19 +2,21 @@ package kr.or.dgit.it_3st_2team.ui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import kr.or.dgit.it_3st_2team.ui.CustomerJPanel;
 
-public class MainFrame extends JFrame implements ActionListener {
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JMenu;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
+public class testframe extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private JMenuItem mntmNewMenuItem;
@@ -26,7 +28,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainFrame frame = new MainFrame();
+					testframe frame = new testframe();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,27 +40,26 @@ public class MainFrame extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public MainFrame() {
-		initComponents();
-	}
-	private void initComponents() {
-		setTitle("hairshop");
+	public testframe() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 461, 281);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+		setBounds(100, 100, 871, 452);
 		
 		JMenuBar menuBar = new JMenuBar();
-		contentPane.add(menuBar, BorderLayout.NORTH);
+		setJMenuBar(menuBar);
 		
 		JMenu mnNewMenu = new JMenu("고객관리");
 		menuBar.add(mnNewMenu);
 		
-		mntmNewMenuItem = new JMenuItem("헤어주문");
+		mntmNewMenuItem = new JMenuItem("고객관리");
 		mntmNewMenuItem.addActionListener(this);
 		mnNewMenu.add(mntmNewMenuItem);
+		
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("헤어관리");
+		mnNewMenu.add(mntmNewMenuItem_1);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -67,13 +68,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 	}
 	protected void actionPerformedMntmNewMenuItem(ActionEvent e) {
-		/*Container cp = getContentPane();
-		EnrollPanel en = new EnrollPanel();
-		
-		cp.add(en);
+		JPanel cpanel = new CustomerJPanel();
+		setContentPane(cpanel);
 		revalidate();
-		repaint();*/
-		EnrollFrame ef = new EnrollFrame();
-		ef.setVisible(true);
+		pack();
 	}
 }

@@ -26,27 +26,15 @@ public class EmployeeTest {
 		service = null;
 	}
 
-	@Test
+	/*@Test
 	public void test1SelectAllEmployee() {
 		List<Employee> listStd = service.selectAllEmployee();
 		Assert.assertNotNull(listStd);
 		for (Employee cs : listStd) {
 			System.out.println(cs);
 		}
-	}
-	
-	@Test
-	public void test2selectEmpByLoginId() {
-		Employee employee = new Employee();
-		employee.setId("idemp1");
-		employee.setPassword("pwemp1");
-		Employee searchEmployee = service.selectEmployeeByLoginId(employee);
-		if (employee.getPassword().equals(searchEmployee.getPassword())) {
-			System.out.println("로그인 성공");
 
-		}else {
-			System.out.println("비밀번호가 틀렸습니다");
-		}
-	}
-	
+	}*/
+
 }
+

@@ -1,142 +1,133 @@
-INSERT INTO event (evnNo,evnName,discount) VALUES  
- (1,'기획',0.5), 
- (2,'생일',0.3), 
- (3,'조조',0.2), 
- (4,'어린이',0.6),
- (5,'일반',0.0);
- select * from event;
-  
-INSERT INTO hair (hairNum,hairName,price,pic) VALUES  
- (1,'커트',15000,null), 
- (2,'드라이',12000,null), 
- (3,'샴푸',5000,null), 
- (4,'펌',38500,null), 
- (5,'매직',95000,null), 
- (6,'트리트먼트',35000,null), 
- (7,'앰플',18000,null), 
- (8,'기타',16000,null); 
- select * from hair;
-  
-insert into employee (empNo, empName, title, joinDate, addr, id, password) values 
-(1,'직원1','사장','2011-01-02',null,'idemp1','pwemp1'), 
-(2,'직원2','이사','2012-05-01',null,'idemp2','pwemp2'), 
-(3,'직원3','실장','2015-06-30',null,'idemp3','pwemp3'), 
-(4,'직원4','매니저','2016-10-20',null,'idemp4','pwemp4'), 
-(5,'직원5','인턴','2017-11-01',null,'idemp5','pwemp5'); 
-select * from employee; 
+show tables;
 
-insert into customer (cusNo, cusName, birth, age, joinDate, phone, gender, pic, addr, empNo) values 
-(1,'고객1','1990-02-20',YEAR(CURDATE())-YEAR(birth),'2001-05-10','010-1111-1111',0,null,'서울시 서초구 서초동',2), 
-(2,'고객2','1992-09-09',YEAR(CURDATE())-YEAR(birth),'2000-03-02','010-2222-2222',1,null,'경기도 영통구 천천동',1), 
-(3,'고객3','1987-06-01',YEAR(CURDATE())-YEAR(birth),'2001-08-08','010-3333-3333',0,null,'경산시 정평동',3), 
-(4,'고객4','1990-10-11',YEAR(CURDATE())-YEAR(birth),'2001-08-02','010-4444-4444',1,null,'대구시 북구 반월동',5); 
-select * from customer; 
-
-insert into eoff (empNo,eoffDay) values 
-(1,'2018-02-20'), 
-(1,'2018-02-21'), 
-(1,'2018-02-22'), 
-(2,'2018-03-01'), 
-(2,'2018-03-02'), 
-(3,'2018-02-27'), 
-(4,'2018-02-25'); 
-select * from eoff; 
-
-/*트리거 생성*/
-create trigger tri_after_insert_sale
-after insert on sale
-for each row
-begin 
-	set @z =(select count(*) from sale);
-	set @x =(select h.price from hair h join sale s on h.hairNum=s.hairNum where s.saleNo=@z);
-	set @y =(select e.discount from event e join sale s on s.evnNo=e.evnNo where s.saleNo=@z); 
-	set @mul = @x*(1-@y);
-	set @idx =(select saleNo from sale where saleNo=@z);
-	insert into result(saleNo, income) values (@idx, @mul);
-end;
-
-/*트리거 생성+if문 추가*/
-create trigger tri_after_insert_sale
-after insert on sale
-for each row
-begin 
-	set @z =(select count(*) from sale);
-	if (new.state>1) then
-	set @x =(select h.price from hair h join sale s on h.hairNum=s.hairNum where s.saleNo=@z);
-	set @y =(select e.discount from event e join sale s on s.evnNo=e.evnNo where s.saleNo=@z); 
-	set @mul = @x*(1-@y);
-	set @idx =(select saleNo from sale where saleNo=@z);
-	insert into result(saleNo, income) values (@idx, @mul);
-	end if;
-end;
-
-/*영업 데이타 넣기*/
-insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(1,null,'2017-01-10','11:00:00',2,3,1,8,2);
-insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(2,null,'2017-02-01','10:00:00',1,3,4,7,3);
-insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(3,null,'2017-03-26','15:00:00',2,1,3,2,2); 
-insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(4,null,'2017-03-15','18:00:00',2,2,5,4,1); 
-insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(5,null,'2017-04-02','14:00:00',0,4,2,6,2);
-insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(6,null,'2017-05-30','12:00:00',2,1,1,1,5);
-insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(7,null,'2017-06-26','13:00:00',2,2,2,3,2); 
-insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(8,null,'2017-09-17','11:00:00',0,1,1,4,5);
-insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(9,null,'2017-12-19','19:00:00',0,1,5,5,2);
-insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(10,null,'2017-12-20','16:00:00',1,2,2,5,5);
--- 연도별 데이터 추가
-insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(11,null,'2016-01-15','10:00:00',2,3,2,2,3);
-insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(12,null,'2016-02-21','09:00:00',2,3,1,5,3);
-insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(13,null,'2015-03-19','11:00:00',2,1,3,7,2); 
-insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(14,null,'2014-03-26','13:00:00',0,2,3,4,5); 
-insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(15,null,'2012-04-05','16:00:00',0,4,4,3,5);
-insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(16,null,'2012-05-05','11:00:00',1,1,1,1,5);
-insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(17,null,'2011-06-02','19:00:00',2,2,5,8,2); 
-insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(18,null,'2011-09-10','13:00:00',0,1,5,1,4);
-insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(19,null,'2010-12-24','20:00:00',0,1,3,2,5);
-insert into sale (saleNo, description, date, time, state, cusNo, empNo, hairNum, evnNo) values 
-(20,null,'2010-12-25','15:00:00',2,2,2,8,1);
+select * from address;
+select * from hair;
+select * from enroll;
+select * from event;
+select * from employee;
+select * from customer;
+select * from title;
 select * from sale;
 
-/*할인적용된 가격 확인*/
-select * from result;
 
-/*기간별*/
-SELECT DATE(sub.d) AS `date`, sum(sub.i) FROM (select s.date d, r.income i from result r join sale s on r.saleNo=s.saleNo) sub
-WHERE DATE(sub.d) >= STR_TO_DATE('2010-01-01','%Y-%m-%d')
-and DATE(sub.d) <= STR_TO_DATE('2017-12-31', '%Y-%m-%d') group by `date`;
+insert into hair values
+(1,'커트',15000),(2,'드라이',12000),(3,'샴푸',5000),(4,'펌',38500),
+(5,'매직',95000),(6,'트리트먼트',35000),(7,'앰플',18000),(8,'기타',16000);
 
-/*년도별 매출합,건수*/
-select DATE_FORMAT(sub.d,'%Y') year, sum(sub.i) sum, count(sub.d) as `건` from (select s.date d, r.income i from result r join sale s on r.saleNo=s.saleNo) sub group by `year`;
+insert into event values
+(1,'기획',0.5),(2,'생일',0.3),(3,'조조',0.2),(4,'어린이',0.6),(5,'일반',0.0);
 
-/*월별 매출합,건수*/
-select DATE_FORMAT(sub.d,'%Y-%m') month, sum(sub.i) as sum, count(sub.d) as `건` from (select s.date d, r.income i from result r join sale s on r.saleNo=s.saleNo) sub group by `month`;
 
-/*차트현황*/
-select count(cusNo) `총고객수` from customer;
-select count(saleNo) `총예약수(예약취소포함)` from sale;
-select count(saleNo) `총영업수` from result;
-select sum(income) `총금액` from result;
+insert into title values
+(1,'사장'),
+(2,'실장'),
+(3,'디자이너'),
+(4,'스텝');
 
-/*헤어별 주문건수*/
-select sub.u `헤어번호`, sub.a `헤어명`, count(sub.u) `주문건수` from (select s.hairNum u, h.hairName a from sale s left join hair h on s.hairNum=h.hairNum) sub group by `헤어번호`;
 
-/*직원별 매출*/
-select s.empNo `직원번호`, e.empName `직원명`, e.title `직급`, sum(r.income) `매출액` 
-from sale s left join employee e on s.empNo=e.empNo left join result r on s.saleNo=r.saleNo group by `직원번호`;
+insert into employee values
+(1,'영은수','2016-02-08',null,'idmaster','pwmaster',1,0,1),
+(2,'김은수','2016-03-08',null,'idemp1','pwemp1',2,1,1),
+(3,'한여진','2016-04-18',null,'idemp2','pwemp2',2,2,1),
+(4,'배두나','2016-05-08',null,'idemp3','pwemp3',2,3,1),
+(5,'황시목','2016-06-18',null,'idemp4','pwemp4',3,4,1),
+(6,'조승우','2016-07-08',null,'idemp5','pwemp5',3,5,1),
+(7,'서동재','2016-08-18',null,'idemp6','pwemp6',3,6,1),
+(8,'이준혁','2016-09-08',null,'idemp7','pwemp7',3,1,1),
+(9,'이창준','2016-10-18',null,'idemp8','pwemp8',4,2,1),
+(10,'유재명','2016-11-08',null,'idemp9','pwemp9',4,3,1);
+
+
+insert into customer(cus_no,cus_name,birth,age,join_date,phone,emp_no,c_tf) values
+(1,'신혜선','1980-07-05',year(curdate())-year(birth),'2017-01-11','010-111-1111',1,1),
+(2,'김수찬','1982-08-02',year(curdate())-year(birth),'2017-01-01','010-111-1111',2,1),
+(3,'박진우','1986-11-15',year(curdate())-year(birth),'2017-02-15','010-111-1111',3,1),
+(4,'최재웅','1981-12-03',year(curdate())-year(birth),'2017-02-25','010-111-1111',4,1),
+(5,'예수정','1990-03-05',year(curdate())-year(birth),'2017-03-11','010-111-1111',5,1),
+(6,'박경완','1976-08-02',year(curdate())-year(birth),'2017-04-01','010-111-1111',6,1),
+(7,'장성범','1977-11-15',year(curdate())-year(birth),'2017-05-15','010-111-1111',7,1),
+(8,'영일재','1979-12-03',year(curdate())-year(birth),'2017-06-25','010-111-1111',8,1),
+(9,'이호재','1990-07-05',year(curdate())-year(birth),'2017-07-11','010-111-1111',9,1),
+(10,'이연재','1992-08-02',year(curdate())-year(birth),'2017-08-01','010-111-1111',10,1),
+(11,'윤세아','1975-11-15',year(curdate())-year(birth),'2017-09-15','010-111-1111',3,1),
+(12,'송지호','1988-12-03',year(curdate())-year(birth),'2017-10-25','010-111-1111',4,1);
+
+
+insert into sale(sale_no,sdate,stime,emp_no,cus_no,evn_no) values
+(1,'2017-01-12','09:30:00',1,1,1),
+(2,'2017-01-22','09:30:00',2,2,2),
+(3,'2017-02-12','09:30:00',3,3,4),
+(4,'2017-02-22','09:30:00',4,4,4),
+(5,'2017-03-12','09:30:00',5,5,3),
+(6,'2017-04-12','09:30:00',4,6,4),
+(7,'2017-05-22','09:30:00',3,7,5),
+(8,'2017-05-12','09:30:00',2,8,4),
+(9,'2017-06-12','09:30:00',1,9,3),
+(10,'2017-07-12','09:30:00',2,10,2),
+(11,'2017-07-22','09:30:00',3,11,4),
+(12,'2017-08-12','09:30:00',4,10,3),
+(13,'2017-09-12','09:30:00',5,2,2),
+(14,'2017-10-12','09:30:00',4,3,4),
+(15,'2017-11-12','09:30:00',3,4,4),
+(16,'2017-12-25','09:30:00',2,5,2),
+(17,'2017-12-12','09:30:00',1,1,3);
+
+
+
+insert into enroll values
+(1,1),
+(1,2),
+(2,3),
+(3,4),
+(4,5),
+(5,6),
+(5,7),
+(5,8),
+(6,7),
+(6,6),
+(7,5),
+(8,4),
+(9,3),
+(10,2),
+(11,1),
+(12,2),
+(12,3),
+(13,6),
+(14,5),
+(15,4),
+(16,3),
+(16,2),
+(16,1),
+(17,2),
+(17,3);
+
+
+
+
+create view v_sale as
+select s.sale_no, round(sum(h.price)-sum(h.price)* e.discount) as price
+from sale s join enroll er on s.sale_no=er.sale_no join hair h on er.hair_no=h.hair_no join event e on s.evn_no=e.evn_no
+group by s.sale_no;
+
+
+
+update sale s
+	set sprice = (select price from v_sale where sale_no=s.sale_no)  
+	where sale_no =  (select sale_no from v_sale where sale_no=s.sale_no);
+
+
+
+select * from sale;
+
+
+
+load data local infile 'D:/workspace/zipcode/대구광역시.txt'
+into table address
+character set 'euckr'
+fields terminated by '|'
+ignore 1 lines
+(@zipcode,@sido,@d,@sigungu, @d,@d,@d,@d,@doro,
+@d,@d,@building1,@building2,
+@d,@d,@d,@d,@d,@d,@d,@d,@d,@d,@d,@d,@d)
+set zipcode=@zipcode, sido=@sido, sigungu=@sigungu,
+doro=@doro, building1=@building1, building2=@building2;

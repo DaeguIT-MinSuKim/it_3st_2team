@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import kr.or.dgit.it_3st_2team.dto.Employee;
 import kr.or.dgit.it_3st_2team.service.EmployeeService;
 
-//khj
+//khj 2018-02-26
 public class EmployeeSearchUI extends JFrame {
 
 	private JPanel contentPane;

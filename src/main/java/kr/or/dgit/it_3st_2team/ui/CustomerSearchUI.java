@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import kr.or.dgit.it_3st_2team.dto.Customer;
 import kr.or.dgit.it_3st_2team.service.CustomerService;
 
-//khj
+//khj 2018-02-26
 public class CustomerSearchUI extends JFrame {
 
 	private JPanel contentPane;

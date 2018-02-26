@@ -35,5 +35,6 @@
    <mapper resource="kr/or/dgit/it_3st_2team/mappers/SaleMapper.xml"/>
    <mapper resource="kr/or/dgit/it_3st_2team/mappers/EventMapper.xml"/>
    <mapper resource="kr/or/dgit/it_3st_2team/mappers/HairMapper.xml"/>
+   <mapper resource="kr/or/dgit/it_3st_2team/mappers/AddressMapper.xml"/>
 </mappers>  
 </configuration>

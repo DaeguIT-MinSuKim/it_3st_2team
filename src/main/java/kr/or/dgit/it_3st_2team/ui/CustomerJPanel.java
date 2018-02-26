@@ -64,7 +64,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 	private CustomerService cservice;
 	private EmployeeService eservice;
 	private JButton btnAdd;
-	private JComboBox cmbEmp;
+	private JComboBox<SimpleEmp> cmbEmp;
 	private JComboBox cmbphone1;
 	private JScrollPane scrollPane;
 	private JButton btnCancel;
@@ -164,12 +164,13 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		lists.toArray(items);
 		DefaultComboBoxModel<SimpleEmp> cModel = new DefaultComboBoxModel<>(items);
 
-		cmbEmp = new JComboBox();
+		cmbEmp = new JComboBox<>();
 		cmbEmp.addActionListener(this);
 		cmbEmp.addMouseListener(this);
 		panel_1.add(cmbEmp);
 		cmbEmp.setModel(cModel);
-
+		cmbEmp.setSelectedIndex(0);
+		
 		JPanel panel_6 = new JPanel();
 		panel_3.add(panel_6, BorderLayout.WEST);
 		panel_6.setLayout(new BorderLayout(0, 0));
@@ -511,15 +512,18 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 	}
 
 	protected void actionPerformedBtnAdd(ActionEvent arg0) {
+		if(isEmpty()) {
+			JOptionPane.showMessageDialog(null, "고객정보를 입력해주세요.");
+		}else {
+			Customer ctm = addCustomers();
+			cservice.inSertCustomer(ctm);
+			JOptionPane.showMessageDialog(null, "고객이 등록 되었습니다.");
 
-		Customer ctm = addCustomers();
-		cservice.inSertCustomer(ctm);
-		JOptionPane.showMessageDialog(null, "고객이 등록 되었습니다.");
-
-		cList = cservice.SelectAllCustomerEmpName(new Customer(true));
-		showTables();
-		addtfNo();
-		clear();
+			cList = cservice.SelectAllCustomerEmpName(new Customer(true));
+			showTables();
+			addtfNo();
+			clear();		
+		}	
 	}
 
 	private Customer addCustomers() {
@@ -644,11 +648,8 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 	}
 
 	protected void do_cmbEmp_actionPerformed(ActionEvent e) {
-		/* 추가할때 */
-		String em = toString().format("%s", cmbEmp.getSelectedItem());
-		String aem = em.substring(0, 3);
-		Employee emp = new Employee(aem);
-		cmbEmpNo = eservice.selectEmpNo(emp);
+		SimpleEmp selectedSimpleEmp = (SimpleEmp) cmbEmp.getSelectedItem();
+		cmbEmpNo =selectedSimpleEmp.getEmpNo();
 	}
 
 	protected void actionPerformedBtnDelete(ActionEvent e) {
@@ -689,4 +690,9 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		cList = cservice.SelectAllCustomerEmpName(new Customer(true));
 		showTables();
 	}
+	public boolean isEmpty() {
+		return tfName.getText().equals("") || tfBirth.getText().equals("")|| tfphone2.getText().equals("")
+				|| tfphone3.getText().equals("")|| tfaddr.getText().equals("");
+	}
+	
 }

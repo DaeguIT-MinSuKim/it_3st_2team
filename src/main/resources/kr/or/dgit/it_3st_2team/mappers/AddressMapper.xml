@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.dgit.it_3st_2team.dao.AddressDao">
+	<resultMap type="Address" id="AddressResult">
+		<id property="sido" column="sido"/>
+		<result property="zipcode" column="zipcode"/>
+		<result property="sigungu" column="sigungu"/>
+		<result property="doro" column="doro"/>
+	</resultMap>
+	
+	<!-- selectsido -->
+	<select id="SelectSidoSql" resultType="Address">
+		select distinct(sido) from address
+	</select>
+	
+	
+	
+	<!-- selectsigungu -->
+	
+	<sql id="whereSidoSql">
+		<where>
+			<if test="sido != null">
+				sido = #{sido}
+			</if>
+		</where>
+	</sql>
+	
+	
+	<select id="SelectSigunguSql" resultType="Address">
+		select distinct(sigungu) from address
+		<include refid="whereSidoSql"/>
+	</select>
+	<!-- select doro -->
+	
+	<sql id="SelectDoroSql">
+		select zipcode,sido,sigungu,doro from address
+	</sql>
+	
+	<sql id="whereDoroSql">
+		<where>
+			<if test="sido != null">
+				sido=#{sido}
+			</if>
+			<if test="sigungu != null">
+				and sigungu=#{sigungu}
+			</if>
+			<if test="doro != null">
+				and doro like #{doro}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="SelectDoro" resultMap="AddressResult" parameterType="map">
+		<include refid="SelectDoroSql"></include>
+		<include refid="whereDoroSql"></include>	
+	</select>
+	
+</mapper>

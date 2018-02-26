@@ -25,6 +25,7 @@ public class CustomerService {
 			return sqlSession.selectList(namespace + "selectAllCustomer");
 		}
 	}
+	
 	public List<Employee> selectAllEmployee(){
 		log.debug("selectAllEmployee()");
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {

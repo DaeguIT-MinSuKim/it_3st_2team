@@ -40,7 +40,7 @@ public class testframe extends JFrame implements ActionListener {
 	 */
 	public testframe() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 871, 452);
+		setBounds(100, 100, 871, 573);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -69,6 +69,6 @@ public class testframe extends JFrame implements ActionListener {
 		JPanel cpanel = new CustomerJPanel();
 		setContentPane(cpanel);
 		revalidate();
-		pack();
+		//pack();
 	}
 }

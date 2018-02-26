@@ -8,7 +8,7 @@ public class Address {
 	private int building1;
 	private String building2;
 	
-	private Address() {
+	public Address() {
 	}
 	private Address(char zipcode, String sido, String sigungu, String doro, int building1, String building2) {
 		this.zipcode = zipcode;
@@ -17,6 +17,11 @@ public class Address {
 		this.doro = doro;
 		this.building1 = building1;
 		this.building2 = building2;
+	}
+	
+	private Address(String sido) {
+		super();
+		this.sido = sido;
 	}
 	public char getZipcode() {
 		return zipcode;

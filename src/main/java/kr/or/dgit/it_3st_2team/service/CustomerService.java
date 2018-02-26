@@ -25,16 +25,18 @@ public class CustomerService {
 			return sqlSession.selectList(namespace + "selectAllCustomer");
 		}
 	}
+	
 	public List<Employee> selectAllEmployee(){
 		log.debug("selectAllEmployee()");
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
 			return sqlSession.selectList(namespace + "selectAllEmployee");
 		}
 	}
-	public List<Customer> SelectAllCustomerEmpName(){
+	
+	public List<Customer> SelectAllCustomerEmpName(Customer customer){
 		log.debug("SelectAllCustomerEmpName()");
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
-			return sqlSession.selectList(namespace + "SelectAllCustomerEmpName");
+			return sqlSession.selectList(namespace + "SelectAllCustomerEmpName",customer);
 		}
 	}
 	public int inSertCustomer(Customer customer) {
@@ -43,6 +45,40 @@ public class CustomerService {
 			int res = sqlSession.insert(namespace + "inSertCustomer",customer);
 			sqlSession.commit();
 			return res;
+		}
+	}
+	public List<Customer>SelectWhereCusId(Customer customer){
+		log.debug("SelectWhereCusId()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			return sqlSession.selectList(namespace + "SelectWhereCusId",customer);
+		}
+	}
+	public int  cusomerSizeNo() {
+		log.debug("cusomerSizeNo()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			return sqlSession.selectOne(namespace + "cusomerSizeNo");
+		}
+	}
+	public int updateSetCustomer(Customer customer) {
+		log.debug("updateSetCustomer()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			int res = sqlSession.update(namespace + "updateSetCustomer",customer);
+			sqlSession.commit();
+			return res;
+		}
+	}
+	public int deleteCustomer(Customer customer) {
+		log.debug("deleteCustomer()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			int res = sqlSession.update(namespace + "deleteCustomer",customer);
+			sqlSession.commit();
+			return res;
+		}
+	}
+	public List<Customer> SelectAllCustomerName(Customer customer){
+		log.debug("SelectAllCustomerName()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			return sqlSession.selectList(namespace + "SelectAllCustomerName",customer);
 		}
 	}
 }

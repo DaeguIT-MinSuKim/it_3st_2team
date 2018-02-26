@@ -66,7 +66,7 @@ public class EmployeeSearchUI extends JFrame {
 
 		rows = new Object[list.size()][];
 		for (int i = 0; i < list.size(); i++) {
-			rows[i] = list.get(i).toArray();
+			rows[i] = list.get(i).toArrayNoandName();
 		}
 
 		return rows;

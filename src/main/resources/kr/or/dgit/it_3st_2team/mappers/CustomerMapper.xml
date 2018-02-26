@@ -16,24 +16,52 @@
 		<association property="emp" resultMap="kr.or.dgit.it_3st_2team.dao.EmployeeDao.employeeResult"></association>
 	</resultMap>
 	
+	<!-- select customer -->
+	
+	
+	
 	<sql id="selectSql">
 		select cus_no, cus_name,birth,age,join_date,phone,addr,emp_no,c_tf
-		from customer
+		from customer 
+	</sql>
+	
+	<sql id="wherecTfSql">
+		<where>
+			<if test="cTf != null">
+				c_tf = #{cTf} order by cus_no desc
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="whereCusnoSql">
+		<where>
+			<if test="cusNo != null">
+				cus_no = #{cusNo}
+			</if>
+		</where>
 	</sql>
 	
 	<sql id="selectEmployee">
 		select emp_name,t.title_name  from employee e join title t on e.title_no=t.title_no
 	</sql> 
 	
-	<select id="selectAllCustomer" resultType="Customer">
+	 <select id="selectAllCustomer" resultType="Customer">
 		<include refid="selectSql"/>
-	</select>
-	
+	</select> 
+
 	
 	
 	<select id="selectAllEmployee" resultType="Employee">
 		<include refid="selectEmployee"/>
 	</select> 
+
+	<!-- select customer size -->
+	<sql id="cusomerSizeSql">
+		select count(*) from customer
+	</sql>
+	<select id="cusomerSizeNo" resultType="int">
+		<include refid="cusomerSizeSql"></include>
+	</select>
 	
 	<!-- select Allcustomer, empname -->
 	
@@ -44,19 +72,72 @@
 	<sql id="SelectCustomerSql">
 		select c.cus_no,c.cus_name,c.birth,c.age,c.join_date,c.phone,c.addr,e.emp_name 
 		from customer c join employee e on c.emp_no=e.emp_no
-		order by cus_no
 	</sql>
+
 	<select id="SelectAllCustomerEmpName" resultMap="CustomerAddEmpName">
 		<include refid="SelectCustomerSql"/>
+		<include refid="wherecTfSql"/>
+	</select> 
+	<!-- select wherename -->
+	
+	<sql id="whereEmpNamelSql">
+		<where>
+			<if test="cusName != null">
+				cus_name=#{cusName}
+			</if>
+			<if test="cTf != null">
+				and c_tf=#{cTf}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="SelectAllCustomerName" resultMap="CustomerAddEmpName">
+		<include refid="SelectCustomerSql"/>
+		<include refid="whereEmpNamelSql"/>
 	</select> 
 	
+	<!-- select Wherecusid -->
+
+	 <resultMap id="CustomerAddEmpNo" type="Customer" extends="customerResult">
+		<association property="emp" resultMap="kr.or.dgit.it_3st_2team.dao.EmployeeDao.empNoResult"></association>
+	</resultMap>
+	<select id="SelectWhereCusId" resultMap="CustomerAddEmpNo">
+		<include refid="selectSql"/>
+		<include refid="whereCusnoSql"/>
+	</select>
+	
+	
 	<!-- insert customer -->
-<!-- 	<sql id="inSertCustomerSql">
-		insert into customer(cus_no,cus_name,birth,age,join_date,phone,addr,emp_no,c_tf) values
-			(#{cusNo},#{cusName},#{birth},#{age},#{joinDate},#{phone},#{addr},#{emp},#{cTf})
+	<sql id="inSertCustomerSql">
+		insert into customer(cus_no,cus_name,birth,age,join_date,phone,addr,emp_no,c_tf) 
+		values(#{cusNo},#{cusName},#{birth},#{age},#{joinDate},#{phoneNumber},#{addr},#{emp.empNo},#{cTf})
 	</sql>
 	
 	<insert id="inSertCustomer" parameterType="Customer">
 		<include refid="inSertCustomerSql"></include>
-	</insert> -->
+	</insert> 
+	
+	<!--  update customer-->
+	<update id="updateSetCustomer" parameterType="Customer">
+		update customer
+		<set>
+			<if test="cusName !=null">cus_name=#{cusName},</if>
+			<if test="birth !=null">birth=#{birth},</if>
+			<if test="age !=null">age=#{age},</if>
+			<if test="joinDate !=null">join_date=#{joinDate},</if>
+			<if test="phoneNumber !=null">phone=#{phoneNumber},</if>
+			<if test="addr !=null">addr=#{addr},</if>
+			<if test="emp !=null">emp_no=#{emp.empNo},</if>
+			<if test="cTf !=null">c_tf=#{cTf},</if>
+		</set>
+		<include refid="whereCusnoSql"></include>
+	</update>
+	
+	<update id="deleteCustomer" parameterType="Customer">
+		update customer
+		<set>
+		<if test="cTf !=null">c_tf=#{cTf},</if>
+		</set>
+		<include refid="whereCusnoSql"></include>
+	</update>
 </mapper>

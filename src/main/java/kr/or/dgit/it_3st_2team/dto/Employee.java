@@ -1,7 +1,6 @@
 package kr.or.dgit.it_3st_2team.dto;
 
 import java.util.Date;
-import java.util.List;
 
 public class Employee {
 	private int empNo;
@@ -38,11 +37,21 @@ public class Employee {
 		this.id = id;
 		this.epassword = password;
 	}
+	
+	public Employee(Boolean eTf) {
+		super();
+		this.eTf = eTf;
+	}
 
 	private Employee(String empName, Title titleNo) {
 		super();
 		this.empName = empName;
 		this.title = titleNo;
+	}
+
+	public Employee(String empName) {
+		super();
+		this.empName = empName;
 	}
 
 	public Employee(int empNo) {
@@ -138,7 +147,11 @@ public class Employee {
 				empNo, empName, joinDate, addr, id, epassword, title, eOff, eTf);
 	}
 	
-	public Object[] toArray() {
+	public Object[] toArrayNoandName() {
 		return new Object[] {empNo, empName};
+	}
+
+	public Object[] toArray() {
+		return new Object[] { empNo, empName, joinDate, id, epassword, title };
 	}
 }

@@ -18,8 +18,8 @@ public class Customer {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	private Customer(int cusNo, String cusName, Date birth, int age, Date joinDate, PhoneNumber phone, String addr,
-			Employee empNo, Boolean cTf) {
+	public Customer(int cusNo, String cusName, Date birth, int age, Date joinDate, PhoneNumber phone, String addr,
+			Employee emp, Boolean cTf) {
 		super();
 		this.cusNo = cusNo;
 		this.cusName = cusName;
@@ -28,8 +28,35 @@ public class Customer {
 		this.joinDate = joinDate;
 		this.phoneNumber = phone;
 		this.addr = addr;
-		this.emp = empNo;
+		this.emp = emp;
 		this.cTf = cTf;
+	}
+	
+	private Customer(int cusNo, String cusName, Date birth, int age, Date joinDate, PhoneNumber phoneNumber,
+			String addr, Employee emp) {
+		super();
+		this.cusNo = cusNo;
+		this.cusName = cusName;
+		this.birth = birth;
+		this.age = age;
+		this.joinDate = joinDate;
+		this.phoneNumber = phoneNumber;
+		this.addr = addr;
+		this.emp = emp;
+	}
+	
+	public Customer(int cusNo, Boolean cTf) {
+		super();
+		this.cusNo = cusNo;
+		this.cTf = cTf;
+	}
+	public Customer(Boolean cTf) {
+		super();
+		this.cTf = cTf;
+	}
+	public Customer(int cusNo) {
+		super();
+		this.cusNo = cusNo;
 	}
 	public int getCusNo() {
 		return cusNo;
@@ -80,12 +107,12 @@ public class Customer {
 	public void setAddr(String addr) {
 		this.addr = addr;
 	}
-	public Employee getEmpNo() {
+	/*public Employee getEmpNo() {
 		return emp;
 	}
-	public void setEmpNo(Employee empNo) {
-		this.emp = empNo;
-	}
+	public void setEmpNo(Employee emp) {
+		this.emp = emp;
+	}*/
 	public Boolean getcTf() {
 		return cTf;
 	}

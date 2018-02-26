@@ -58,4 +58,26 @@ public class CustomerService {
 			return sqlSession.selectOne(namespace + "cusomerSizeNo");
 		}
 	}
+	public int updateSetCustomer(Customer customer) {
+		log.debug("updateSetCustomer()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			int res = sqlSession.update(namespace + "updateSetCustomer",customer);
+			sqlSession.commit();
+			return res;
+		}
+	}
+	public int deleteCustomer(Customer customer) {
+		log.debug("deleteCustomer()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			int res = sqlSession.update(namespace + "deleteCustomer",customer);
+			sqlSession.commit();
+			return res;
+		}
+	}
+	public List<Customer> SelectAllCustomerName(Customer customer){
+		log.debug("SelectAllCustomerName()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			return sqlSession.selectList(namespace + "SelectAllCustomerName",customer);
+		}
+	}
 }

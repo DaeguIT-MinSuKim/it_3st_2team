@@ -10,6 +10,9 @@ public interface CustomerDao {
 	List<Employee> selectAllEmployee();
 	/*select customerAll*/
 	List<Customer> SelectAllCustomerEmpName(Customer customer);
+	
+	/*select customername*/
+	List<Customer> SelectAllCustomerName(Customer customer);
 	/*insert customer*/
 	int inSertCustomer(Customer customer);
 	
@@ -17,4 +20,9 @@ public interface CustomerDao {
 	
 	/*select CusomerSize*/
 	int cusomerSizeNo();
+	
+	/*update customer*/
+	int updateSetCustomer(Customer customer);
+	/*delete customer*/
+	int deleteCustomer(Customer customer);
 }

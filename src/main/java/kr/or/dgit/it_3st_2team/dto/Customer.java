@@ -32,6 +32,24 @@ public class Customer {
 		this.cTf = cTf;
 	}
 	
+	private Customer(int cusNo, String cusName, Date birth, int age, Date joinDate, PhoneNumber phoneNumber,
+			String addr, Employee emp) {
+		super();
+		this.cusNo = cusNo;
+		this.cusName = cusName;
+		this.birth = birth;
+		this.age = age;
+		this.joinDate = joinDate;
+		this.phoneNumber = phoneNumber;
+		this.addr = addr;
+		this.emp = emp;
+	}
+	
+	public Customer(int cusNo, Boolean cTf) {
+		super();
+		this.cusNo = cusNo;
+		this.cTf = cTf;
+	}
 	public Customer(Boolean cTf) {
 		super();
 		this.cTf = cTf;

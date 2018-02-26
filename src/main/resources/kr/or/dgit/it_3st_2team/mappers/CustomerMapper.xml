@@ -78,6 +78,23 @@
 		<include refid="SelectCustomerSql"/>
 		<include refid="wherecTfSql"/>
 	</select> 
+	<!-- select wherename -->
+	
+	<sql id="whereEmpNamelSql">
+		<where>
+			<if test="cusName != null">
+				cus_name=#{cusName}
+			</if>
+			<if test="cTf != null">
+				and c_tf=#{cTf}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="SelectAllCustomerName" resultMap="CustomerAddEmpName">
+		<include refid="SelectCustomerSql"/>
+		<include refid="whereEmpNamelSql"/>
+	</select> 
 	
 	<!-- select Wherecusid -->
 
@@ -99,4 +116,28 @@
 	<insert id="inSertCustomer" parameterType="Customer">
 		<include refid="inSertCustomerSql"></include>
 	</insert> 
+	
+	<!--  update customer-->
+	<update id="updateSetCustomer" parameterType="Customer">
+		update customer
+		<set>
+			<if test="cusName !=null">cus_name=#{cusName},</if>
+			<if test="birth !=null">birth=#{birth},</if>
+			<if test="age !=null">age=#{age},</if>
+			<if test="joinDate !=null">join_date=#{joinDate},</if>
+			<if test="phoneNumber !=null">phone=#{phoneNumber},</if>
+			<if test="addr !=null">addr=#{addr},</if>
+			<if test="emp !=null">emp_no=#{emp.empNo},</if>
+			<if test="cTf !=null">c_tf=#{cTf},</if>
+		</set>
+		<include refid="whereCusnoSql"></include>
+	</update>
+	
+	<update id="deleteCustomer" parameterType="Customer">
+		update customer
+		<set>
+		<if test="cTf !=null">c_tf=#{cTf},</if>
+		</set>
+		<include refid="whereCusnoSql"></include>
+	</update>
 </mapper>

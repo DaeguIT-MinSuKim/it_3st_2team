@@ -90,4 +90,38 @@ public class CustomerTest {
 		System.out.println(listStd);
 
 	}*/
+	/*@Test
+	public void test7UpdateCustomer() {
+		Calendar newDate = GregorianCalendar.getInstance();
+		newDate.set(1990, 2, 15);
+		Customer ctm = new Customer();
+		ctm.setCusNo(4);
+		ctm.setCusName("dddd");
+		ctm.setBirth(newDate.getTime());
+		ctm.setJoinDate(newDate.getTime());
+		ctm.setPhoneNumber(new PhoneNumber("010-0000-0000"));
+		ctm.setAge(15);
+		ctm.setAddr("대구광역시 동구");
+		ctm.setEmp(new Employee(1));
+		int res = service.updateSetCustomer(ctm);
+		Assert.assertEquals(1, res);
+	}*/
+/*	@Test
+	public void test8DeleteCustomer() {
+		Customer ctm = new Customer();
+		ctm.setCusNo(5);
+		ctm.setcTf(false);
+		int res=service.deleteCustomer(ctm);
+		Assert.assertEquals(1, res);
+	}*/
+	@Test
+	public void test9SelectCustomerName() {
+		Customer ctm = new Customer();
+		ctm.setCusName("김수찬");
+		ctm.setcTf(true);
+		List<Customer> list = service.SelectAllCustomerName(ctm);
+		Assert.assertNotNull(list);
+
+		System.out.println(list);
+	}
 }

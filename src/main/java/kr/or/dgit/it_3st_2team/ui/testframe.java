@@ -2,19 +2,17 @@ package kr.or.dgit.it_3st_2team.ui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import kr.or.dgit.it_3st_2team.ui.CustomerJPanel;
-
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+@SuppressWarnings("serial")
 
 public class testframe extends JFrame implements ActionListener {
 
@@ -42,7 +40,7 @@ public class testframe extends JFrame implements ActionListener {
 	 */
 	public testframe() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 871, 452);
+		setBounds(100, 100, 871, 573);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -71,6 +69,6 @@ public class testframe extends JFrame implements ActionListener {
 		JPanel cpanel = new CustomerJPanel();
 		setContentPane(cpanel);
 		revalidate();
-		pack();
+		//pack();
 	}
 }

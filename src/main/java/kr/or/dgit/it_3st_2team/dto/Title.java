@@ -22,10 +22,8 @@ public class Title {
 	public void setTitleName(String titleName) {
 		this.titleName = titleName;
 	}
-	@Override
-	public String toString() {
-		return String.format("Title [titleNo=%s, titleName=%s]", titleNo, titleName);
+	public Object[] toArray() {
+		return new Object[] {titleNo, titleName};
 	}
-	
 	
 }

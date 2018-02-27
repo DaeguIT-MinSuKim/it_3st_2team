@@ -31,12 +31,25 @@ public class Sale { //Foreign key에 대한 변수타입 수정 kim 2018-02-22
 		this.evn = evn;
 		this.sPrice = sPrice;
 	}
+
 	
 	public Hair getHair() {
 		return hair;
 	}
 	public void setHair(Hair hair) {
 		this.hair = hair;
+	}
+
+	public Sale(int saleNo, Date sDate, Date sTime, Customer cus, Employee emp, Event evn, int sPrice) { //khj
+		super();
+		this.saleNo = saleNo;
+		this.sDate = sDate;
+		this.sTime = sTime;
+		this.cus = cus;
+		this.emp = emp;
+		this.evn = evn;
+		this.sPrice = sPrice;
+
 	}
 	public int getSaleNo() {
 		return saleNo;

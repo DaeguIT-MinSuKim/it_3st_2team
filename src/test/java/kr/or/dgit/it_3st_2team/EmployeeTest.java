@@ -41,9 +41,9 @@ public class EmployeeTest {
 		  (Employee cs : listStd) { System.out.println(cs); } }
 		 
 	}*/
-	 @Test 
+	 /*@Test 
 	 public void test2SelectempNo() {
 		 Employee emp = new Employee("이창준");
 		 int no = service.selectEmpNo(emp);
-	 }
+	 }*/
 }

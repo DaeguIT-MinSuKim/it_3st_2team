@@ -52,8 +52,10 @@ public class CustomerSearchUI extends JFrame {
 		public void mouseClicked(MouseEvent e) {
 			if(e.getClickCount()==1) { //더블클릭 처리안됨 khj
 				int row = table.getSelectedRow();
-				String str = model.getValueAt(row, 1).toString();
-				enrollFrame.setTfSelectedCus(str);
+				String name = model.getValueAt(row, 1).toString();
+				enrollFrame.setTfSelectedCus(name);
+				int no = (int) model.getValueAt(row, 0);
+				enrollFrame.setTfCusNo(no);
 				setVisible(false);
 			}
 		}

@@ -8,6 +8,6 @@
 	</resultMap>
 	
 	<select id="selectAllEvent" resultMap="eventResult">	
-		select evn_name,discount from event
+		select evn_no,evn_name,discount from event
 	</select>
 </mapper>

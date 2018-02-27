@@ -1,33 +1,42 @@
 package kr.or.dgit.it_3st_2team.dto;
 
 public class Enroll {
-	private Sale saleNo;
-	private Hair hairNo;
+	private int enrollNo;
+	private int saleNo;
+	private int hairNo;
 	private Enroll() {
 		// TODO Auto-generated constructor stub
 	}
-	private Enroll(Sale saleNo, Hair hairNo) {
+	public Enroll(int enrollNo, int saleNo, int hairNo) {
 		super();
+		this.enrollNo = enrollNo;
 		this.saleNo = saleNo;
 		this.hairNo = hairNo;
 	}
-	public Sale getSaleNo() {
+	public int getEnrollNo() {
+		return enrollNo;
+	}
+	public void setEnrollNo(int enrollNo) {
+		this.enrollNo = enrollNo;
+	}
+	public int getSaleNo() {
 		return saleNo;
 	}
-	public void setSaleNo(Sale saleNo) {
+	public void setSaleNo(int saleNo) {
 		this.saleNo = saleNo;
 	}
-	public Hair getHairNo() {
+	public int getHairNo() {
 		return hairNo;
 	}
-	public void setHairNo(Hair hairNo) {
+	public void setHairNo(int hairNo) {
 		this.hairNo = hairNo;
 	}
 	@Override
 	public String toString() {
-		return String.format("Enroll [saleNo=%s, hairNo=%s]", saleNo, hairNo);
+		return String.format("Enroll [enrollNo=%s, saleNo=%s, hairNo=%s]", enrollNo, saleNo, hairNo);
 	}
-
+	
+	
 	
 	
 }

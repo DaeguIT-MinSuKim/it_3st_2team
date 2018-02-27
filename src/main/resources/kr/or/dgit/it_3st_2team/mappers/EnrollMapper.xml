@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.dgit.it_3st_2team.dao.EnrollDao">
+	<resultMap id="enrollResult" type="Enroll">
+		<id property="enrollNo" column="enroll_no"/>
+		<result property="saleNo" column="sale_no"/>
+		<result property="hairNo" column="hair_no"/>
+	</resultMap>
+	
+	<insert id="insertEnroll" parameterType="Enroll">
+		insert into enroll(enroll_no, sale_no, hair_no) 
+		values (#{enrollNo},#{saleNo},#{hairNo})
+	</insert>
+</mapper>

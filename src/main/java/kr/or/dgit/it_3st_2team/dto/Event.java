@@ -8,6 +8,15 @@ public class Event {
 	public Event() {
 
 	}
+	
+	
+
+	public Event(int evnNo) {
+		super();
+		this.evnNo = evnNo;
+	}
+
+
 
 	public Event(Integer evnNo, String evnName, Float discount) {
 		this.evnNo = evnNo;

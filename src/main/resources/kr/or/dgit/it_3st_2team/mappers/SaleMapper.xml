@@ -23,7 +23,7 @@
 		select max(sale_no) from sale
 	</select>
 	
-<<<<<<< HEAD
+
 	<!-- yyj 02-27 -->
 	<resultMap type="Sale" id="selectRMonth" extends="saleResult">
 		<association property="cus" resultMap="kr.or.dgit.it_3st_2team.dao.CustomerDao.cusNameResult"></association>
@@ -33,18 +33,22 @@
 	</resultMap>
 	
 	<select id="selectReportMonth" resultMap="selectRMonth">
-		select s.sale_no,sdate,stime,c.cus_name,h.hair_name,ev.evn_name
+		select s.sale_no,sdate,stime,c.cus_name,h.hair_name,ev.evn_name,s.sprice
 			from sale s 
 			join enroll e on s.sale_no=e.sale_no
 			join customer c on s.cus_no=c.cus_no
 			join hair h on h.hair_no=e.hair_no
 			join event ev on ev.evn_no=s.evn_no
-			order by sdate; 
+			order by sdate
 	</select>
 
 	<insert id="insertSale" parameterType="Sale">
 		insert into sale(sale_no,sdate,stime,cus_no,emp_no,evn_no,sprice) 
 		values (#{saleNo},#{sDate},#{sTime},#{cus.cusNo},#{emp.empNo},#{evn.evnNo},#{sPrice})
 	</insert>
-
+	
+	<!-- select count yyj 02-27-->
+	<select id="selectCount" resultType="int">
+		select  count(*) as 'count' from sale group by Month(sdate)
+	</select>
 </mapper>

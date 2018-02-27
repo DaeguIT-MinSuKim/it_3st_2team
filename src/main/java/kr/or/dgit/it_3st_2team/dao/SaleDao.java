@@ -9,4 +9,7 @@ public interface SaleDao {
 	
 	/*selectReportMonth yyj*/
 	List<Sale>selectReportMonth();
+	
+	/*select count test yyj*/
+	List<Integer>selectCount();
 }

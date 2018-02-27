@@ -42,7 +42,7 @@ public class SaleTest {
 		service.insertSale(sale);
 	
 	}*/
-	@Test
+/*	@Test
 	public void test2SelectReportMonth() {
 		
         List<Sale> lists = service.selectReportMonth();
@@ -50,5 +50,14 @@ public class SaleTest {
         for(Sale se : lists) {
         	System.out.println(se);
         }
+}*/
+@Test
+public void test3SelectCount() {
+	
+    List<Integer> lists = service.selectCount();
+    Assert.assertNotNull(lists);
+    for(Integer se : lists) {
+    	System.out.println(se);
+    }
 }
 }

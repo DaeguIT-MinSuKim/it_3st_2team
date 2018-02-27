@@ -41,4 +41,10 @@ public class SaleService {
 
 		}
 	}
+	public List<Integer>selectCount(){
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			SaleDao saleDao = sqlSession.getMapper(SaleDao.class);
+			return saleDao.selectCount();
+		}
+	}
 }

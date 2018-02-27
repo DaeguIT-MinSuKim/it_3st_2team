@@ -26,6 +26,7 @@ public class ReportSaleFrame extends JFrame implements ActionListener {
 	private JPanel pCenter;
 	private SaleService sservice;
 	private JRadioButton rdbMonth;
+	private JRadioButton rdbYear;
 	/**
 	 * Launch the application.
 	 */
@@ -92,7 +93,8 @@ public class ReportSaleFrame extends JFrame implements ActionListener {
 		rdbMonth.addActionListener(this);
 		panel_5.add(rdbMonth);
 		
-		JRadioButton rdbYear = new JRadioButton("연도별");
+		rdbYear = new JRadioButton("연도별");
+		rdbYear.addActionListener(this);
 		panel_5.add(rdbYear);
 		
 		btng.add(rdbMonth);
@@ -101,28 +103,35 @@ public class ReportSaleFrame extends JFrame implements ActionListener {
 		
 		pCenter = new JPanel();
 		contentPane.add(pCenter, BorderLayout.CENTER);
+		pCenter.setLayout(new BorderLayout(0, 0));
 		
-		
+		rdbYear.setVisible(false);
+		showTables();
+	}
+
+	private void showTables() {
 		List<Sale> saletable= sservice.selectReportMonth();
 		tbs.loadDatas(saletable);
 		tbs.getRows(saletable);
-		pCenter.setLayout(new BorderLayout(0, 0));
+		pCenter.setLayout(new BorderLayout(0, 0));	
 		pCenter.add(tbs);
-		
 		
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == rdbYear) {
+			actionPerformedRdbYear(arg0);
+		}
 		if (arg0.getSource() == rdbMonth) {
 			actionPerformedRdbMonth(arg0);
 		}
 	}
 	protected void actionPerformedRdbMonth(ActionEvent arg0) {
-	
-		/*List<Sale> saletable= sservice.selectReportMonth();
-		tbs.loadDatas(saletable);
-		tbs.getRows(saletable);
-		pCenter.setLayout(new BorderLayout(0, 0));
-		pCenter.add(tbs);*/
+//		pCenter.setVisible(true);
+//		showTables();
+		
+	}
+	protected void actionPerformedRdbYear(ActionEvent arg0) {
+		/*pCenter.setVisible(false);*/
 	}
 }

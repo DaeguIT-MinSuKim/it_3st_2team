@@ -106,10 +106,7 @@ public class Sale { //Foreign key에 대한 변수타입 수정 kim 2018-02-22
 	}
 /*	yyj*/
 	public Object[] toArrayMonth() {
-		return new Object[] {saleNo,dateToStrong(sDate),timeToStrong(sTime),cus.getCusName(),hair.getHairName(),evn.getEvnName()};
-	}
-	public Object[] toArrayMonthTotal() {
-		return new Object[] {"n","n","n","n","n","n"};
+		return new Object[] {saleNo,dateToStrong(sDate),timeToStrong(sTime),cus.getCusName(),hair.getHairName(),evn.getEvnName(),sPrice};
 	}
 	public String dateToStrong(Date sdate) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

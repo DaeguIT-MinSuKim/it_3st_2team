@@ -15,6 +15,11 @@ public class Event {
 		this.evnName = evnName;
 		this.discount = discount;
 	}
+	
+	public Event(String evnName) {
+		super();
+		this.evnName = evnName;
+	}
 	public int getEvnNo() {
 		return evnNo;
 	}

@@ -18,4 +18,20 @@
 	<select id="selectMaxSaleNo" resultType="int">
 		select max(sale_no) from sale
 	</select>
+	
+	<resultMap id="saleResultAddCustomer" type="Customer" extends="saleResult">
+		<association property="cus" resultMap="kr.or.dgit.it_3st_2team.dao.CustomerDao.cusNameResult"/>
+	</resultMap>
+	
+	<resultMap id="saleResultAddEmployee" type="Employee" extends="saleResult">
+		<association property="emp" resultMap="kr.or.dgit.it_3st_2team.dao.EmployeeDao.empNameResult"/>
+	</resultMap>
+	
+	<resultMap id="saleResultAddEvent" type="Event" extends="saleResult">
+		<association property="evn" resultMap="kr.or.dgit.it_3st_2team.dao.EventDao.eventResult"/>
+	</resultMap>
+	<insert id="insertSale" parameterType="Sale">
+		insert into sale(sale_no,sdate,stime,emp_no,cus_no,evn_no,sprice) 
+		values(#{saleNo},#{sDate},#{sTime},#{emp},#{cus},#{evn},#{sPrice})
+	</insert>
 </mapper>

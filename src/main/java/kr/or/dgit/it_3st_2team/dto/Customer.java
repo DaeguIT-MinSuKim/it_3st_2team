@@ -45,6 +45,10 @@ public class Customer {
 		this.emp = emp;
 	}
 	
+	public Customer(String cusName) {
+		super();
+		this.cusName = cusName;
+	}
 	public Customer(int cusNo, Boolean cTf) {
 		super();
 		this.cusNo = cusNo;

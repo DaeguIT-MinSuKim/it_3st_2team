@@ -5,7 +5,7 @@
 
 
 <mapper namespace="kr.or.dgit.it_3st_2team.dao.EmployeeDao">
-	<resultMap id="EmployeeResult" type="Employee">
+	<resultMap id="employeeResult" type="Employee">
 		<id property="empNo" column="emp_no" />
 		<result property="empName" column="emp_name" />
 		<result property="joinDate" column="join_date" />
@@ -41,6 +41,10 @@
 			<id property="empNo" column="emp_no" />
 			<result property="empName" column="emp_name" />
 		</resultMap>
+		
+		<resultMap type="Employee" id="empNameResult">
+			<result property="empName" column="emp_name"/>
+		</resultMap>
 
 		<resultMap type="Employee" id="EmployeeAddTitle" extends="employeeResult">
 			<association property="title"
@@ -68,7 +72,7 @@
 		</select>
 
 
-		<resultMap id="employeeResult" type="Employee">
+		<!-- <resultMap id="employeeResult" type="Employee">
 			<id property="empNo" column="emp_no" />
 			<result property="empName" column="emp_name" />
 			<result property="joinDate" column="join_date" />
@@ -76,7 +80,7 @@
 			<result property="id" column="id" />
 			<result property="password" column="epassword" />
 			<result property="eTf" column="e_tf" />
-		</resultMap>
+		</resultMap> -->
 
 		<resultMap id="employeeResultAddTitle" type="Employee"
 			extends="employeeResult">

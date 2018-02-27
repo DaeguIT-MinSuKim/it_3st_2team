@@ -6,6 +6,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,9 +23,13 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
+import kr.or.dgit.it_3st_2team.dto.Customer;
+import kr.or.dgit.it_3st_2team.dto.Employee;
 import kr.or.dgit.it_3st_2team.dto.Event;
 import kr.or.dgit.it_3st_2team.dto.Hair;
+import kr.or.dgit.it_3st_2team.dto.Sale;
 import kr.or.dgit.it_3st_2team.service.EventService;
 import kr.or.dgit.it_3st_2team.service.HairService;
 import kr.or.dgit.it_3st_2team.service.SaleService;
@@ -42,10 +48,11 @@ public class EnrollFrame extends JFrame implements ActionListener {
 	private HashMap<String, Float> mapEvent;
 	private HashMap<String, Integer> mapHair;
 	private JList<String> listHair;
-	private JTable table;
+	private JTable tblAdd;
 	private JTextField tfSelectedEmp;
 	private JButton btnSearchEmp;
 	private JButton btnAdd;
+	private SaleService service;
 
 	/**
 	 * Launch the application.
@@ -86,7 +93,7 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		pnl1.add(pnl1_1);
 		pnl1_1.setLayout(new GridLayout(0, 6, 0, 0));
 		
-		JLabel lblNo = new JLabel("order no :");
+		JLabel lblNo = new JLabel("주문번호 :");
 		pnl1_1.add(lblNo);
 		
 		tfNo = new JTextField();
@@ -95,8 +102,7 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		pnl1_1.add(tfNo);
 		tfNo.setColumns(10);
 		int orderNum=-1;
-		//Sale sale = new Sale();
-		SaleService service = new SaleService();
+		service = new SaleService();
 		orderNum=service.getPresentSaleNo()+1;
 		tfNo.setText(Integer.toString(orderNum));
 		
@@ -104,7 +110,7 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		pnl1.add(pnl1_2);
 		pnl1_2.setLayout(new GridLayout(0, 6, 0, 0));
 		
-		JLabel lblDate = new JLabel("order date :");
+		JLabel lblDate = new JLabel("영업일 :");
 		pnl1_2.add(lblDate);
 		
 		tfDate = new JTextField();
@@ -120,7 +126,7 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		JLabel lblNewLabel_5 = new JLabel("");
 		pnl1_2.add(lblNewLabel_5);
 		
-		JLabel lblTime = new JLabel("order time :");
+		JLabel lblTime = new JLabel("방문시간 :");
 		pnl1_2.add(lblTime);
 		
 		tfTime = new JTextField();
@@ -135,8 +141,9 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		pnl1.add(pnl1_3);
 		pnl1_3.setLayout(new GridLayout(0, 5, 0, 0));
 		
-		JLabel lblName = new JLabel("customer :");
+		JLabel lblName = new JLabel("고객명 :");
 		pnl1_3.add(lblName);
+		
 		
 		btnSearchCus = new JButton("찾기");
 		btnSearchCus.addActionListener(this);
@@ -179,7 +186,7 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		pnl1_4.add(pnl1_4_1);
 		pnl1_4_1.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JLabel lblHair = new JLabel("hair service :");
+		JLabel lblHair = new JLabel("헤어명 :");
 		pnl1_4_1.add(lblHair);
 		
 		
@@ -239,7 +246,7 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		fl_pnl1_6.setAlignment(FlowLayout.RIGHT);
 		pnl1.add(pnl1_6);
 		
-		btnAdd = new JButton("add");
+		btnAdd = new JButton("등록");
 		btnAdd.addActionListener(this);
 		pnl1_6.add(btnAdd);
 		
@@ -250,12 +257,25 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		contentPane.add(pnl2);
 		pnl2.setLayout(new BoxLayout(pnl2, BoxLayout.X_AXIS));
 		
-		table = new JTable();
-		pnl2.add(table);
-	
+		tblAdd = new JTable();
+		pnl2.add(tblAdd);
+		String[] columnType = new String[] {"번호", "영업일", "방문시간", "고객","직원","헤어","이벤트명","금액"};
+		//NonEditableModel model = new NonEditableModel(data, columnType);
+		contentPane.add(tblAdd);
 	}
+	class NonEditableModel extends DefaultTableModel{
+		public NonEditableModel(Object[][] data, Object[] columnNames) {
+			super(data, columnNames);
+		}
+
+		@Override
+		public boolean isCellEditable(int row, int column) {
+			return false;
+		}
+	}
+	
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnAdd) {
+		if (e.getSource() == btnAdd) { //등록 버튼 누르면
 			actionPerformedBtnAdd(e);
 		}
 		if (e.getSource() == btnSearchEmp) {
@@ -400,5 +420,24 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		
 	}*/
 	protected void actionPerformedBtnAdd(ActionEvent e) {
+		int saleNo = Integer.parseInt(tfNo.getText().trim());
+		String sDate = tfDate.getText().trim();
+		String[] arrDate = sDate.split("-");
+		int year = Integer.parseInt(arrDate[0]);
+		int month = Integer.parseInt(arrDate[1]);
+		int day = Integer.parseInt(arrDate[2]);
+		Calendar date = GregorianCalendar.getInstance();
+		date.set(year, month-1, day);
+
+		String cusName = tfSelectedCus.getText().trim();
+		String empName = tfSelectedEmp.getText().trim();
+		String evnName = cmbEvent.getSelectedItem().toString();
+		//String hair = listHair.getSelectedValue();
+		int sPrice = Integer.parseInt(tfPrice.getText().trim());
+		Customer customer = new Customer(cusName);
+		Employee employee = new Employee(empName);
+		Event event = new Event(evnName);
+		Sale sale = new Sale(saleNo,date.getTime(),date.getTime(),customer,employee,event,sPrice);
+		service.insertSale(sale);
 	}
 }

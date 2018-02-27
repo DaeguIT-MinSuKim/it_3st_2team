@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.dgit.it_3st_2team.dao.SaleDao">
-	<resultMap id="saleResult" type="Sale">
+	 <resultMap id="saleResult" type="Sale">
 		<id property="saleNo" column="sale_no"/>
 		<result property="description" column="description"/>
 		<result property="sDate" column="sdate"/>
 		<result property="sTime" column="stime"/>
 		<result property="sPrice" column="sprice"/>
-	</resultMap>
+
+	</resultMap> 
+	
+
+
 	
 	<resultMap id="saleResultAddOthers" type="Sale" extends="saleResult">
 		<association property="cus" resultMap="kr.or.dgit.it_3st_2team.dao.CustomerDao.customerResult"></association>
@@ -19,6 +23,25 @@
 		select max(sale_no) from sale
 	</select>
 	
+
+	<!-- yyj 02-27 -->
+	<resultMap type="Sale" id="selectRMonth" extends="saleResult">
+		<association property="cus" resultMap="kr.or.dgit.it_3st_2team.dao.CustomerDao.cusNameResult"></association>
+		<association property="emp" resultMap="kr.or.dgit.it_3st_2team.dao.EmployeeDao.employeeResult"></association>
+		<association property="evn" resultMap="kr.or.dgit.it_3st_2team.dao.EventDao.eventResult"></association>
+		<association property="hair" resultMap="kr.or.dgit.it_3st_2team.dao.HairDao.hairResult"></association>
+	</resultMap>
+	
+	<select id="selectReportMonth" resultMap="selectRMonth">
+		select s.sale_no,sdate,stime,c.cus_name,h.hair_name,ev.evn_name,s.sprice
+			from sale s 
+			join enroll e on s.sale_no=e.sale_no
+			join customer c on s.cus_no=c.cus_no
+			join hair h on h.hair_no=e.hair_no
+			join event ev on ev.evn_no=s.evn_no
+			order by sdate
+	</select>
+
 	<insert id="insertSale" parameterType="Sale">
 		insert into sale(sale_no,sdate,stime,cus_no,emp_no,evn_no,sprice) 
 		values (#{saleNo},#{sDate},#{sTime},#{cus.cusNo},#{emp.empNo},#{evn.evnNo},#{sPrice})
@@ -26,5 +49,10 @@
 	
 	<select id="selectAllSale" resultMap="saleResultAddOthers">
 		select sale_no, sdate, stime, cus_no, emp_no, evn_no, sprice from sale
+	</select>
+	
+	<!-- select count yyj 02-27-->
+	<select id="selectCount" resultType="int">
+		select  count(*) as 'count' from sale group by Month(sdate)
 	</select>
 </mapper>

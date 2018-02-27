@@ -12,6 +12,9 @@ public class Sale { //Foreign key에 대한 변수타입 수정 kim 2018-02-22
 	private Employee emp;
 	private Event evn;
 	private int sPrice;
+	
+	/*hair변수  get,set 추가 yyj 02-07*/
+	private Hair hair;
 	public Sale() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -28,6 +31,15 @@ public class Sale { //Foreign key에 대한 변수타입 수정 kim 2018-02-22
 		this.evn = evn;
 		this.sPrice = sPrice;
 	}
+
+	
+	public Hair getHair() {
+		return hair;
+	}
+	public void setHair(Hair hair) {
+		this.hair = hair;
+	}
+
 	public Sale(int saleNo, Date sDate, Date sTime, Customer cus, Employee emp, Event evn, int sPrice) { //khj
 		super();
 		this.saleNo = saleNo;
@@ -37,6 +49,7 @@ public class Sale { //Foreign key에 대한 변수타입 수정 kim 2018-02-22
 		this.emp = emp;
 		this.evn = evn;
 		this.sPrice = sPrice;
+
 	}
 	public int getSaleNo() {
 		return saleNo;
@@ -99,15 +112,16 @@ public class Sale { //Foreign key에 대한 변수타입 수정 kim 2018-02-22
 	public Object[] toArraySelectAllSale() {
 		return new Object[] {saleNo,dateToString(sDate),timeToString(sTime),cus.getCusNo(),emp.getEmpName(), evn.getEvnName(), sPrice};		
 	}
-	//khj
+/*	yyj*/
+	public Object[] toArrayMonth() {
+		return new Object[] {saleNo,dateToString(sDate),timeToString(sTime),cus.getCusName(),hair.getHairName(),evn.getEvnName(),sPrice};
+	}
 	public String dateToString(Date date) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		return sdf.format(date);
 	}
-	//khj
-	public String timeToString(Date date) {
-		SimpleDateFormat sdf = new SimpleDateFormat("HH-mm");
-		return sdf.format(date);
+	public String timeToString(Date stime) {
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+		return sdf.format(stime);
 	}
-	
 }

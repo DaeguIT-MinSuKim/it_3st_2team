@@ -45,7 +45,7 @@ import kr.or.dgit.it_3st_2team.service.CustomerService;
 import kr.or.dgit.it_3st_2team.service.EmployeeService;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
-
+/*yyj*/
 @SuppressWarnings("serial")
 public class CustomerJPanel extends JPanel implements ActionListener, KeyListener, MouseListener {
 	private JTextField tfNo;

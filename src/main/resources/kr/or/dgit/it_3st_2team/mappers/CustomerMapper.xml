@@ -16,6 +16,12 @@
 		<association property="emp" resultMap="kr.or.dgit.it_3st_2team.dao.EmployeeDao.employeeResult"></association>
 	</resultMap>
 	
+	<!-- resulemap yyj 02-27 -->
+		<resultMap type="Customer" id="cusNameResult">
+			<id property="cusNo" column="cus_no"/>
+			<result property="cusName" column="cus_name"/>
+		</resultMap>
+	
 	<!-- select customer -->
 	<!-- yyj -->
 		

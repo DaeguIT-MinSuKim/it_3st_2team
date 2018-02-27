@@ -27,6 +27,8 @@ import kr.or.dgit.it_3st_2team.dto.Hair;
 import kr.or.dgit.it_3st_2team.service.EventService;
 import kr.or.dgit.it_3st_2team.service.HairService;
 import kr.or.dgit.it_3st_2team.service.SaleService;
+import javax.swing.table.DefaultTableModel;
+import java.awt.BorderLayout;
 
 public class EnrollFrame extends JFrame implements ActionListener {
 
@@ -248,10 +250,18 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		
 		JPanel pnl2 = new JPanel();
 		contentPane.add(pnl2);
-		pnl2.setLayout(new BoxLayout(pnl2, BoxLayout.X_AXIS));
+		pnl2.setLayout(new BorderLayout(0, 0));
 		
 		table = new JTable();
-		pnl2.add(table);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"영업번호", "영업일", "방문시간", "고객명", "직원명", "헤어명", "이벤트명", "단가"},
+			},
+			new String[] {
+				"New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column"
+			}
+		));
+		pnl2.add(table, BorderLayout.CENTER);
 	
 	}
 	public void actionPerformed(ActionEvent e) {

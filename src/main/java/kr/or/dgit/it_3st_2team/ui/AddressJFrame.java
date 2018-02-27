@@ -29,6 +29,8 @@ import kr.or.dgit.it_3st_2team.dto.Address;
 import kr.or.dgit.it_3st_2team.service.AddressService;
 import java.awt.event.MouseEvent;
 
+
+/*yyj*/
 public class AddressJFrame extends JFrame implements ActionListener, MouseListener {
 
 	private JPanel contentPane;

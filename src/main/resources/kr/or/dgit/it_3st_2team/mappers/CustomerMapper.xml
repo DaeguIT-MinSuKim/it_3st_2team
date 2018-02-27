@@ -78,6 +78,7 @@
 		<include refid="SelectCustomerSql"/>
 		<include refid="wherecTfSql"/>
 	</select> 
+	
 	<!-- select wherename -->
 	<!-- yyj -->
 	 <sql id="whereEmpNamelSql">

@@ -23,4 +23,8 @@
 		insert into sale(sale_no,sdate,stime,cus_no,emp_no,evn_no,sprice) 
 		values (#{saleNo},#{sDate},#{sTime},#{cus.cusNo},#{emp.empNo},#{evn.evnNo},#{sPrice})
 	</insert>
+	
+	<select id="selectAllSale" resultMap="saleResultAddOthers">
+		select sale_no, sdate, stime, cus_no, emp_no, evn_no, sprice from sale
+	</select>
 </mapper>

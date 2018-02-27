@@ -1,5 +1,6 @@
 package kr.or.dgit.it_3st_2team.dto;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Sale { //Foreign key에 대한 변수타입 수정 kim 2018-02-22
@@ -90,6 +91,23 @@ public class Sale { //Foreign key에 대한 변수타입 수정 kim 2018-02-22
 		return String.format("Sale [saleNo=%s, description=%s, sDate=%s, sTime=%s, cus=%s, emp=%s, evn=%s, sPrice=%s]",
 				saleNo, description, sDate, sTime, cus, emp, evn, sPrice);
 	}
-	
+	//khj
+	public Object[] toArray() {
+		return new Object[] {saleNo, sDate, sTime, cus, emp, evn, sPrice};
+	}
+	//khj
+	public Object[] toArraySelectAllSale() {
+		return new Object[] {saleNo,dateToString(sDate),timeToString(sTime),cus.getCusNo(),emp.getEmpName(), evn.getEvnName(), sPrice};		
+	}
+	//khj
+	public String dateToString(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		return sdf.format(date);
+	}
+	//khj
+	public String timeToString(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("HH-mm");
+		return sdf.format(date);
+	}
 	
 }

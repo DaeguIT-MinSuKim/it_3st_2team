@@ -43,4 +43,9 @@ public class SaleTest {
 		service.insertSale(sale);
 	
 	}*/
+	
+	@Test
+	public void test2SelectAllSale() {
+		service.selectAllSale();
+	}
 }

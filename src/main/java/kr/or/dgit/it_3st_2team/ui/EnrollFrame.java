@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -23,15 +24,20 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import kr.or.dgit.it_3st_2team.dto.Customer;
 import kr.or.dgit.it_3st_2team.dto.Employee;
+import kr.or.dgit.it_3st_2team.dto.Enroll;
 import kr.or.dgit.it_3st_2team.dto.Event;
 import kr.or.dgit.it_3st_2team.dto.Hair;
 import kr.or.dgit.it_3st_2team.dto.Sale;
+import kr.or.dgit.it_3st_2team.service.CustomerService;
+import kr.or.dgit.it_3st_2team.service.EnrollService;
 import kr.or.dgit.it_3st_2team.service.EventService;
 import kr.or.dgit.it_3st_2team.service.HairService;
 import kr.or.dgit.it_3st_2team.service.SaleService;
+import kr.or.dgit.it_3st_2team.ui.CustomerSearchUI.NonEditableModel;
 
 public class EnrollFrame extends JFrame implements ActionListener {
 
@@ -48,6 +54,7 @@ public class EnrollFrame extends JFrame implements ActionListener {
 	private HashMap<String, Integer> mapNoEvent;
 	private HashMap<String, Integer> mapHairPrice;
 	private JList<String> listHair;
+	private HashMap<String, Integer> mapHairNo;
 	private JTable table;
 	private JTextField tfSelectedEmp;
 	private JButton btnSearchEmp;
@@ -55,6 +62,10 @@ public class EnrollFrame extends JFrame implements ActionListener {
 	private JTextField tfCusNo;
 	private JTextField tfEmpNo;
 	private JTextField tfEvnNo;
+	private List<Sale> saleList;
+	private SaleService saleService = new SaleService();
+	private CustomerService customerService = new CustomerService();
+	private NonEditableModel model;
 
 	/**
 	 * Launch the application.
@@ -77,6 +88,9 @@ public class EnrollFrame extends JFrame implements ActionListener {
 	 */
 	public EnrollFrame() {
 		initComponents();
+		saleList = new ArrayList<>();
+		saleService = new SaleService();
+		customerService = new CustomerService();
 	}
 	private void initComponents() {
 		setTitle("헤어주문");
@@ -104,9 +118,7 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		pnl1_1.add(tfNo);
 		tfNo.setColumns(10);
 		int orderNum=-1;
-		//Sale sale = new Sale();
-		SaleService service = new SaleService();
-		orderNum=service.getPresentSaleNo()+1;
+		orderNum=saleService.getPresentSaleNo()+1;
 		tfNo.setText(Integer.toString(orderNum));
 		
 		JPanel pnl1_2 = new JPanel();
@@ -211,8 +223,10 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		HairService hairService = new HairService();
 		List<Hair> hairList = hairService.SelectAllHair();
 		mapHairPrice = new HashMap<>();
+		mapHairNo = new HashMap<>();
 		for(Hair h:hairList) {
 			mapHairPrice.put(h.getHairName(), h.getPrice());
+			mapHairNo.put(h.getHairName(), h.getHairNo());
 		}
 		String[] hairNames = new String[mapHairPrice.size()];
 		mapHairPrice.keySet().toArray(hairNames);
@@ -288,10 +302,38 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		contentPane.add(pnl2);
 		pnl2.setLayout(new BorderLayout(0, 0));
 		
-		table = new JTable();
+		String[] columnType = new String[] {"영업번호","영업일","방문시간","고객명","직원명","이벤트명","금액"};
+		saleList = saleService.selectAllSale();
+		Object[][] data = getRows(saleList);
+		model = new NonEditableModel(data, columnType);
+		table = new JTable(model);
 		pnl2.add(table, BorderLayout.CENTER);
-	
+		contentPane.add(table);
 	}
+	
+	class NonEditableModel extends DefaultTableModel {
+		public NonEditableModel(Object[][] data, Object[] columnNames) {
+			super(data, columnNames);
+		}
+
+		@Override
+		public boolean isCellEditable(int row, int column) {
+			return false;
+		}
+	}
+	
+	public Object[][] getRows(List<Sale> list) {
+		Object[][] rows = null;
+
+		rows = new Object[list.size()][];
+		for (int i = 0; i < list.size(); i++) {
+			Sale sale = list.get(i);
+			rows[i] = sale.toArraySelectAllSale();
+		}
+
+		return rows;
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnAdd) {
 			actionPerformedBtnAdd(e);
@@ -463,11 +505,14 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		Customer customer = new Customer(cus);
 		Employee employee = new Employee(emp);
 		Event event = new Event(evn);
-		SaleService service = new SaleService();
 		Sale sale = new Sale(saleNo, calender.getTime(), calender.getTime(), customer, employee, event, price);
-		service.insertSale(sale);
+		saleService.insertSale(sale);
 		
 		//enroll 테이블 넣기
-		
+		EnrollService enrollservice = new EnrollService();
+		String selectedHairName = listHair.getSelectedValue();
+		int hairNo = mapHairNo.get(selectedHairName);
+		Enroll enroll = new Enroll(saleNo, hairNo);
+		enrollservice.insertEnroll(enroll);
 	}
 }

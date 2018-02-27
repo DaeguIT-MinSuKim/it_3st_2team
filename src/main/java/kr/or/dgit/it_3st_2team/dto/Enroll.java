@@ -13,6 +13,12 @@ public class Enroll {
 		this.saleNo = saleNo;
 		this.hairNo = hairNo;
 	}
+	
+	public Enroll(int saleNo, int hairNo) { //khj auto-increment
+		super();
+		this.saleNo = saleNo;
+		this.hairNo = hairNo;
+	}
 	public int getEnrollNo() {
 		return enrollNo;
 	}

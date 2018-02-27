@@ -12,17 +12,20 @@
 		<result property="cTf" column="c_tf"/>
 	</resultMap>
 
-	<resultMap id="customerResultAddEmp" type="Customer" extends="customerResult">
+ <resultMap id="customerResultAddEmp" type="Customer" extends="customerResult">
 		<association property="emp" resultMap="kr.or.dgit.it_3st_2team.dao.EmployeeDao.employeeResult"></association>
 	</resultMap>
 	
-	<resultMap id="cusNameResult" type="Customer">
-		<result property="empName" column="emp_name"/>
-	</resultMap>
+
+	<!-- resulemap yyj 02-27 -->
+		<resultMap type="Customer" id="cusNameResult">
+			<id property="cusNo" column="cus_no"/>
+			<result property="cusName" column="cus_name"/>
+		</resultMap>
+	
 	<!-- select customer -->
-	
-	
-	
+	<!-- yyj -->
+		
 	<sql id="selectSql">
 		select cus_no, cus_name,birth,age,join_date,phone,addr,emp_no,c_tf
 		from customer 
@@ -43,14 +46,14 @@
 			</if>
 		</where>
 	</sql>
-	
+	<!-- yyj -->
 	<sql id="selectEmployee">
 		select emp_name,t.title_name  from employee e join title t on e.title_no=t.title_no
 	</sql> 
 	
 	 <select id="selectAllCustomer" resultType="Customer">
 		<include refid="selectSql"/>
-	</select> 
+	</select>  
 
 	
 	
@@ -59,6 +62,7 @@
 	</select> 
 
 	<!-- select customer size -->
+	<!-- yyj -->
 	<sql id="cusomerSizeSql">
 		select count(*) from customer
 	</sql>
@@ -67,7 +71,7 @@
 	</select>
 	
 	<!-- select Allcustomer, empname -->
-	
+	<!-- yyj -->
 	 <resultMap id="CustomerAddEmpName" type="Customer" extends="customerResult">
 		<association property="emp" resultMap="kr.or.dgit.it_3st_2team.dao.EmployeeDao.empNoNameResult"></association>
 	</resultMap> 
@@ -81,9 +85,10 @@
 		<include refid="SelectCustomerSql"/>
 		<include refid="wherecTfSql"/>
 	</select> 
-	<!-- select wherename -->
 	
-	<sql id="whereEmpNamelSql">
+	<!-- select wherename -->
+	<!-- yyj -->
+	 <sql id="whereEmpNamelSql">
 		<where>
 			<if test="cusName != null">
 				cus_name=#{cusName}
@@ -100,6 +105,7 @@
 	</select> 
 	
 	<!-- select Wherecusid -->
+	<!-- yyj -->
 
 	 <resultMap id="CustomerAddEmpNo" type="Customer" extends="customerResult">
 		<association property="emp" resultMap="kr.or.dgit.it_3st_2team.dao.EmployeeDao.empNoResult"></association>
@@ -111,6 +117,7 @@
 	
 	
 	<!-- insert customer -->
+	<!-- yyj -->
 	<sql id="inSertCustomerSql">
 		insert into customer(cus_no,cus_name,birth,age,join_date,phone,addr,emp_no,c_tf) 
 		values(#{cusNo},#{cusName},#{birth},#{age},#{joinDate},#{phoneNumber},#{addr},#{emp.empNo},#{cTf})
@@ -121,6 +128,7 @@
 	</insert> 
 	
 	<!--  update customer-->
+	<!-- yyj -->
 	<update id="updateSetCustomer" parameterType="Customer">
 		update customer
 		<set>

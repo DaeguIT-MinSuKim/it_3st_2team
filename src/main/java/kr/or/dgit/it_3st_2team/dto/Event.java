@@ -9,12 +9,22 @@ public class Event {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
 	public Event(int evnNo, String evnName, float discount) {
-		super();
 		this.evnNo = evnNo;
 		this.evnName = evnName;
 		this.discount = discount;
 	}
+
+	
+	
+
+	public Event(int evnNo) {
+		super();
+		this.evnNo = evnNo;
+	}
+
+	
 	
 	public Event(String evnName) {
 		super();

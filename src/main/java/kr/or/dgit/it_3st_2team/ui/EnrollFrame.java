@@ -1,12 +1,13 @@
 package kr.or.dgit.it_3st_2team.ui;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -27,9 +29,12 @@ import javax.swing.table.DefaultTableModel;
 
 import kr.or.dgit.it_3st_2team.dto.Customer;
 import kr.or.dgit.it_3st_2team.dto.Employee;
+import kr.or.dgit.it_3st_2team.dto.Enroll;
 import kr.or.dgit.it_3st_2team.dto.Event;
 import kr.or.dgit.it_3st_2team.dto.Hair;
 import kr.or.dgit.it_3st_2team.dto.Sale;
+import kr.or.dgit.it_3st_2team.service.CustomerService;
+import kr.or.dgit.it_3st_2team.service.EnrollService;
 import kr.or.dgit.it_3st_2team.service.EventService;
 import kr.or.dgit.it_3st_2team.service.HairService;
 import kr.or.dgit.it_3st_2team.service.SaleService;
@@ -45,14 +50,25 @@ public class EnrollFrame extends JFrame implements ActionListener {
 	private JTextField tfPrice;
 	private JButton btnSearchCus;
 	private JComboBox<String> cmbEvent;
-	private HashMap<String, Float> mapEvent;
-	private HashMap<String, Integer> mapHair;
+	private HashMap<String, Float> mapEventDiscount;
+	private HashMap<String, Integer> mapNoEvent;
+	private HashMap<String, Integer> mapHairPrice;
 	private JList<String> listHair;
-	private JTable tblAdd;
+	private HashMap<String, Integer> mapHairNo;
+	private JTable table;
 	private JTextField tfSelectedEmp;
 	private JButton btnSearchEmp;
 	private JButton btnAdd;
-	private SaleService service;
+	private JTextField tfCusNo;
+	private JTextField tfEmpNo;
+	private JTextField tfEvnNo;
+	private List<Sale> saleList;
+	private SaleService saleService = new SaleService();
+	private CustomerService customerService = new CustomerService();
+	private NonEditableModel model;
+	private JScrollPane scrollPane;
+	private Calendar calender;
+	private EnrollService enrollservice;
 
 	/**
 	 * Launch the application.
@@ -75,6 +91,10 @@ public class EnrollFrame extends JFrame implements ActionListener {
 	 */
 	public EnrollFrame() {
 		initComponents();
+		saleList = new ArrayList<>();
+		saleService = new SaleService();
+		customerService = new CustomerService();
+		enrollservice = new EnrollService();
 	}
 	private void initComponents() {
 		setTitle("헤어주문");
@@ -93,7 +113,8 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		pnl1.add(pnl1_1);
 		pnl1_1.setLayout(new GridLayout(0, 6, 0, 0));
 		
-		JLabel lblNo = new JLabel("주문번호 :");
+
+		JLabel lblNo = new JLabel("영업번호 :");
 		pnl1_1.add(lblNo);
 		
 		tfNo = new JTextField();
@@ -101,10 +122,7 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		tfNo.setFocusable(false);
 		pnl1_1.add(tfNo);
 		tfNo.setColumns(10);
-		int orderNum=-1;
-		service = new SaleService();
-		orderNum=service.getPresentSaleNo()+1;
-		tfNo.setText(Integer.toString(orderNum));
+		renewtfNo();
 		
 		JPanel pnl1_2 = new JPanel();
 		pnl1.add(pnl1_2);
@@ -117,29 +135,23 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		tfDate.setEditable(false);
 		tfDate.setColumns(10);
 		pnl1_2.add(tfDate);
-		Calendar now = Calendar.getInstance();
-		int year = now.get(Calendar.YEAR);
-		int month = now.get(Calendar.MONTH)+1;
-		int day = now.get(Calendar.DAY_OF_MONTH);
-		tfDate.setText(toString().format("%s-%s-%s",year,month,day));
+		renewtfDate();
 		
 		JLabel lblNewLabel_5 = new JLabel("");
 		pnl1_2.add(lblNewLabel_5);
 		
-		JLabel lblTime = new JLabel("방문시간 :");
+		JLabel lblTime = new JLabel("영업시간 :");
 		pnl1_2.add(lblTime);
 		
 		tfTime = new JTextField();
 		tfTime.setEditable(false);
 		tfTime.setColumns(10);
 		pnl1_2.add(tfTime);
-		int hour = now.get(Calendar.HOUR);
-		int minute = now.get(Calendar.MINUTE);
-		tfTime.setText(toString().format("%s:%s",hour,minute));
+		renewtfTime();
 		
 		JPanel pnl1_3 = new JPanel();
 		pnl1.add(pnl1_3);
-		pnl1_3.setLayout(new GridLayout(0, 5, 0, 0));
+		pnl1_3.setLayout(new GridLayout(0, 6, 0, 0));
 		
 		JLabel lblName = new JLabel("고객명 :");
 		pnl1_3.add(lblName);
@@ -159,9 +171,17 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		pnl1_3.add(tfSelectedCus);
 		tfSelectedCus.setColumns(10);
 		
+		JLabel lblNewLabel_2 = new JLabel("고객 번호 :");
+		pnl1_3.add(lblNewLabel_2);
+		
+		tfCusNo = new JTextField();
+		tfCusNo.setEditable(false);
+		pnl1_3.add(tfCusNo);
+		tfCusNo.setColumns(10);
+		
 		JPanel pnl1_7 = new JPanel();
 		pnl1.add(pnl1_7);
-		pnl1_7.setLayout(new GridLayout(0, 5, 0, 0));
+		pnl1_7.setLayout(new GridLayout(0, 6, 0, 0));
 		
 		JLabel lblNewLabel = new JLabel("직원명 :");
 		pnl1_7.add(lblNewLabel);
@@ -178,6 +198,14 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		pnl1_7.add(tfSelectedEmp);
 		tfSelectedEmp.setColumns(10);
 		
+		JLabel lblNewLabel_3 = new JLabel("직원 번호 :");
+		pnl1_7.add(lblNewLabel_3);
+		
+		tfEmpNo = new JTextField();
+		tfEmpNo.setEditable(false);
+		pnl1_7.add(tfEmpNo);
+		tfEmpNo.setColumns(10);
+		
 		JPanel pnl1_4 = new JPanel();
 		pnl1.add(pnl1_4);
 		pnl1_4.setLayout(new GridLayout(0, 2, 0, 0));
@@ -192,19 +220,22 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		
 		HairService hairService = new HairService();
 		List<Hair> hairList = hairService.SelectAllHair();
-		mapHair = new HashMap<>();
+		mapHairPrice = new HashMap<>();
+		mapHairNo = new HashMap<>();
 		for(Hair h:hairList) {
-			mapHair.put(h.getHairName(), h.getPrice());
+			mapHairPrice.put(h.getHairName(), h.getPrice());
+			mapHairNo.put(h.getHairName(), h.getHairNo());
 		}
-		String[] hairNames = new String[mapHair.size()];
-		mapHair.keySet().toArray(hairNames);
+		String[] hairNames = new String[mapHairPrice.size()];
+		mapHairPrice.keySet().toArray(hairNames);
+		
 		listHair = new JList(hairNames);
-		listHair.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		pnl1_4_1.add(listHair);
+		listHair.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		pnl1_4_1.add(new JScrollPane(listHair));
 		
 		JPanel pnl1_5 = new JPanel();
 		pnl1.add(pnl1_5);
-		pnl1_5.setLayout(new GridLayout(0, 6, 0, 0));
+		pnl1_5.setLayout(new GridLayout(0, 8, 0, 0));
 		
 		JLabel lblEvent = new JLabel("이벤트 :");
 		pnl1_5.add(lblEvent);
@@ -212,18 +243,30 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		cmbEvent = new JComboBox<String>();
 		EventService eventService = new EventService();
 		List<Event> eventList = eventService.selectAllEvent();
-		mapEvent = new HashMap<>();
-
+		mapEventDiscount = new HashMap<>();
 		for(Event e:eventList) {
-			mapEvent.put(e.getEvnName(), e.getDiscount());
+			mapEventDiscount.put(e.getEvnName(), e.getDiscount());
 		}
 		
-		String[] eventNames = new String[mapEvent.size()];
-		mapEvent.keySet().toArray(eventNames);
+		mapNoEvent = new HashMap<>();
+		for(Event e:eventList) {
+			mapNoEvent.put(e.getEvnName(),e.getEvnNo());
+		}
+		
+		String[] eventNames = new String[mapEventDiscount.size()];
+		mapEventDiscount.keySet().toArray(eventNames);
 		
 		cmbEvent.setModel(new DefaultComboBoxModel(eventNames));
 		cmbEvent.addActionListener(this);
 		pnl1_5.add(cmbEvent);
+		
+		JLabel lblNewLabel_4 = new JLabel("번호 :");
+		pnl1_5.add(lblNewLabel_4);
+		
+		tfEvnNo = new JTextField();
+		tfEvnNo.setEditable(false);
+		pnl1_5.add(tfEvnNo);
+		tfEvnNo.setColumns(10);
 		
 		JLabel lblDiscount = new JLabel("할인율 : ");
 		pnl1_5.add(lblDiscount);
@@ -255,15 +298,45 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		
 		JPanel pnl2 = new JPanel();
 		contentPane.add(pnl2);
-		pnl2.setLayout(new BoxLayout(pnl2, BoxLayout.X_AXIS));
+		pnl2.setLayout(new BorderLayout(0, 0));
 		
-		tblAdd = new JTable();
-		pnl2.add(tblAdd);
-		String[] columnType = new String[] {"번호", "영업일", "방문시간", "고객","직원","헤어","이벤트명","금액"};
-		//NonEditableModel model = new NonEditableModel(data, columnType);
-		contentPane.add(tblAdd);
+		scrollPane = new JScrollPane();
+		pnl2.add(scrollPane, BorderLayout.NORTH);
+		//table = new JTable(model);
+		//pnl2.add(table, BorderLayout.SOUTH);
+		table = new JTable();
+		
+		drawTable();
 	}
-	class NonEditableModel extends DefaultTableModel{
+
+	private void renewtfTime() {
+		int hour = calender.get(Calendar.HOUR);
+		int minute = calender.get(Calendar.MINUTE);
+		tfTime.setText(toString().format("%s:%s",hour,minute));
+	}
+
+	private void renewtfDate() {
+		calender = Calendar.getInstance();
+		int year = calender.get(Calendar.YEAR);
+		int month = calender.get(Calendar.MONTH)+1;
+		int day = calender.get(Calendar.DAY_OF_MONTH);
+		tfDate.setText(toString().format("%s-%s-%s",year,month,day));
+	}
+
+	private void renewtfNo() {
+		int orderNum=-1;
+		orderNum=saleService.getPresentSaleNo()+1;
+		tfNo.setText(Integer.toString(orderNum));
+	}
+
+	private void drawTable() {
+		saleList = saleService.selectAllSale();
+		String[] columnType = new String[] {"영업번호","영업일","방문시간","고객명","직원명","이벤트명","금액"};
+		table.setModel(new NonEditableModel(getRows(saleList), columnType));
+		scrollPane.setViewportView(table);
+	}
+	
+	class NonEditableModel extends DefaultTableModel {
 		public NonEditableModel(Object[][] data, Object[] columnNames) {
 			super(data, columnNames);
 		}
@@ -272,6 +345,18 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		public boolean isCellEditable(int row, int column) {
 			return false;
 		}
+	}
+	
+	public Object[][] getRows(List<Sale> list) {
+		Object[][] rows = null;
+
+		rows = new Object[list.size()][];
+		for (int i = 0; i < list.size(); i++) {
+			Sale sale = list.get(i);
+			rows[i] = sale.toArraySelectAllSale();
+		}
+
+		return rows;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -288,12 +373,14 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		}
 		if (e.getSource() == cmbEvent) {
 			String selectedEventName = cmbEvent.getSelectedItem().toString();
-			Float discount = mapEvent.get(selectedEventName);
+			Float discount = mapEventDiscount.get(selectedEventName);
 			tfDiscount.setText(Float.toString(discount));
 			String selectedHairName = listHair.getSelectedValue();
-			int price = mapHair.get(selectedHairName);
+			int price = mapHairPrice.get(selectedHairName);
 			price = (int) Math.ceil(price-(price*discount));
 			tfPrice.setText(Integer.toString(price));
+			int saleNo = mapNoEvent.get(selectedEventName);
+			tfEvnNo.setText(Integer.toString(saleNo));
 		}
 	}
 
@@ -301,10 +388,17 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		tfSelectedCus.setText(cusName);
 	}
 	
+	public void setTfCusNo(int cusNo) {
+		tfCusNo.setText(Integer.toString(cusNo));
+	}
+	
 	public void setTfSelectedEmp(String empName) {
 		tfSelectedEmp.setText(empName);
 	}
 	
+	public void setTfEmpNo(int empNo) {
+		tfEmpNo.setText(Integer.toString(empNo));
+	}
 
 /*	public class DialogEx extends JFrame{
 		private MyModalDialog dialog;
@@ -420,24 +514,56 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		
 	}*/
 	protected void actionPerformedBtnAdd(ActionEvent e) {
-		int saleNo = Integer.parseInt(tfNo.getText().trim());
-		String sDate = tfDate.getText().trim();
-		String[] arrDate = sDate.split("-");
+		//sale 테이블 넣기
+		int saleNo = Integer.parseInt(tfNo.getText());
+		Calendar calender = GregorianCalendar.getInstance();
+		String date = tfDate.getText();
+		String[] arrDate = date.split("-");
 		int year = Integer.parseInt(arrDate[0]);
 		int month = Integer.parseInt(arrDate[1]);
 		int day = Integer.parseInt(arrDate[2]);
-		Calendar date = GregorianCalendar.getInstance();
-		date.set(year, month-1, day);
+		calender.set(year, month-1, day);
+		int cus = Integer.parseInt(tfCusNo.getText());
+		int emp = Integer.parseInt(tfEmpNo.getText());
+		int evn = Integer.parseInt(tfEvnNo.getText());
+		int price = Integer.parseInt(tfPrice.getText());
+		Customer customer = new Customer(cus);
+		Employee employee = new Employee(emp);
+		Event event = new Event(evn);
+		Sale sale = new Sale(saleNo, calender.getTime(), calender.getTime(), customer, employee, event, price);
+		saleService.insertSale(sale);
+		
+		/*String selectedHairName = listHair.getSelectedValue();
+		int hairNo = mapHairNo.get(selectedHairName);
+		Enroll enroll = new Enroll(saleNo, hairNo);
+		enrollservice.insertEnroll(enroll);*/
+		
+		//enroll 테이블 넣기 (여러 헤어)
+		List<String> selectedHairList = listHair.getSelectedValuesList();
+		for(String str:selectedHairList) {
+			Enroll enroll2 = new Enroll(saleNo, mapHairNo.get(str));
+			enrollservice.insertEnroll(enroll2);
+		}
+		
+		//테이블 다시 그리기
+		drawTable();
+		
+		//영업번호 업데이트
+		renewtfNo();
+		
+		//입력 필드값 초기화
+		resetTextfields();
+	}
 
-		String cusName = tfSelectedCus.getText().trim();
-		String empName = tfSelectedEmp.getText().trim();
-		String evnName = cmbEvent.getSelectedItem().toString();
-		//String hair = listHair.getSelectedValue();
-		int sPrice = Integer.parseInt(tfPrice.getText().trim());
-		Customer customer = new Customer(cusName);
-		Employee employee = new Employee(empName);
-		Event event = new Event(evnName);
-		Sale sale = new Sale(saleNo,date.getTime(),date.getTime(),customer,employee,event,sPrice);
-		service.insertSale(sale);
+	private void resetTextfields() {
+		tfSelectedCus.setText("");
+		tfCusNo.setText("");
+		tfSelectedEmp.setText("");
+		tfEmpNo.setText("");
+		tfEvnNo.setText("");
+		tfDiscount.setText("");
+		tfPrice.setText("");
+		renewtfDate();
+		renewtfTime();
 	}
 }

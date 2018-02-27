@@ -29,6 +29,8 @@ import kr.or.dgit.it_3st_2team.dto.Address;
 import kr.or.dgit.it_3st_2team.service.AddressService;
 import java.awt.event.MouseEvent;
 
+
+/*yyj*/
 public class AddressJFrame extends JFrame implements ActionListener, MouseListener {
 
 	private JPanel contentPane;
@@ -330,12 +332,16 @@ public class AddressJFrame extends JFrame implements ActionListener, MouseListen
 		String addr1 = (String) (table.getValueAt(row, 1));
 		tfAddr1.setText(addr1);
 		btnAddrAdd.setEnabled(true);
+		tfAddr2.setFocusable(true);
+		tfAddr2.requestFocus();
 
 	}
 	protected void actionPerformedBtnAddrAdd(ActionEvent e) {	
 		addr1 = tfAddr1.getText();
+		
 		addr2 = tfAddr2.getText();
 		cjpanel.setTfaddr(addr1+" "+addr2);
 		setVisible(false);
+		
 	}
 }

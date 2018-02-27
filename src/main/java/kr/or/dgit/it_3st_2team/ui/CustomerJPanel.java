@@ -45,7 +45,7 @@ import kr.or.dgit.it_3st_2team.service.CustomerService;
 import kr.or.dgit.it_3st_2team.service.EmployeeService;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
-
+/*yyj*/
 @SuppressWarnings("serial")
 public class CustomerJPanel extends JPanel implements ActionListener, KeyListener, MouseListener {
 	private JTextField tfNo;
@@ -81,6 +81,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 	public CustomerJPanel() {
 		cservice = new CustomerService();
 		eservice = new EmployeeService();
+		
 		initComponents();
 
 	}
@@ -113,7 +114,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		panel_1.add(lblNo);
 
 		tfNo = new JTextField();
-		tfNo.setFocusable(false);
+	//	tfNo.setFocusable(false);
 		panel_1.add(tfNo);
 		tfNo.setColumns(10);
 		tfNo.setEditable(false);
@@ -127,6 +128,9 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		tfName.addKeyListener(this);
 		tfName.setColumns(10);
 		panel_1.add(tfName);
+		/*focus*/
+		tfName.setFocusable(true);
+		tfName.requestFocus();
 
 		JLabel lblJoin = new JLabel("가입일자");
 		lblJoin.setHorizontalAlignment(SwingConstants.CENTER);

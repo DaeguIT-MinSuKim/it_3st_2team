@@ -52,12 +52,20 @@ public class EmployeeTest {
 >>>>>>> refs/remotes/origin/master
 	}*/
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 	 @Test 
+=======
+	 /*@Test 
+>>>>>>> refs/remotes/origin/master
 	 public void test2SelectempNo() {
 		 Employee emp = new Employee("이창준");
 		 int no = service.selectEmpNo(emp);
+<<<<<<< HEAD
 	 }
+>>>>>>> refs/remotes/origin/master
+=======
+	 }*/
 >>>>>>> refs/remotes/origin/master
 }

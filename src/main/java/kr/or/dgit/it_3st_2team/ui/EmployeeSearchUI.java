@@ -54,8 +54,10 @@ public class EmployeeSearchUI extends JFrame {
 		public void mouseClicked(MouseEvent e) {
 			if(e.getClickCount()==1) { //더블클릭 처리안됨 khj
 				int row = table.getSelectedRow();
-				String str = model.getValueAt(row, 1).toString();
-				enrollFrame.setTfSelectedEmp(str);
+				String name = model.getValueAt(row, 1).toString();
+				enrollFrame.setTfSelectedEmp(name);
+				int no = (int) model.getValueAt(row, 0);
+				enrollFrame.setTfEmpNo(no);
 				setVisible(false);
 			}
 		}

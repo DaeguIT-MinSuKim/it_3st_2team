@@ -1,37 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.dgit.it_3st_2team.dao.SaleDao">
-	<resultMap id="saleResult" type="Sale">
+	 <resultMap id="saleResult" type="Sale">
 		<id property="saleNo" column="sale_no"/>
 		<result property="description" column="description"/>
-		<result property="sdate" column="sdate"/>
-		<result property="stime" column="stime"/>
-		<result property="sprice" column="sprice"/>
-	</resultMap>
-	
+		<result property="sDate" column="sdate"/>
+		<result property="sTime" column="stime"/>
+		<result property="sPrice" column="sprice"/>
+
+	</resultMap> 
+
+	<!-- khj -->
 	<resultMap id="saleResultAddOthers" type="Sale" extends="saleResult">
-		<association property="cusNo" resultMap="kr.or.dgit.it_3st_2team.dao.CustomerDao.customerResult"></association>
-		<association property="empNo" resultMap="kr.or.dgit.it_3st_2team.dao.EmployeeDao.employeeResult"></association>
-		<association property="evnNo" resultMap="kr.or.dgit.it_3st_2team.dao.EventDao.eventResult"></association>
+		<association property="cus" resultMap="kr.or.dgit.it_3st_2team.dao.CustomerDao.customerResult"></association>
+		<association property="emp" resultMap="kr.or.dgit.it_3st_2team.dao.EmployeeDao.employeeResult"></association>
+		<association property="evn" resultMap="kr.or.dgit.it_3st_2team.dao.EventDao.eventResult"></association>
 	</resultMap>
 	
+	<!-- khj 마지막 영엉번호 가져오기 -->
 	<select id="selectMaxSaleNo" resultType="int">
 		select max(sale_no) from sale
 	</select>
-	
-	<resultMap id="saleResultAddCustomer" type="Customer" extends="saleResult">
-		<association property="cus" resultMap="kr.or.dgit.it_3st_2team.dao.CustomerDao.cusNameResult"/>
+
+	<!-- yyj 02-27 -->
+	<resultMap type="Sale" id="selectRMonth" extends="saleResult">
+		<association property="cus" resultMap="kr.or.dgit.it_3st_2team.dao.CustomerDao.cusNameResult"></association>
+		<association property="emp" resultMap="kr.or.dgit.it_3st_2team.dao.EmployeeDao.employeeResult"></association>
+		<association property="evn" resultMap="kr.or.dgit.it_3st_2team.dao.EventDao.eventResult"></association>
+		<association property="hair" resultMap="kr.or.dgit.it_3st_2team.dao.HairDao.hairResult"></association>
 	</resultMap>
 	
-	<resultMap id="saleResultAddEmployee" type="Employee" extends="saleResult">
-		<association property="emp" resultMap="kr.or.dgit.it_3st_2team.dao.EmployeeDao.empNameResult"/>
-	</resultMap>
-	
-	<resultMap id="saleResultAddEvent" type="Event" extends="saleResult">
-		<association property="evn" resultMap="kr.or.dgit.it_3st_2team.dao.EventDao.eventResult"/>
-	</resultMap>
+	<select id="selectReportMonth" resultMap="selectRMonth">
+		select s.sale_no,sdate,stime,c.cus_name,h.hair_name,ev.evn_name,s.sprice
+			from sale s 
+			join enroll e on s.sale_no=e.sale_no
+			join customer c on s.cus_no=c.cus_no
+			join hair h on h.hair_no=e.hair_no
+			join event ev on ev.evn_no=s.evn_no
+			order by sdate
+	</select>
+
+	<!--khj 안쓸수도 있음 -->
 	<insert id="insertSale" parameterType="Sale">
-		insert into sale(sale_no,sdate,stime,emp_no,cus_no,evn_no,sprice) 
-		values(#{saleNo},#{sDate},#{sTime},#{emp},#{cus},#{evn},#{sPrice})
+		insert into sale(sale_no,sdate,stime,cus_no,emp_no,evn_no,sprice) 
+		values (#{saleNo},#{sDate},#{sTime},#{cus.cusNo},#{emp.empNo},#{evn.evnNo},#{sPrice})
 	</insert>
+	
+	<!-- khj 20180227 -->
+	<select id="selectAllSale" resultMap="saleResultAddOthers">
+		<!-- select sale_no, sdate, stime, cus_no, emp_no, evn_no, sprice from sale -->
+		select sale_no, sdate, stime, c.cus_name, e.emp_name, v.evn_name, sprice from sale s 
+		join customer c on s.cus_no=c.cus_no
+		join employee e on e.emp_no=c.emp_no
+		join event v on v.evn_no=s.evn_no order by sale_no;
+		<!-- select s.sale_no, s.sdate, s.stime, c.cus_name, e.emp_name, v.evn_name, s.sprice, h.hair_name from sale s 
+		join customer c on s.cus_no=c.cus_no
+		join employee e on e.emp_no=c.emp_no
+		join event v on v.evn_no=s.evn_no
+		join enroll n on n.sale_no=s.sale_no
+		join hair h on h.hair_no=n.hair_no
+		order by s.sale_no; -->
+	</select>
+	
+	<!-- select count yyj 02-27-->
+	<select id="selectCount" resultType="int">
+		select  count(*) as 'count' from sale group by Month(sdate)
+	</select>
 </mapper>

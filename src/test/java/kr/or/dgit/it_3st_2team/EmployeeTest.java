@@ -26,46 +26,27 @@ public class EmployeeTest {
 		service = null;
 	}
 
-	/*@Test
-<<<<<<< HEAD
+	@Test
 	public void test1SelectAllEmployee() {
 		List<Employee> listStd = service.selectAllEmployee();
 		Assert.assertNotNull(listStd);
 		for (Employee cs : listStd) {
 			System.out.println(cs);
 		}
-
-=======
-	public void selectTitleName() {
-		
-		  @Test 
-		  public void test1SelectAllEmployee() 
-		  { List<Employee> listStd =
-		  service.selectAllEmployee(); Assert.assertNotNull(listStd); for (Employee cs
-		  : listStd) { System.out.println(cs); } }
-		 
-		
-		  @Test public void selectTitleName(){  List<Employee> listStd =
-		  service.selectEmployeeAddTitle(); Assert.assertNotNull(listStd); for
-		  (Employee cs : listStd) { System.out.println(cs); } }
-		 
->>>>>>> refs/remotes/origin/master
-	}*/
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
-	 @Test 
-=======
-	 /*@Test 
->>>>>>> refs/remotes/origin/master
-	 public void test2SelectempNo() {
+	}
+	
+	@Test 
+	public void selectTitleName(){  
+		List<Employee> listStd = service.selectEmployeeAddTitle(); 
+		Assert.assertNotNull(listStd); 
+		for (Employee cs : listStd) { 
+			System.out.println(cs); 
+			} 
+	}
+	
+	@Test
+	public void test2SelectempNo() {
 		 Employee emp = new Employee("이창준");
 		 int no = service.selectEmpNo(emp);
-<<<<<<< HEAD
-	 }
->>>>>>> refs/remotes/origin/master
-=======
-	 }*/
->>>>>>> refs/remotes/origin/master
+	}
 }

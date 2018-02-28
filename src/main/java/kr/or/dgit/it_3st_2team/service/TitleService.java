@@ -7,16 +7,18 @@ import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 
 import kr.or.dgit.it_3st_2team.dao.TitleDao;
+import kr.or.dgit.it_3st_2team.dto.Employee;
 import kr.or.dgit.it_3st_2team.dto.Title;
 import kr.or.dgit.it_3st_2team.util.MyBatisSqlSessionFactory;
 
 public class TitleService {
 	private static final Log log = LogFactory.getLog(TitleService.class);
 
-	public List<Title> selectAllTitle() {
-		log.debug("selectAllTitle()");
+	public List<Title> selectTitle() {
+		log.debug("selectTitle()");
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
 			TitleDao TitleDao = sqlSession.getMapper(TitleDao.class);
+			sqlSession.commit();
 			return TitleDao.selectTitle();
 		}
 
@@ -54,6 +56,15 @@ public class TitleService {
 		}
 		return res;
 
+	}
+
+	public List<Title> selectTitle2() {
+		log.debug("selectTitle2()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			TitleDao TitleDao = sqlSession.getMapper(TitleDao.class);
+			sqlSession.commit();
+			return TitleDao.selectTitle2();
+		}
 	}
 
 }

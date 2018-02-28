@@ -5,8 +5,15 @@ public class Title {
 	private String titleName;
 	
 	public Title() {
+		super();
 	}
 	
+	
+	public Title(String titleName) {
+		this.titleName = titleName;
+	}
+
+
 	public Title(int titleNo) {
 		this.titleNo = titleNo;
 	}
@@ -31,4 +38,5 @@ public class Title {
 		return new Object[] {titleNo, titleName};
 	}
 	
+
 }

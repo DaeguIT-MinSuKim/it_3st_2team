@@ -52,7 +52,7 @@ public class AddressJFrame extends JFrame implements ActionListener, MouseListen
 	private CustomerJPanel cjpanel;
 	private String addr1;
 	private String addr2;
-	
+	private NowEmployee Nowemjpanel;
 	
 	
 	
@@ -90,6 +90,13 @@ public class AddressJFrame extends JFrame implements ActionListener, MouseListen
 	}
 
 
+
+	public AddressJFrame(NowEmployee nowEmployee) {
+		Nowemjpanel = nowEmployee;
+		aservice = new AddressService();	
+		initComponents();
+		
+	}
 
 	private void initComponents() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -183,7 +190,7 @@ public class AddressJFrame extends JFrame implements ActionListener, MouseListen
 		pCenter.setLayout(new BorderLayout(0, 0));
 		
 		scrollPane = new JScrollPane();
-		pCenter.add(scrollPane, BorderLayout.CENTER);
+		pCenter.add(scrollPane, BorderLayout.SOUTH);
 		
 
 		table = new JTable();
@@ -338,10 +345,11 @@ public class AddressJFrame extends JFrame implements ActionListener, MouseListen
 	}
 	protected void actionPerformedBtnAddrAdd(ActionEvent e) {	
 		addr1 = tfAddr1.getText();
-		
 		addr2 = tfAddr2.getText();
 		cjpanel.setTfaddr(addr1+" "+addr2);
 		setVisible(false);
 		
+		
+		Nowemjpanel.setTfaddr(addr1+" "+addr2);
 	}
 }

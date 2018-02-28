@@ -179,7 +179,8 @@ public class EmployeeJoin extends JFrame {
 		panel_11.add(findtitle);
 		
 		JComboBox empfind = new JComboBox();
-		empfind.setModel(new DefaultComboBoxModel(new String[] {"사장", "실장", "디자이너", "스텝", "인턴"}));
+		empfind.setEnabled(false);
+		empfind.setModel(new DefaultComboBoxModel(new String[] {"인턴"}));
 		empfind.setMaximumSize(new Dimension(80, 30));
 		empfind.setPreferredSize(new Dimension(25, 21));
 		panel_11.add(empfind);

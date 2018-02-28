@@ -10,6 +10,7 @@
 		<result property="addr" column="addr" />
 		<result property="id" column="id" />
 		<result property="password" column="epassword" />
+		<result property="eOff" column="eoff"/>
 		<result property="eTf" column="e_tf" />
 	</resultMap>
 
@@ -86,10 +87,18 @@
 
 	<!--bjh -->
 
+	<sql id="EmployeeTfSql">
+		<where>
+			<if test="eTf == 0">
+				e_tf = "퇴사"
+			</if>
+		</where>
+	</sql>
+
 	<select id="selecteNowEmplyoee" parameterType="Employee"
 		resultMap="employeeResultAddTitle">
 		select e.emp_no ,
-		e.emp_name,e.join_date,id,epassword,t.title_no
+		e.emp_name,e.join_date,e.addr,id,e.epassword,t.title_no,e.eoff,e_tf
 		from employee e join
 		Title t
 		on e.title_no=t.title_no
@@ -98,11 +107,13 @@
 
 	<!--bjh -->
 	<sql id="updateNowEmplyoeeSql">
-		update e.emp_no ,
-		e.emp_name,e.join_date,id,epassword,t.title_no
+		update Employee 
+		set
+		epassword=#{password},e.title_no=#{e_tf
 		from
 		employee e join
 		Title t on e.title_no=t.title_no
+		where e.emp_no=#{empNo}
 	</sql>
 	<update id="updateNowEmplyoee" parameterType="Employee">
 		<include refid="updateNowEmplyoeeSql"></include>

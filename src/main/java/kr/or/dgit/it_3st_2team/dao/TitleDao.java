@@ -14,4 +14,6 @@ public interface TitleDao {
 
 	int updateTitle(Title title);
 
+	List<Title> selectTitle2();
+
 }

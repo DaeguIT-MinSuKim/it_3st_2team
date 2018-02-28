@@ -154,6 +154,6 @@ public class Employee {
 
 	public Object[] toArray() {
 		String Sdf = new SimpleDateFormat("yyyy-mm-dd").format(joinDate);
-		return new Object[] { empNo, empName, Sdf, id, epassword, title.getTitleNo() };
+		return new Object[] { empNo, empName, Sdf, addr,id, epassword, title.getTitleNo(),eOff,eTf };
 	}
 }

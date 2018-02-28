@@ -4,7 +4,7 @@ public class Event {
 	private int evnNo;
 	private String evnName;
 	private float discount;
-
+ 
 	public Event() {
 		super();
 		// TODO Auto-generated constructor stub

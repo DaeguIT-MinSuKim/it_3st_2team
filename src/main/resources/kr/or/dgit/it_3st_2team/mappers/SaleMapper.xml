@@ -78,6 +78,7 @@
 			order by s.sale_no;
 	</select>
 	
+<<<<<<< HEAD
 
 	<!-- select count yyj 02-27-->
 	
@@ -99,6 +100,15 @@
 			</if>
 		</where>
 	</sql>
+
+	<!-- khj 20180228 -->
+	<sql id="deleteSql">
+		delete from sale where sale_no=#{saleNo};
+	</sql>
+	<update id="deleteSale" parameterType="Sale">
+		<include refid="deleteSql"/>
+	</update>
+
 	
 	<select id="selectCount" resultType="int">
 		<include refid="selectYearCountSql"></include>

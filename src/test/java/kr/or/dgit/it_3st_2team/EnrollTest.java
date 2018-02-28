@@ -30,4 +30,10 @@ public class EnrollTest {
 		Enroll enroll = new Enroll(26, 17, 1);
 		service.insertEnroll(enroll);
 	}*/
+	
+	@Test
+	public void test2DeleteEnroll() {
+		Enroll enroll = new Enroll(26);
+		service.deleteEnroll(enroll);
+	}
 }

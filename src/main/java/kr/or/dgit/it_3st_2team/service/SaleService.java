@@ -8,9 +8,6 @@ import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 
 import kr.or.dgit.it_3st_2team.dao.SaleDao;
-import kr.or.dgit.it_3st_2team.dto.Customer;
-import kr.or.dgit.it_3st_2team.dto.Employee;
-import kr.or.dgit.it_3st_2team.dto.Event;
 import kr.or.dgit.it_3st_2team.dto.Sale;
 import kr.or.dgit.it_3st_2team.util.MyBatisSqlSessionFactory;
 
@@ -57,11 +54,21 @@ public class SaleService {
 			return sqlSession.selectList(namespace+"selectAllSale");
 		}
 	}
+
 	/*yyj*/
 	public List<Integer>selectCountMonth(Map<String,Object> map){
 		log.debug("selectCountMonth()");
 		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
 			return sqlSession.selectList(namespace+"selectCountMonth",map);
+		}
+	}
+	//khj 20180228
+	public int deleteSale(Sale sale) {
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			int res = sqlSession.update(namespace+"deleteSale",sale);
+			sqlSession.commit();
+			return res;
+
 		}
 	}
 }

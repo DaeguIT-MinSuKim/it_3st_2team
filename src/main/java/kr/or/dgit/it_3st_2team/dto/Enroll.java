@@ -19,6 +19,10 @@ public class Enroll {
 		this.saleNo = saleNo;
 		this.hairNo = hairNo;
 	}
+	public Enroll(int saleNo) { //khj 헤어주문 삭제기능을 위함
+		super();
+		this.saleNo = saleNo;
+	}
 	public int getEnrollNo() {
 		return enrollNo;
 	}

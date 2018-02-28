@@ -11,4 +11,13 @@
 		insert into enroll(enroll_no, sale_no, hair_no) 
 		values (#{enrollNo},#{saleNo},#{hairNo})
 	</insert>
+	
+	<!-- delete khj 180228 -->
+	<sql id="deleteSql">
+		delete from enroll where sale_no=#{saleNo}
+	</sql>
+	<update id="deleteEnroll" parameterType="Enroll">
+		<include refid="deleteSql"/>
+	</update>	
+	
 </mapper>

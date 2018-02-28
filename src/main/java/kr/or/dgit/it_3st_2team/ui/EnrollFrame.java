@@ -69,6 +69,9 @@ public class EnrollFrame extends JFrame implements ActionListener {
 	private JScrollPane scrollPane;
 	private Calendar calender;
 	private EnrollService enrollservice = new EnrollService();
+	private JButton btnDelete;
+	private JButton btnUpdate;
+	private JButton btnCancel;
 
 	/**
 	 * Launch the application.
@@ -293,8 +296,20 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		btnAdd.addActionListener(this);
 		pnl1_6.add(btnAdd);
 		
-		JButton btnNewButton_3 = new JButton("cancel");
-		pnl1_6.add(btnNewButton_3);
+		btnCancel = new JButton("취소");
+		btnCancel.addActionListener(this);
+		pnl1_6.add(btnCancel);
+		
+		btnDelete = new JButton("삭제");
+		btnDelete.addActionListener(this);
+		pnl1_6.add(btnDelete);
+		
+		btnUpdate = new JButton("수정");
+		btnUpdate.addActionListener(this);
+		pnl1_6.add(btnUpdate);
+		
+		JButton btnSelect = new JButton("검색");
+		pnl1_6.add(btnSelect);
 		
 		JPanel pnl2 = new JPanel();
 		contentPane.add(pnl2);
@@ -360,6 +375,15 @@ public class EnrollFrame extends JFrame implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnCancel) {
+			actionPerformedBtnCancel(e);
+		}
+		if (e.getSource() == btnUpdate) {
+			actionPerformedBtnUpdate(e);
+		}
+		if (e.getSource() == btnDelete) {
+			actionPerformedBtnDelete(e);
+		}
 		if (e.getSource() == btnAdd) { //등록 버튼 누르면
 			actionPerformedBtnAdd(e);
 		}
@@ -378,9 +402,9 @@ public class EnrollFrame extends JFrame implements ActionListener {
 			/*String selectedHairName = listHair.getSelectedValue();
 			int price = mapHairPrice.get(selectedHairName);
 			price = (int) Math.ceil(price-(price*discount));
-			tfPrice.setText(Integer.toString(price));
+			tfPrice.setText(Integer.toString(price));*/
 			int saleNo = mapNoEvent.get(selectedEventName);
-			tfEvnNo.setText(Integer.toString(saleNo));*/
+			tfEvnNo.setText(Integer.toString(saleNo));
 			List<String> selectedHairList = listHair.getSelectedValuesList();
 			int[] arrPrice = new int[selectedHairList.size()];
 			int i=0;
@@ -578,5 +602,21 @@ public class EnrollFrame extends JFrame implements ActionListener {
 		tfPrice.setText("");
 		renewtfDate();
 		renewtfTime();
+	}
+	protected void actionPerformedBtnDelete(ActionEvent e) { //삭제
+		int row = table.getSelectedRow();
+		int saleNo = (int) table.getValueAt(row, 0);
+		
+		Enroll enroll = new Enroll(saleNo);
+		enrollservice.deleteEnroll(enroll);
+		
+		Sale sale = new Sale(saleNo);
+		saleService.deleteSale(sale);
+		
+		drawTable();
+	}
+	protected void actionPerformedBtnUpdate(ActionEvent e) { //수정
+	} 
+	protected void actionPerformedBtnCancel(ActionEvent e) { //취소
 	}
 }

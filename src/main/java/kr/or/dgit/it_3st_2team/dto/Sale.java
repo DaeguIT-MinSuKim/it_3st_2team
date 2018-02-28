@@ -54,6 +54,12 @@ public class Sale { //Foreign key에 대한 변수타입 수정 kim 2018-02-22
 		this.sPrice = sPrice;
 	}
 	
+	//khj 20180228 헤어주문 삭제기능을 위함
+	public Sale(int saleNo) {
+		super();
+		this.saleNo = saleNo;
+	}
+
 	public int getSaleNo() {
 		return saleNo;
 	}

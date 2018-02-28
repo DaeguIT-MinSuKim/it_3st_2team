@@ -66,7 +66,11 @@ public class SaleTest {
         	System.out.println(se);
         }
 }*/
-/*	@Test
+
+
+
+	/*@Test
+
 	public void test3SelectCount() {
 		Map<String,Object> map = new HashMap<>();	
 		map.put("sDate","2017%");
@@ -75,6 +79,7 @@ public class SaleTest {
 	    for(Integer se : lists) {
 	    	System.out.println(se);
 	    	}
+
 		}*/
 /*	@Test
 	public void test4SelectCountMonth() {
@@ -86,4 +91,12 @@ public class SaleTest {
 	    	System.out.println(se);
 	    	}
 		}*/
+
+
+	
+	@Test
+	public void test4DeleteSale() {
+		Sale sale = new Sale(28);
+		service.deleteSale(sale);
+	}
 }

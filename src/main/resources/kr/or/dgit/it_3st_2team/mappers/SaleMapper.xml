@@ -77,8 +77,7 @@
 			join customer c on s.cus_no=c.cus_no
 			order by s.sale_no;
 	</select>
-	
-<<<<<<< HEAD
+
 
 	<!-- select count yyj 02-27-->
 	

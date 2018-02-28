@@ -1,0 +1,6 @@
+
+
+
+
+Customer ctm = new Customer(tfno, tfname, jBirth.getTime(), age, jDate.getTime(), new PhoneNumber(phone), addr,
+				new Employee(cmbEmpNo), true);

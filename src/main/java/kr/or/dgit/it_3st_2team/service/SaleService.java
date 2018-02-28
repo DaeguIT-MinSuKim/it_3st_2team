@@ -1,6 +1,7 @@
 package kr.or.dgit.it_3st_2team.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
@@ -27,12 +28,12 @@ public class SaleService {
 			return saleDao.selectMaxSaleNo();
 		}
 	}
-
-	public List<Sale>selectReportMonth(){
-		log.debug("selectReportMonth()");
+ /*yyj*/
+	public List<Sale>selectReportYear(Map<String,Object> map){
+		log.debug("selectReportYear()");
 		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
-			SaleDao saleDao = sqlSession.getMapper(SaleDao.class);
-			return saleDao.selectReportMonth();
+			/*SaleDao saleDao = sqlSession.getMapper(SaleDao.class);*/
+			return sqlSession.selectList(namespace+"selectReportYear",map);
 		}
 	}
 	public int insertSale(Sale sale) {
@@ -43,16 +44,24 @@ public class SaleService {
 
 		}
 	}
-	public List<Integer>selectCount(){
+	/*yyj*/
+	public List<Integer>selectCount(Map<String,Object> map){
+		log.debug("selectCount()");
 		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
-			SaleDao saleDao = sqlSession.getMapper(SaleDao.class);
-			return saleDao.selectCount();
+			return sqlSession.selectList(namespace+"selectCount",map);
 		}
 	}
 	//khj
 	public List<Sale> selectAllSale(){
 		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
 			return sqlSession.selectList(namespace+"selectAllSale");
+		}
+	}
+	/*yyj*/
+	public List<Integer>selectCountMonth(Map<String,Object> map){
+		log.debug("selectCountMonth()");
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			return sqlSession.selectList(namespace+"selectCountMonth",map);
 		}
 	}
 }

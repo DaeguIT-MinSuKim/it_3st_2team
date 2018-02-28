@@ -23,22 +23,37 @@
 	</select>
 
 	<!-- yyj 02-27 -->
-	<resultMap type="Sale" id="selectRMonth" extends="saleResult">
+	<resultMap type="Sale" id="selectRe" extends="saleResult">
 		<association property="cus" resultMap="kr.or.dgit.it_3st_2team.dao.CustomerDao.cusNameResult"></association>
 		<association property="emp" resultMap="kr.or.dgit.it_3st_2team.dao.EmployeeDao.employeeResult"></association>
 		<association property="evn" resultMap="kr.or.dgit.it_3st_2team.dao.EventDao.eventResult"></association>
 		<association property="hair" resultMap="kr.or.dgit.it_3st_2team.dao.HairDao.hairResult"></association>
 	</resultMap>
 	
-	<select id="selectReportMonth" resultMap="selectRMonth">
+	<sql id="selectYearSql">
 		select s.sale_no,sdate,stime,c.cus_name,h.hair_name,ev.evn_name,s.sprice
 			from sale s 
 			join enroll e on s.sale_no=e.sale_no
 			join customer c on s.cus_no=c.cus_no
 			join hair h on h.hair_no=e.hair_no
 			join event ev on ev.evn_no=s.evn_no
-			order by sdate
+	</sql>
+	
+	<sql id="whereYearSql">
+		<where>
+			<if test="sDate != null">
+				sdate like #{sDate} order by sdate
+			</if>
+		</where>
+	</sql>
+		
+	<select id="selectReportYear" resultMap="selectRe" parameterType="map">
+			<include refid="selectYearSql"></include>
+			<include refid="whereYearSql"></include>
 	</select>
+
+
+
 
 	<!--khj 안쓸수도 있음 -->
 	<insert id="insertSale" parameterType="Sale">
@@ -63,8 +78,35 @@
 			order by s.sale_no;
 	</select>
 	
+
 	<!-- select count yyj 02-27-->
+	
+		<sql id="selectYearCountSql">
+		select  count(*) as 'count' from sale
+	</sql>
+	<sql id="whereYearCountSql">
+		<where>
+			<if test="sDate != null">
+				sdate like #{sDate} group by Month(sdate)
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="whereMonthCountSql">
+		<where>
+			<if test="sDate != null">
+				sdate like #{sDate} group by year(sdate)
+			</if>
+		</where>
+	</sql>
+	
 	<select id="selectCount" resultType="int">
-		select  count(*) as 'count' from sale group by Month(sdate)
+		<include refid="selectYearCountSql"></include>
+		<include refid="whereYearCountSql"></include>
+	</select>
+	<!-- yyj 02-28 -->
+	<select id="selectCountMonth" resultType="int">
+		<include refid="selectYearCountSql"></include>
+		<include refid="whereMonthCountSql"></include>
 	</select>
 </mapper>

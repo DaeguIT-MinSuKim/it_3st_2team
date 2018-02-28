@@ -2,7 +2,13 @@ package kr.or.dgit.it_3st_2team;
 
 
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -51,19 +57,33 @@ public class SaleTest {
 /*	@Test
 	public void test2SelectReportMonth() {
 		
-        List<Sale> lists = service.selectReportMonth();
+		
+		Map<String,Object> map = new HashMap<>();	
+		map.put("sDate","%-01-%");
+        List<Sale> lists = service.selectReportYear(map);
         Assert.assertNotNull(lists);
         for(Sale se : lists) {
         	System.out.println(se);
         }
 }*/
-	@Test
+/*	@Test
 	public void test3SelectCount() {
-		
-	    List<Integer> lists = service.selectCount();
+		Map<String,Object> map = new HashMap<>();	
+		map.put("sDate","2017%");
+	    List<Integer> lists = service.selectCount(map);
 	    Assert.assertNotNull(lists);
 	    for(Integer se : lists) {
 	    	System.out.println(se);
 	    	}
-		}
+		}*/
+/*	@Test
+	public void test4SelectCountMonth() {
+		Map<String,Object> map = new HashMap<>();	
+		map.put("sDate","%-01-%");
+	    List<Integer> lists = service.selectCountMonth(map);
+	    Assert.assertNotNull(lists);
+	    for(Integer se : lists) {
+	    	System.out.println(se);
+	    	}
+		}*/
 }

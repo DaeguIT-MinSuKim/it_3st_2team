@@ -135,12 +135,14 @@ public class Sale { //Foreign key에 대한 변수타입 수정 kim 2018-02-22
 		}
 		return hairList.toString();
 	}
+	
 	public Object[] toArraySelectAllSale() {
 		return new Object[] {saleNo,dateToString(sDate),timeToString(sTime),cus.getCusName(),emp.getEmpName(), evn.getEvnName(), sPrice, getHairElement()};		
 	}
 	/*	yyj*/
 	public Object[] toArrayMonth() {
-		return new Object[] {saleNo,dateToString(sDate),timeToString(sTime),cus.getCusName(),hair.getHairName(),evn.getEvnName(),sPrice};
+		/*return new Object[] {saleNo,dateToString(sDate),timeToString(sTime),cus.getCusName(),hair.getHairName(),evn.getEvnName(),sPrice};*/
+		return new Object[] {saleNo,dateToString(sDate),timeToString(sTime),cus.getCusName(),getHairElement(),evn.getEvnName(),sPrice};
 	}
 	public String dateToString(Date date) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

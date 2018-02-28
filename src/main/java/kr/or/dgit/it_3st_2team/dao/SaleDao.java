@@ -2,6 +2,8 @@ package kr.or.dgit.it_3st_2team.dao;
 
 
 import java.util.List;
+import java.util.Map;
+
 import kr.or.dgit.it_3st_2team.dto.Sale;
 
 public interface SaleDao {
@@ -11,9 +13,11 @@ public interface SaleDao {
 	int insertSale(Sale sale);
 
 	/*selectReportMonth yyj*/
-	List<Sale>selectReportMonth();
+	List<Sale>selectReportYear(Map<String,Object> map);
+	
+	
 	
 	/*select count test yyj*/
-	List<Integer>selectCount();
-
+	List<Integer>selectCount(Map<String,Object> map);
+	List<Integer>selectCountMonth(Map<String,Object> map);
 }

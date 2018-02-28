@@ -15,4 +15,11 @@ public class EnrollService {
 			return res;
 		}
 	}
+	public int deleteEnroll(Enroll enroll) {
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			int res = sqlSession.update(namespace+"deleteEnroll",enroll);
+			sqlSession.commit();
+			return res;
+		}
+	}
 }

@@ -57,7 +57,7 @@ public class SaleTest {
         	System.out.println(se);
         }
 }*/
-	@Test
+	/*@Test
 	public void test3SelectCount() {
 		
 	    List<Integer> lists = service.selectCount();
@@ -65,5 +65,11 @@ public class SaleTest {
 	    for(Integer se : lists) {
 	    	System.out.println(se);
 	    	}
-		}
+	}*/
+	
+	@Test
+	public void test4DeleteSale() {
+		Sale sale = new Sale(28);
+		service.deleteSale(sale);
+	}
 }

@@ -55,4 +55,12 @@ public class SaleService {
 			return sqlSession.selectList(namespace+"selectAllSale");
 		}
 	}
+	//khj 20180228
+	public int deleteSale(Sale sale) {
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			int res = sqlSession.update(namespace+"deleteSale",sale);
+			sqlSession.commit();
+			return res;
+		}
+	}
 }

@@ -6,15 +6,37 @@
 		<result property="titleName" column="title_name" />
 	</resultMap>
 
+
+<!--bjh-->
 	<select id="selectTitle" resultMap="TitleResult">
 		select title_no,title_name
 		from title
 	</select>
-	
-	<insert id="insertTitle" parameterType="Title">
-		insert into Title(title_No,title_Name)
-		values(#{title_No},#{title_Name})
+
+	<sql id="insertTitlesql">
+		insert into title(title_no,title_name)
+		values(#{titleNo},#{titleName})
+	</sql>
+
+	<insert id="insertTitle">
+		<include refid="insertTitlesql" />
 	</insert>
-	
-	
+
+	<sql id="updateTitlesql">
+		update Title set title_Name=#{titleName}
+		where title_No=#{titleNo}
+	</sql>
+
+	<update id="updateTitle">
+		<include refid="updateTitlesql"></include>
+	</update>
+
+	<sql id="deleteTitlesql">
+		delete from Title where title_No=#{titleNo}
+	</sql>
+
+	<delete id="deleteTitle">
+		<include refid="deleteTitlesql"></include>
+	</delete>
+
 </mapper>

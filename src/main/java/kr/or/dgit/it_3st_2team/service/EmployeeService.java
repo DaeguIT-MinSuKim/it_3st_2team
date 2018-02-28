@@ -39,7 +39,7 @@ public class EmployeeService {
 	}
 	public List<Employee> selecteNowEmplyoee() {
 		log.debug("selecteNowEmplyoee()");
-		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
 			EmployeeDao employeeDao = sqlSession.getMapper(EmployeeDao.class);
 			return sqlSession.selectList(namespace + "selecteNowEmplyoee");
 		}

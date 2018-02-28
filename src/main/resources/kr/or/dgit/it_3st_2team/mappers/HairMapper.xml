@@ -11,5 +11,31 @@
 	<select id="selectAllHair" resultMap="hairResult">
 		select hair_no, hair_name, price from hair;
 	</select>
+	
+	<sql id="insertHairSql">
+		insert into hair(hair_no,hair_name,price)
+		values(#{hairNo},#{hairName},#{price})
+	</sql>
+
+	<insert id="insertHair">
+		<include refid="insertHairSql" />
+	</insert>
+	
+		<sql id="deleteHairsql">
+		delete from Hair where hair_no=#{hairNo}
+	</sql>
+
+	<delete id="deleteHair">
+		<include refid="deleteHairsql"></include>
+	</delete>
+	
+	<sql id="updateHairsql">
+		update Hair set hair_Name=#{hairName},price=#{price}
+		where hair_no=#{hairNo}
+	</sql>
+
+	<update id="updateHair">
+		<include refid="updateHairsql"></include>
+	</update>
 
 </mapper>

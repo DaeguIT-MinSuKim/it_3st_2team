@@ -1,5 +1,6 @@
 package kr.or.dgit.it_3st_2team.dto;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Employee {
@@ -152,6 +153,7 @@ public class Employee {
 	}
 
 	public Object[] toArray() {
-		return new Object[] { empNo, empName, joinDate, id, epassword, title };
+		String Sdf = new SimpleDateFormat("yyyy-mm-dd").format(joinDate);
+		return new Object[] { empNo, empName, Sdf, id, epassword, title.getTitleNo() };
 	}
 }

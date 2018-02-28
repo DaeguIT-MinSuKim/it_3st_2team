@@ -14,27 +14,46 @@ public class TitleService {
 	private static final Log log = LogFactory.getLog(TitleService.class);
 
 	public List<Title> selectAllTitle() {
-		log.debug("TitleService()");
+		log.debug("selectAllTitle()");
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
-			 TitleDao TitleDao = sqlSession.getMapper(TitleDao.class);
+			TitleDao TitleDao = sqlSession.getMapper(TitleDao.class);
 			return TitleDao.selectTitle();
 		}
 
 	}
-	public List<Title> insertTitle() {
-		log.debug("insertTitle()");
-		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
-			 TitleDao TitleDao = sqlSession.getMapper(TitleDao.class);
-			return TitleDao.selectTitle();
-		}
 
-	}
 	public int insertTitle(Title title) {
 		log.debug("insertTitle()");
+		int res = -1;
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
-			 TitleDao TitleDao = sqlSession.getMapper(TitleDao.class);
-			return TitleDao.insertTitle();
+			TitleDao TitleDao = sqlSession.getMapper(TitleDao.class);
+			res = TitleDao.insertTitle(title);
+			sqlSession.commit();
 		}
+		return res;
+	}
+
+	public int deleteTitle(int row) {
+		log.debug("deleteTitle()");
+		int res = -1;
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			TitleDao TitleDao = sqlSession.getMapper(TitleDao.class);
+			res = TitleDao.deleteTitle(row);
+			sqlSession.commit();
+		}
+		return res;
+	}
+
+	public int updateTitle(Title title) {
+		log.debug("updateTitle()");
+		int res = -1;
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			TitleDao TitleDao = sqlSession.getMapper(TitleDao.class);
+			res = TitleDao.updateTitle(title);
+			sqlSession.commit();
+		}
+		return res;
+
 	}
 
 }

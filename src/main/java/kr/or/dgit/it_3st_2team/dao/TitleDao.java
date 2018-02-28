@@ -8,5 +8,10 @@ public interface TitleDao {
 
 	List<Title> selectTitle();
 
-	int insertTitle();
+	int insertTitle(Title title);
+
+	int deleteTitle(int row);
+
+	int updateTitle(Title title);
+
 }

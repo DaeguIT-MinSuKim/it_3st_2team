@@ -5,7 +5,10 @@ public class Hair {
 	private String hairName;
 	private int price;
 	
-	private Hair() {
+	
+	public Hair() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 	private Hair(int hairNo, String hairName, int price) {
 		this.hairNo = hairNo;

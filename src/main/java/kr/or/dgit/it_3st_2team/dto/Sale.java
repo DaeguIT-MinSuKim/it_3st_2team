@@ -1,7 +1,9 @@
 package kr.or.dgit.it_3st_2team.dto;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Sale { //Foreign key에 대한 변수타입 수정 kim 2018-02-22
 	private int saleNo;
@@ -12,6 +14,9 @@ public class Sale { //Foreign key에 대한 변수타입 수정 kim 2018-02-22
 	private Employee emp;
 	private Event evn;
 	private int sPrice;
+	//khj 20180228 일대다
+	private List<Hair> hairs;
+	
 	
 	/*hair변수  get,set 추가 yyj 02-07*/
 	private Hair hair;
@@ -117,14 +122,21 @@ public class Sale { //Foreign key에 대한 변수타입 수정 kim 2018-02-22
 		return String.format("Sale [saleNo=%s, description=%s, sDate=%s, sTime=%s, cus=%s, emp=%s, evn=%s, sPrice=%s]",
 				saleNo, description, sDate, sTime, cus, emp, evn, sPrice);
 	}
-
+	
 	//khj
 	public Object[] toArray() {
 		return new Object[] {saleNo, sDate, sTime, cus, emp, evn, sPrice};
 	}
 	//khj
+	public String getHairElement() {
+		List<String> hairList = new ArrayList<>();
+		for(Hair h:hairs) {
+			hairList.add(h.getHairName());
+		}
+		return hairList.toString();
+	}
 	public Object[] toArraySelectAllSale() {
-		return new Object[] {saleNo,dateToString(sDate),timeToString(sTime),cus.getCusName(),emp.getEmpName(), evn.getEvnName(), sPrice};		
+		return new Object[] {saleNo,dateToString(sDate),timeToString(sTime),cus.getCusName(),emp.getEmpName(), evn.getEvnName(), sPrice, getHairElement()};		
 	}
 	/*	yyj*/
 	public Object[] toArrayMonth() {

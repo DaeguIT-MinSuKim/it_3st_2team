@@ -68,7 +68,7 @@ public class EnrollFrame extends JFrame implements ActionListener {
 	private NonEditableModel model;
 	private JScrollPane scrollPane;
 	private Calendar calender;
-	private EnrollService enrollservice;
+	private EnrollService enrollservice = new EnrollService();
 
 	/**
 	 * Launch the application.
@@ -92,9 +92,9 @@ public class EnrollFrame extends JFrame implements ActionListener {
 	public EnrollFrame() {
 		initComponents();
 		saleList = new ArrayList<>();
-		saleService = new SaleService();
+		/*saleService = new SaleService();
 		customerService = new CustomerService();
-		enrollservice = new EnrollService();
+		enrollservice = new EnrollService();*/
 	}
 	private void initComponents() {
 		setTitle("헤어주문");
@@ -331,7 +331,7 @@ public class EnrollFrame extends JFrame implements ActionListener {
 
 	private void drawTable() {
 		saleList = saleService.selectAllSale();
-		String[] columnType = new String[] {"영업번호","영업일","방문시간","고객명","직원명","이벤트명","금액"};
+		String[] columnType = new String[] {"영업번호","영업일","방문시간","고객명","직원명","이벤트명","금액","헤어"};
 		table.setModel(new NonEditableModel(getRows(saleList), columnType));
 		scrollPane.setViewportView(table);
 	}
@@ -375,12 +375,25 @@ public class EnrollFrame extends JFrame implements ActionListener {
 			String selectedEventName = cmbEvent.getSelectedItem().toString();
 			Float discount = mapEventDiscount.get(selectedEventName);
 			tfDiscount.setText(Float.toString(discount));
-			String selectedHairName = listHair.getSelectedValue();
+			/*String selectedHairName = listHair.getSelectedValue();
 			int price = mapHairPrice.get(selectedHairName);
 			price = (int) Math.ceil(price-(price*discount));
 			tfPrice.setText(Integer.toString(price));
 			int saleNo = mapNoEvent.get(selectedEventName);
-			tfEvnNo.setText(Integer.toString(saleNo));
+			tfEvnNo.setText(Integer.toString(saleNo));*/
+			List<String> selectedHairList = listHair.getSelectedValuesList();
+			int[] arrPrice = new int[selectedHairList.size()];
+			int i=0;
+			for(String str:selectedHairList) {
+				int price = mapHairPrice.get(str);
+				arrPrice[i]=price;
+				i++;
+			}
+			int totalPrice=0;
+			for(Integer integer :arrPrice) {
+				totalPrice+=integer;
+			}
+			tfPrice.setText(Integer.toString(totalPrice));
 		}
 	}
 

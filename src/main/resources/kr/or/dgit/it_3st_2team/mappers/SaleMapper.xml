@@ -7,7 +7,7 @@
 		<result property="sDate" column="sdate"/>
 		<result property="sTime" column="stime"/>
 		<result property="sPrice" column="sprice"/>
-
+		<collection property="hairs" resultMap="kr.or.dgit.it_3st_2team.dao.HairDao.hairResult"/> <!-- khj 일대다 -->
 	</resultMap> 
 
 	<!-- khj -->
@@ -49,17 +49,18 @@
 	<!-- khj 20180227 -->
 	<select id="selectAllSale" resultMap="saleResultAddOthers">
 		<!-- select sale_no, sdate, stime, cus_no, emp_no, evn_no, sprice from sale -->
-		select sale_no, sdate, stime, c.cus_name, e.emp_name, v.evn_name, sprice from sale s 
+		<!-- select sale_no, sdate, stime, c.cus_name, e.emp_name, v.evn_name, sprice from sale s 
 		join customer c on s.cus_no=c.cus_no
-		join employee e on e.emp_no=c.emp_no
-		join event v on v.evn_no=s.evn_no order by sale_no;
-		<!-- select s.sale_no, s.sdate, s.stime, c.cus_name, e.emp_name, v.evn_name, s.sprice, h.hair_name from sale s 
-		join customer c on s.cus_no=c.cus_no
-		join employee e on e.emp_no=c.emp_no
-		join event v on v.evn_no=s.evn_no
-		join enroll n on n.sale_no=s.sale_no
-		join hair h on h.hair_no=n.hair_no
-		order by s.sale_no; -->
+		join employee e on s.emp_no=e.emp_no
+		join event v on s.evn_no=v.evn_no order by sale_no; -->
+		select s.sale_no, s.sdate, s.stime, c.cus_name, m.emp_name, n.evn_name, s.sprice, h.hair_name 
+			from sale s 
+			join enroll e on s.sale_no=e.sale_no 
+			join hair h on e.hair_no=h.hair_no 
+			join event n on s.evn_no=n.evn_no
+			join employee m on s.emp_no=m.emp_no
+			join customer c on s.cus_no=c.cus_no
+			order by s.sale_no;
 	</select>
 	
 	<!-- select count yyj 02-27-->

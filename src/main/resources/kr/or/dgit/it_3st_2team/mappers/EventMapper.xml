@@ -10,4 +10,32 @@
 	<select id="selectAllEvent" resultMap="eventResult">	
 		select evn_no,evn_name,discount from event
 	</select>
+	
+	<sql id="insertEventsql">
+		insert into Event(evn_no,evn_name,discount)
+		values(#{evnNo},#{evnName},#{discount})
+	</sql>
+	
+	<insert id="insertEvent">
+		<include refid="insertEventsql" />
+	</insert>
+	
+	
+	<sql id="UpdateEventsql">
+		update Event set evn_name=#{evnName},discount=#{discount}
+		where evn_no=#{evnNo}
+	</sql>
+
+	<delete id="UpdateEvent">
+		<include refid="UpdateEventsql"></include>
+	</delete>
+	
+	<sql id="deleteEventsql">
+		delete from Event where evn_no=#{evnNo}
+	</sql>
+
+	<delete id="deleteEvent">
+		<include refid="deleteEventsql"></include>
+	</delete>
+	
 </mapper>

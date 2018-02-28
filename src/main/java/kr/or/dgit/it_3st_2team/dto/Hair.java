@@ -7,7 +7,7 @@ public class Hair {
 	
 	private Hair() {
 	}
-	private Hair(int hairNo, String hairName, int price) {
+	public Hair(int hairNo, String hairName, int price) {
 		this.hairNo = hairNo;
 		this.hairName = hairName;
 		this.price = price;
@@ -33,6 +33,9 @@ public class Hair {
 	@Override
 	public String toString() {
 		return String.format("Hair [hairNo=%s, hairName=%s, price=%s]", hairNo, hairName, price);
+	}
+	public Object[] toArray() {
+		return new Object[] {hairNo, hairName,price};
 	}
 	
 	

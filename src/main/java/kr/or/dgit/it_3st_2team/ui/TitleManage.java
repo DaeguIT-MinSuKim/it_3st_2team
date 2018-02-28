@@ -35,8 +35,9 @@ public class TitleManage extends JFrame implements ActionListener {
 	private TextField Titleno;
 	private TextField Titlename;
 	int row = -1;
+	private TitleService tservice;
 
-	private String title[] = { "직책번호", "직책명" };
+	private String[] title = { "직책번호", "직책명" };
 
 	JScrollPane jsp;
 	DefaultTableModel model;
@@ -65,6 +66,7 @@ public class TitleManage extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public TitleManage() {
+		tservice = new TitleService();
 		initComponents();
 	}
 
@@ -84,15 +86,11 @@ public class TitleManage extends JFrame implements ActionListener {
 		JScrollPane scrollPane = new JScrollPane();
 		panel.add(scrollPane, BorderLayout.CENTER);
 
-		List<Title> lists = null;
-		TitleService service = new TitleService();
-		lists = service.selectAllTitle();
-		Object[][] data = getRows(lists);
-
-		model = new DefaultTableModel(data, title);
-		table = new JTable(model);
+		table = new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
+
+		lTitle();
 
 		table.setSelectionBackground(Color.yellow);
 		table.setSelectionForeground(Color.MAGENTA);
@@ -134,9 +132,19 @@ public class TitleManage extends JFrame implements ActionListener {
 		pBottom.add(btnMod);
 	}
 
+	private void lTitle() {
+		List<Title> lists = null;
+		TitleService service = new TitleService();
+		lists = service.selectAllTitle();
+		System.out.println(lists);
+		Object[][] data = getRows(lists);
+
+		model = new DefaultTableModel(data, title);
+		table.setModel(model);
+	}
+
 	private Object[][] getRows(List<Title> lists) {
-		Object[][] rows = null;
-		rows = new Object[lists.size()][];
+		Object[][] rows = new Object[lists.size()][];
 		for (int i = 0; i < lists.size(); i++) {
 			rows[i] = lists.get(i).toArray();
 		}
@@ -162,18 +170,28 @@ public class TitleManage extends JFrame implements ActionListener {
 	}
 
 	private void actionPerformedBtnMod(ActionEvent e) {
+		String[] str = new String[2];
+		Object ob = e.getSource();
 
 		if (row == -1) {
 			JOptionPane.showConfirmDialog(this, "먼저 수정할 행을 선택해주세요", "수정확인", JOptionPane.INFORMATION_MESSAGE);
 
 			return;
 		}
-		model.setValueAt(Titleno.getText(), row, 0);
-		model.setValueAt(Titlename.getText(), row, 1);
+
+
+		str[0] = Titleno.getText();
+		str[1] = Titlename.getText();
+		tservice.updateTitle(new Title(Integer.parseInt(str[0]), str[1]));
+		lTitle();
+		// model.setValueAt(Titleno.getText(), row, 0);
+		// model.setValueAt(Titlename.getText(), row, 1);
 
 	}
 
 	private void actionPerformedBtnDel(ActionEvent e) {
+		int row = table.getSelectedRow();
+		int Titleno = (int) (table.getValueAt(row, 0));
 		if (row == -1) {
 			JOptionPane.showMessageDialog(this, "먼저 삭제할 행을 선택해주세요");
 
@@ -184,9 +202,10 @@ public class TitleManage extends JFrame implements ActionListener {
 			int b = JOptionPane.showConfirmDialog(this, "데이터를 삭제할까요?", "삭제", JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE);
 			if (b == 0) {
-				model.removeRow(row);
+				tservice.deleteTitle(Titleno);
 				row = -1;
 				this.clearData();
+				lTitle();
 			}
 		}
 
@@ -209,8 +228,10 @@ public class TitleManage extends JFrame implements ActionListener {
 		str[0] = Titleno.getText();
 		str[1] = Titlename.getText();
 
-		model.addRow(str);
+		// model.addRow(str);
 
+		tservice.insertTitle(new Title(Integer.parseInt(str[0]), str[1]));
+		lTitle();
 	}
 
 	class TableSelect extends MouseAdapter {
@@ -218,11 +239,11 @@ public class TitleManage extends JFrame implements ActionListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			row = table.getSelectedRow(); // 테이블에서 선택된 행의 값을 row에 저장한다.
-			
-			System.out.println(table.getValueAt(row , 0));
-			Titleno.setText(table.getValueAt(row , 0).toString());
+
+			System.out.println(table.getValueAt(row, 0));
+			Titleno.setText(table.getValueAt(row, 0).toString());
 			// 행번호와 행의 데이터 텍스트 필드에 출력하기
-			//Titleno.setText( (String) table.getValueAt(row , 0));
+			// Titleno.setText( (String) table.getValueAt(row , 0));
 			Titlename.setText((String) table.getValueAt(row, 1));
 		}
 

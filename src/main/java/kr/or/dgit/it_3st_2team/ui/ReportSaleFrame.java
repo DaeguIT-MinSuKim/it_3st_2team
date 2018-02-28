@@ -71,7 +71,7 @@ public class ReportSaleFrame extends JFrame implements ActionListener {
 		panel_1.add(panel_2, BorderLayout.NORTH);
 		
 		JLabel lblNewLabel = new JLabel("영업 현황 보고서");
-		lblNewLabel.setFont(new Font("굴림", Font.PLAIN, 21));
+		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 21));
 		panel_2.add(lblNewLabel);
 		
 		JPanel panel_3 = new JPanel();

@@ -71,4 +71,18 @@ public class SaleService {
 
 		}
 	}
+	/*yyj 03-31*/
+	public List<Sale>selectReportAll(){
+		log.debug("selectReportAll()");
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			return sqlSession.selectList(namespace+"selectReportAll");
+		}
+	}
+	/*yyj 03-31*/
+	public List<Integer>SelectAllCount(){
+		log.debug("selectReportAll()");
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			return sqlSession.selectList(namespace+"SelectAllCount");
+		}
+	}
 }

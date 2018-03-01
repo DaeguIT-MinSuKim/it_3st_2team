@@ -59,7 +59,7 @@ public class SaleTest {
 		
 		
 		Map<String,Object> map = new HashMap<>();	
-		map.put("sDate","%-01-%");
+		//map.put("sDate","%-01-%");
         List<Sale> lists = service.selectReportYear(map);
         Assert.assertNotNull(lists);
         for(Sale se : lists) {
@@ -90,8 +90,8 @@ public class SaleTest {
 	    for(Integer se : lists) {
 	    	System.out.println(se);
 	    	}
-		}*/
-
+		}
+*/
 
 	
 	@Test

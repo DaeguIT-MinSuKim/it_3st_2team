@@ -20,14 +20,18 @@ import javax.swing.border.TitledBorder;
 
 import kr.or.dgit.it_3st_2team.dto.Sale;
 import kr.or.dgit.it_3st_2team.service.SaleService;
-import kr.or.dgit.it_3st_2team.t.TableSaleRe;
+import kr.or.dgit.it_3st_2team.t.TableSaleReAll;
+import kr.or.dgit.it_3st_2team.t.TableSaleReMonth;
+import kr.or.dgit.it_3st_2team.t.TableSaleReYear;
 import java.awt.event.ActionEvent;
 
 /*yyj*/
 public class ReportSaleFrame extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
-	private TableSaleRe tbs;
+	private TableSaleReYear tbs;
+	private TableSaleReMonth tbmonth;
+	private TableSaleReAll tball;
 	private JPanel pCenter;
 	private SaleService sservice;
 	private JRadioButton rdbMonth;
@@ -55,7 +59,9 @@ public class ReportSaleFrame extends JFrame implements ActionListener {
 	 */
 	public ReportSaleFrame() {
 		sservice = new SaleService();
-		tbs= new TableSaleRe(this);
+		tbs= new TableSaleReYear(this);
+		tbmonth = new TableSaleReMonth(this);
+		tball = new TableSaleReAll(this);
 		initComponents();
 	}
 
@@ -134,7 +140,12 @@ public class ReportSaleFrame extends JFrame implements ActionListener {
 		contentPane.add(pCenter, BorderLayout.CENTER);
 		pCenter.setLayout(new BorderLayout(0, 0));
 		
-		pCenter.add(tbs);
+			
+		List<Sale> saletable= sservice.selectReportAll();
+		tball.loadDatas(saletable);
+		tball.getRows(saletable);
+		pCenter.setLayout(new BorderLayout(0, 0));	
+		pCenter.add(tball);
 	}
 
 	private void showTablesYear(Map<String,Object> map) {
@@ -144,16 +155,9 @@ public class ReportSaleFrame extends JFrame implements ActionListener {
 		tbs.getRows(saletable);
 		pCenter.setLayout(new BorderLayout(0, 0));	
 		pCenter.add(tbs);
-		
-	}
-	
-	private void showTablesMonth(Map<String,Object> map) {
-		
-		List<Sale> saletable= sservice.selectReportYear(map);
-		tbs.loadDatas(saletable);
-		tbs.getRowsMonth(saletable);
-		pCenter.setLayout(new BorderLayout(0, 0));	
-		pCenter.add(tbs);
+		tbmonth.setVisible(false);
+		tball.setVisible(false);
+		tbs.setVisible(true);
 		
 	}
 	
@@ -168,12 +172,13 @@ public class ReportSaleFrame extends JFrame implements ActionListener {
 		String getdate = tfDate.getText();
 		
 		if(m) {
-			/*System.out.println(getdate);
+			
 			Map<String,Object> map = new HashMap<>();			
 			map.put("sDate","%-"+getdate+"-%");
-			showTablesMonth(map);
+			gettableMonth(map);
 			tfDate.setText("");
-			return;*/
+			return;
+			
 		}else if(y) {
 			Map<String,Object> map = new HashMap<>();			
 			map.put("sDate",getdate+"%");
@@ -181,5 +186,16 @@ public class ReportSaleFrame extends JFrame implements ActionListener {
 			tfDate.setText("");
 			return;
 		}
+	}
+
+	private void gettableMonth(Map<String, Object> map) {
+		List<Sale> saletable= sservice.selectReportYear(map);
+		tbmonth.loadDatas(saletable);
+		tbmonth.getRows(saletable);
+		pCenter.setLayout(new BorderLayout(0, 0));	
+		pCenter.add(tbmonth);
+		tbs.setVisible(false);
+		tball.setVisible(false);
+		tbmonth.setVisible(true);
 	}
 }

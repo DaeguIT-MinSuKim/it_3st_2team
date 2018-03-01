@@ -51,8 +51,19 @@
 			<include refid="selectYearSql"></include>
 			<include refid="whereYearSql"></include>
 	</select>
-
-
+	<!-- select all yyj 03-01 -->
+	
+	<sql id="selectAllSql">
+		select s.sale_no,sdate,stime,c.cus_name,h.hair_name,ev.evn_name,s.sprice
+			from sale s 
+			join enroll e on s.sale_no=e.sale_no
+			join customer c on s.cus_no=c.cus_no
+			join hair h on h.hair_no=e.hair_no
+			join event ev on ev.evn_no=s.evn_no order by sdate
+	</sql>
+	<select id="selectReportAll" resultMap="selectRe">
+		<include refid="selectAllSql"></include>
+	</select>
 
 
 	<!--khj 안쓸수도 있음 -->
@@ -83,7 +94,7 @@
 	
 		<sql id="selectYearCountSql">
 		select  count(*) as 'count' from sale
-	</sql>
+		</sql>
 	<sql id="whereYearCountSql">
 		<where>
 			<if test="sDate != null">
@@ -99,7 +110,15 @@
 			</if>
 		</where>
 	</sql>
-
+	<!-- yyj 03-01 -->
+	<sql id="selectAllCountSql">
+		select  count(*) as 'count' from sale group by year(sdate)
+	</sql>
+	<select id="SelectAllCount" resultType="int">
+		<include refid="selectAllCountSql"></include>
+	</select>
+	
+	
 	<!-- khj 20180228 -->
 	<sql id="deleteSql">
 		delete from sale where sale_no=#{saleNo};

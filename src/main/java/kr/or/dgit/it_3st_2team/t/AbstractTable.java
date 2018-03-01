@@ -62,7 +62,6 @@ public abstract class AbstractTable<T> extends JPanel {
 	public abstract String[] getColumNames();
 
 	public abstract Object[][] getRows(List<T> list);
-
 	public int getSelectedItemNo() {
 		return (int) table.getValueAt(table.getSelectedRow(), 0);
 	}

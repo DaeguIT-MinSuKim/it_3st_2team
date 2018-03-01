@@ -15,9 +15,11 @@ public interface SaleDao {
 	/*selectReportMonth yyj*/
 	List<Sale>selectReportYear(Map<String,Object> map);
 	
-	
+	/*selectReportAll yyj*/
+	List<Sale>selectReportAll();
 	
 	/*select count test yyj*/
 	List<Integer>selectCount(Map<String,Object> map);
 	List<Integer>selectCountMonth(Map<String,Object> map);
+	List<Integer>SelectAllCount();
 }

@@ -71,18 +71,25 @@ public class SaleService {
 
 		}
 	}
-	/*yyj 03-31*/
+	/*yyj 03-1*/
 	public List<Sale>selectReportAll(){
 		log.debug("selectReportAll()");
 		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
 			return sqlSession.selectList(namespace+"selectReportAll");
 		}
 	}
-	/*yyj 03-31*/
+	/*yyj 03-1*/
 	public List<Integer>SelectAllCount(){
 		log.debug("selectReportAll()");
 		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
 			return sqlSession.selectList(namespace+"SelectAllCount");
+		}
+	}
+	/*yyj 03-02*/
+	public List<String>selectYearExist(){
+		log.debug("selectYearExist()");
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			return sqlSession.selectList(namespace+"selectYearExist");
 		}
 	}
 }

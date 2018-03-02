@@ -54,5 +54,4 @@
 		<include refid="SelectDoroSql"></include>
 		<include refid="whereDoroSql"></include>	
 	</select>
-	
 </mapper>

@@ -137,4 +137,9 @@
 		<include refid="selectYearCountSql"></include>
 		<include refid="whereMonthCountSql"></include>
 	</select>
+	
+	<!-- yyj 03-02 -->
+	<select id="selectYearExist" resultType="String">
+		select  sdate from sale group by year(sdate)
+	</select>
 </mapper>

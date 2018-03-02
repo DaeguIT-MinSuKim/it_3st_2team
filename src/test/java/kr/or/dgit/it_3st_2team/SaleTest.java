@@ -94,9 +94,18 @@ public class SaleTest {
 */
 
 	
-	@Test
+/*	@Test
 	public void test4DeleteSale() {
 		Sale sale = new Sale(28);
 		service.deleteSale(sale);
-	}
+	}*/
+	@Test
+	public void test6SelectYear() {
+		
+	    List<String> lists = service.selectYearExist();
+	    Assert.assertNotNull(lists);
+	    for(String se : lists) {
+	    	System.out.println(se);
+	    	}
+		}
 }

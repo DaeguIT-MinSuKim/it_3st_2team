@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -179,12 +180,28 @@ public class ReportSaleFrame extends JFrame implements ActionListener {
 			tfDate.setText("");
 			return;
 			
-		}else if(y) {
-			Map<String,Object> map = new HashMap<>();			
-			map.put("sDate",getdate+"%");
-			showTablesYear(map);
-			tfDate.setText("");
-			return;
+		}else if(y) {			
+			List<String> list = sservice.selectYearExist();	
+			String existYear=null;
+			boolean tf = false;
+			for(int i =0;i<list.size();i++) {
+				existYear=list.get(i);
+				existYear= existYear.substring(0,4);
+				if(getdate.equals(existYear)) {
+					tf=true;
+				}
+			}
+				if(tf) {			
+					Map<String,Object> map = new HashMap<>();			
+					map.put("sDate",getdate+"%");
+					showTablesYear(map);
+					tfDate.setText("");
+					return;
+				}else {
+					JOptionPane.showMessageDialog(null, getdate+"년의 데이터가 존재하지 않습니다.");
+					tfDate.setText("");
+					return;				
+			}
 		}
 	}
 

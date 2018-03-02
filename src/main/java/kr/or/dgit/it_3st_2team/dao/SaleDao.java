@@ -22,4 +22,7 @@ public interface SaleDao {
 	List<Integer>selectCount(Map<String,Object> map);
 	List<Integer>selectCountMonth(Map<String,Object> map);
 	List<Integer>SelectAllCount();
+	
+	/*select year yyj*/
+	List<String>selectYearExist();
 }

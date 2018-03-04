@@ -1,5 +1,7 @@
 package kr.or.dgit.it_3st_2team;
 
+import java.util.List;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -7,7 +9,6 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import kr.or.dgit.it_3st_2team.dto.Enroll;
-import kr.or.dgit.it_3st_2team.dto.Hair;
 import kr.or.dgit.it_3st_2team.dto.Sale;
 import kr.or.dgit.it_3st_2team.service.EnrollService;
 
@@ -31,9 +32,22 @@ public class EnrollTest {
 		service.insertEnroll(enroll);
 	}*/
 	
-	@Test
+	/*@Test
 	public void test2DeleteEnroll() {
-		Enroll enroll = new Enroll(26);
+		Enroll enroll = new Enroll(8);
 		service.deleteEnroll(enroll);
+	}*/
+	
+	@Test
+	public void test3SelectEnrollBySaleNo() {
+		Enroll enroll = new Enroll(16);
+		service.selectEnrollBySaleNo(enroll);
+	}
+	
+	@Test
+	public void test4UpdateEnrollofHair() {
+		Enroll enroll = new Enroll(16, 1);
+		service.updateEnrollofHair(enroll);
+		
 	}
 }

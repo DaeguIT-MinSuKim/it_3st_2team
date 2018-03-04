@@ -81,4 +81,9 @@ public class CustomerService {
 			return sqlSession.selectList(namespace + "SelectAllCustomerName",customer);
 		}
 	}
+	public int selectCusNoByName(Customer customer) { //khj
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			return sqlSession.selectOne(namespace+"selectCusNoByName",customer);
+		}
+	}
 }

@@ -1,5 +1,6 @@
 package kr.or.dgit.it_3st_2team.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 
 import kr.or.dgit.it_3st_2team.dao.SaleDao;
+import kr.or.dgit.it_3st_2team.dto.Customer;
 import kr.or.dgit.it_3st_2team.dto.Sale;
 import kr.or.dgit.it_3st_2team.util.MyBatisSqlSessionFactory;
 
@@ -69,6 +71,32 @@ public class SaleService {
 			sqlSession.commit();
 			return res;
 
+		}
+	}
+	//khj
+	public int updateSale(Sale sale) {
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			int res = sqlSession.update(namespace+"updateSale",sale);
+			sqlSession.commit();
+			return res;
+		}
+	}
+	//khj
+	public List<Sale> selectSaleByCusNo(Sale sale){
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			return sqlSession.selectList(namespace+"selectSaleByCusNo",sale);
+		}
+	}
+	//khj
+	public List<Sale> selectSaleByDate(String date1, String date2) {
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			return sqlSession.getMapper(SaleDao.class).selectSaleByDate(date1, date2);
+		}
+	}
+	//khj
+	public List<Sale> selectSaleByCusNoAndDate(String cusName, String date1, String date2){
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			return sqlSession.getMapper(SaleDao.class).selectSaleByCusNoAndDate(cusName, date1, date2);
 		}
 	}
 }

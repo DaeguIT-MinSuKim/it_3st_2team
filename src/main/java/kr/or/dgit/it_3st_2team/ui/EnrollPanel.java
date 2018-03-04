@@ -9,7 +9,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
+//khj EnrollFrame 쓸 예정
 public class EnrollPanel extends JPanel {
 	private JTextField textField;
 	private JTextField textField_1;

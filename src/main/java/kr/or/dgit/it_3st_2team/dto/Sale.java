@@ -59,6 +59,28 @@ public class Sale { //Foreign key에 대한 변수타입 수정 kim 2018-02-22
 		super();
 		this.saleNo = saleNo;
 	}
+	
+	// khj 헤어주문 수정기능을 위함
+	public Sale(int saleNo, Customer cus, Employee emp, Event evn, int sPrice) {
+		super();
+		this.saleNo = saleNo;
+		this.cus = cus;
+		this.emp = emp;
+		this.evn = evn;
+		this.sPrice = sPrice;
+	}
+
+	//khj 헤어주문 고객검색기능을 위함
+	public Sale(Customer cus) {
+		super();
+		this.cus = cus;
+	}
+
+	//khj 헤어주문 기간검색기능을 위함
+	public Sale(Date sDate) {
+		super();
+		this.sDate = sDate;
+	}
 
 	public int getSaleNo() {
 		return saleNo;

@@ -2,9 +2,11 @@ package kr.or.dgit.it_3st_2team;
 
 
 
-import java.sql.Date;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +19,9 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import kr.or.dgit.it_3st_2team.dto.Customer;
+import kr.or.dgit.it_3st_2team.dto.Employee;
+import kr.or.dgit.it_3st_2team.dto.Event;
 import kr.or.dgit.it_3st_2team.dto.Sale;
 import kr.or.dgit.it_3st_2team.service.SaleService;
 
@@ -94,9 +99,41 @@ public class SaleTest {
 
 
 	
-	@Test
+	/*@Test
 	public void test4DeleteSale() {
 		Sale sale = new Sale(28);
 		service.deleteSale(sale);
+	}*/
+	
+	/*@Test
+	public void test5UpdateSale() {
+		Customer customer = new Customer(1);
+		Employee employee = new Employee(1);
+		Event event = new Event(1);
+		Sale sale = new Sale(37, customer, employee, event, 1);
+		service.updateSale(sale);
+	}*/
+	
+	/*@Test
+	public void test6SelectSaleByCusName() {
+		Customer customer = new Customer(1);
+		Sale sale = new Sale(customer);
+		service.selectSaleByCusNo(sale);
+		
+	}*/
+	
+	/*@Test
+	public void test6SelectSaleByDate() {
+		String from = "2017-01-01";
+		String to = "2017-12-31";
+		service.selectSaleByDate(from, to);
+	}*/
+	
+	@Test
+	public void test7SelectSaleByCusNoAndDate(){
+		String cusName ="이연재";
+		String from = "2017-01-01";
+		String to = "2017-12-31";
+		service.selectSaleByCusNoAndDate(cusName, from, to);
 	}
 }

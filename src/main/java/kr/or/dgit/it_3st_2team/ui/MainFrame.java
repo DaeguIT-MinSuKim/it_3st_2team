@@ -73,6 +73,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		cp.add(en);
 		revalidate();
 		repaint();*/
+		/*EnrollFrame ef = new EnrollFrame();
+		ef.setVisible(true);*/
+		
 		EnrollFrame ef = new EnrollFrame();
 		ef.setVisible(true);
 	}

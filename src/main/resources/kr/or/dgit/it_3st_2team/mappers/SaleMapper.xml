@@ -107,7 +107,41 @@
 	<update id="deleteSale" parameterType="Sale">
 		<include refid="deleteSql"/>
 	</update>
-
+	<sql id="updateSql">
+		update sale set cus_no=#{cus.cusNo}, emp_no=#{emp.empNo}, evn_no=#{evn.evnNo}, sprice=#{sPrice} 
+		where sale_no=#{saleNo}
+	</sql>
+	<update id="updateSale" parameterType="Sale">
+		<include refid="updateSql"/>
+	</update>
+	<select id="selectSaleByCusNo" resultMap="saleResultAddOthers">
+		select s.sale_no, sdate, stime, c.cus_name, e.emp_name, n.evn_name, s.sprice, h.hair_name from sale s
+		join customer c on s.cus_no=c.cus_no
+		join employee e on s.emp_no=e.emp_no
+		join event n on s.evn_no=n.evn_no
+		join enroll r on s.sale_no=r.sale_no
+		join hair h on r.hair_no=h.hair_no
+		where s.cus_no=#{cus.cusNo};
+	</select>
+	<select id="selectSaleByDate" resultMap="saleResultAddOthers">
+		select s.sale_no, s.sdate, s.stime, s.sprice, c.cus_name, e.emp_name, n.evn_name, h.hair_name from sale s
+		join customer c on s.cus_no=c.cus_no
+		join employee e on s.emp_no=e.emp_no
+		join event n on s.evn_no=n.evn_no
+		left join enroll r on s.sale_no=r.sale_no
+		left join hair h on r.hair_no=h.hair_no
+		where s.sdate between #{param1} and #{param2} order by s.sale_no;
+	</select>
+	<select id="selectSaleByCusNoAndDate" resultMap="saleResultAddOthers">
+		select s.sale_no, sdate, stime, c.cus_name, e.emp_name, n.evn_name, s.sprice, h.hair_name from sale s
+		join customer c on s.cus_no=c.cus_no
+		join employee e on s.emp_no=e.emp_no
+		join event n on s.evn_no=n.evn_no
+		join enroll r on s.sale_no=r.sale_no
+		join hair h on r.hair_no=h.hair_no
+		where c.cus_name=#{param1} and 
+		s.sdate between #{param2} and #{param3}
+	</select>
 	
 	<select id="selectCount" resultType="int">
 		<include refid="selectYearCountSql"></include>

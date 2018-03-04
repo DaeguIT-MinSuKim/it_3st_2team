@@ -53,8 +53,8 @@ public class CustomerSearchUI extends JFrame {
 			if(e.getClickCount()==1) { //더블클릭 처리안됨 khj
 				int row = table.getSelectedRow();
 				String name = model.getValueAt(row, 1).toString();
-				enrollFrame.setTfSelectedCus(name);
 				int no = (int) model.getValueAt(row, 0);
+				enrollFrame.setTfSelectedCus(String.format("%s(%d)", name,no));
 				enrollFrame.setTfCusNo(no);
 				setVisible(false);
 			}

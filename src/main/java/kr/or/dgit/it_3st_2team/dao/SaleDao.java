@@ -17,13 +17,21 @@ public interface SaleDao {
 	/*selectReportMonth yyj*/
 	List<Sale>selectReportYear(Map<String,Object> map);
 	
-	
+	/*selectReportAll yyj*/
+	List<Sale>selectReportAll();
 	
 	/*select count test yyj*/
 	List<Integer>selectCount(Map<String,Object> map);
 	List<Integer>selectCountMonth(Map<String,Object> map);
+
 	
 	//khj 헤어주문 검색
 	List<Sale> selectSaleByDate(String date1, String date2);
 	List<Sale> selectSaleByCusNoAndDate(String cusName, String date1, String date2);
+
+	List<Integer>SelectAllCount();
+	
+	/*select year yyj*/
+	List<String>selectYearExist();
+
 }

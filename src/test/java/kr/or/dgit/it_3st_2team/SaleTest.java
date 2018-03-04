@@ -3,14 +3,7 @@ package kr.or.dgit.it_3st_2team;
 
 
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -19,10 +12,6 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import kr.or.dgit.it_3st_2team.dto.Customer;
-import kr.or.dgit.it_3st_2team.dto.Employee;
-import kr.or.dgit.it_3st_2team.dto.Event;
-import kr.or.dgit.it_3st_2team.dto.Sale;
 import kr.or.dgit.it_3st_2team.service.SaleService;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -64,7 +53,7 @@ public class SaleTest {
 		
 		
 		Map<String,Object> map = new HashMap<>();	
-		map.put("sDate","%-01-%");
+		//map.put("sDate","%-01-%");
         List<Sale> lists = service.selectReportYear(map);
         Assert.assertNotNull(lists);
         for(Sale se : lists) {
@@ -95,15 +84,20 @@ public class SaleTest {
 	    for(Integer se : lists) {
 	    	System.out.println(se);
 	    	}
-		}*/
-
+		}
+*/
 
 	
-	/*@Test
+
+
+
+/*	@Test
+
 	public void test4DeleteSale() {
 		Sale sale = new Sale(28);
 		service.deleteSale(sale);
 	}*/
+
 	
 	/*@Test
 	public void test5UpdateSale() {
@@ -136,4 +130,15 @@ public class SaleTest {
 		String to = "2017-12-31";
 		service.selectSaleByCusNoAndDate(cusName, from, to);
 	}
+
+	@Test
+	public void test6SelectYear() {
+		
+	    List<String> lists = service.selectYearExist();
+	    Assert.assertNotNull(lists);
+	    for(String se : lists) {
+	    	System.out.println(se);
+	    	}
+		}
+
 }

@@ -73,6 +73,7 @@ public class SaleService {
 
 		}
 	}
+
 	//khj
 	public int updateSale(Sale sale) {
 		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
@@ -97,6 +98,28 @@ public class SaleService {
 	public List<Sale> selectSaleByCusNoAndDate(String cusName, String date1, String date2){
 		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
 			return sqlSession.getMapper(SaleDao.class).selectSaleByCusNoAndDate(cusName, date1, date2);
+		}
+	}
+			
+	/*yyj 03-1*/
+	public List<Sale>selectReportAll(){
+		log.debug("selectReportAll()");
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			return sqlSession.selectList(namespace+"selectReportAll");
+		}
+	}
+	/*yyj 03-1*/
+	public List<Integer>SelectAllCount(){
+		log.debug("selectReportAll()");
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			return sqlSession.selectList(namespace+"SelectAllCount");
+		}
+	}
+	/*yyj 03-02*/
+	public List<String>selectYearExist(){
+		log.debug("selectYearExist()");
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			return sqlSession.selectList(namespace+"selectYearExist");
 		}
 	}
 }

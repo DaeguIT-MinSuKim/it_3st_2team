@@ -58,22 +58,19 @@ public class EnrollTest {
 	@Test
 	public void test5Chart() {
 		List<Enroll> list = service.selectChart();
-		List<String> hairNos = new ArrayList<>();
-		//Map<Integer, String> hairNoName = new HashMap<>();
-		for(Enroll e: list) {
-			//System.out.println(e.getHairNo());
-			hairNos.add(Integer.toString(e.getHairNo()));
-			//hairNoName.put(e.getHairNo(), e.getHair().getHairName());
+		List<Hair> hlist = new ArrayList<>();
+		for(Enroll e:list) {
+			hlist.add(new Hair(e.getHairNo(), e.getHair().getHairName()));
 		}
-		//System.out.println(hairNos);
-		
-		//Map<String, Integer> map = new HashMap<>();
 		int num = -1;
-		for(String str:hairNos) {
-			//System.out.println(str);
-			num = service.selectChartCount(Integer.parseInt(str));
-			System.out.println(str+":"+num);
-			//map.put(str, num);
+		Map<String,Integer> hmap = new HashMap<>();
+		for(Hair h:hlist) {
+			num = service.selectChartCount(h.getHairNo());
+			hmap.put(h.getHairName(), num);
+		}
+		for(String key:hmap.keySet()) {
+			int value = hmap.get(key);
+			System.out.println(key+":"+value);
 		}
 	}
 	

@@ -11,6 +11,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import java.awt.FlowLayout;
 
 
 public class MainFrame extends JFrame implements ActionListener {
@@ -18,6 +19,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private JMenuItem mntmNewMenuItem;
+	private JMenuItem mntmNewMenuItem_1;
 
 	/**
 	 * Launch the application.
@@ -47,8 +49,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		setBounds(100, 100, 461, 281);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JMenuBar menuBar = new JMenuBar();
 		contentPane.add(menuBar, BorderLayout.NORTH);
@@ -59,9 +61,19 @@ public class MainFrame extends JFrame implements ActionListener {
 		mntmNewMenuItem = new JMenuItem("헤어주문");
 		mntmNewMenuItem.addActionListener(this);
 		mnNewMenu.add(mntmNewMenuItem);
+		
+		JMenu mnNewMenu_1 = new JMenu("운영");
+		menuBar.add(mnNewMenu_1);
+		
+		mntmNewMenuItem_1 = new JMenuItem("차트 현황");
+		mntmNewMenuItem_1.addActionListener(this);
+		mnNewMenu_1.add(mntmNewMenuItem_1);
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == mntmNewMenuItem_1) {
+			actionPerformedMntmNewMenuItem_1(e);
+		}
 		if (e.getSource() == mntmNewMenuItem) {
 			actionPerformedMntmNewMenuItem(e);
 		}
@@ -78,5 +90,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		EnrollFrame ef = new EnrollFrame();
 		ef.setVisible(true);
+	}
+	protected void actionPerformedMntmNewMenuItem_1(ActionEvent e) {
+		PolylineBarChart cf = new PolylineBarChart();
 	}
 }

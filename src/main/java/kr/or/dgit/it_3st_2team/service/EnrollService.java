@@ -7,6 +7,7 @@ import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 
 import kr.or.dgit.it_3st_2team.dto.Enroll;
+import kr.or.dgit.it_3st_2team.dto.Hair;
 import kr.or.dgit.it_3st_2team.dto.Sale;
 import kr.or.dgit.it_3st_2team.util.MyBatisSqlSessionFactory;
 
@@ -45,6 +46,17 @@ public class EnrollService {
 		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
 			int res = sqlSession.update(namespace+"updateEnrollofHair",enroll);
 			sqlSession.commit();
+			return res;
+		}
+	}
+	public List<Enroll> selectChart(){
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			return sqlSession.selectList(namespace+"selectChart");
+		}
+	}
+	public int selectChartCount(int hairNo) {
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			int res= sqlSession.selectOne(namespace+"selectChartCount",hairNo);
 			return res;
 		}
 	}

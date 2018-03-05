@@ -8,8 +8,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import kr.or.dgit.hair_setting.dao.service.InitService;
-import kr.or.dgit.hair_setting.dao.service.LoadService;
+/*import kr.or.dgit.hair_setting.dao.service.InitService;
+import kr.or.dgit.hair_setting.dao.service.LoadService;*/
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -63,8 +63,8 @@ public class SettingMain extends JFrame implements ActionListener {
 		}
 	}
 	protected void actionPerformedBtnNewButton(ActionEvent arg0) {
-		InitService.getInstance().service();
+		/*InitService.getInstance().service();
 		LoadService.getInstance().service();
-		JOptionPane.showMessageDialog(null, "초기화 성공!");
+		JOptionPane.showMessageDialog(null, "초기화 성공!");*/
 	}
 }

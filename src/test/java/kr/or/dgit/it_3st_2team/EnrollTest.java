@@ -1,6 +1,9 @@
 package kr.or.dgit.it_3st_2team;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -9,8 +12,10 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import kr.or.dgit.it_3st_2team.dto.Enroll;
+import kr.or.dgit.it_3st_2team.dto.Hair;
 import kr.or.dgit.it_3st_2team.dto.Sale;
 import kr.or.dgit.it_3st_2team.service.EnrollService;
+import kr.or.dgit.it_3st_2team.service.HairService;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EnrollTest {
@@ -38,7 +43,7 @@ public class EnrollTest {
 		service.deleteEnroll(enroll);
 	}*/
 	
-	@Test
+	/*@Test
 	public void test3SelectEnrollBySaleNo() {
 		Enroll enroll = new Enroll(16);
 		service.selectEnrollBySaleNo(enroll);
@@ -47,7 +52,29 @@ public class EnrollTest {
 	@Test
 	public void test4UpdateEnrollofHair() {
 		Enroll enroll = new Enroll(16, 1);
-		service.updateEnrollofHair(enroll);
+		service.updateEnrollofHair(enroll);	
+	}*/
+	
+	@Test
+	public void test5Chart() {
+		List<Enroll> list = service.selectChart();
+		List<String> hairNos = new ArrayList<>();
+		//Map<Integer, String> hairNoName = new HashMap<>();
+		for(Enroll e: list) {
+			//System.out.println(e.getHairNo());
+			hairNos.add(Integer.toString(e.getHairNo()));
+			//hairNoName.put(e.getHairNo(), e.getHair().getHairName());
+		}
+		//System.out.println(hairNos);
 		
+		//Map<String, Integer> map = new HashMap<>();
+		int num = -1;
+		for(String str:hairNos) {
+			//System.out.println(str);
+			num = service.selectChartCount(Integer.parseInt(str));
+			System.out.println(str+":"+num);
+			//map.put(str, num);
+		}
 	}
+	
 }

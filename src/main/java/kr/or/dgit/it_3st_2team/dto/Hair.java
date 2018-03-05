@@ -10,11 +10,18 @@ public class Hair {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	//khj
+	public Hair(int hairNo) {
+		super();
+		this.hairNo = hairNo;
+	}
+	
 	public Hair(int hairNo, String hairName, int price) {
 		this.hairNo = hairNo;
 		this.hairName = hairName;
 		this.price = price;
 	}
+
 	public int getHairNo() {
 		return hairNo;
 	}

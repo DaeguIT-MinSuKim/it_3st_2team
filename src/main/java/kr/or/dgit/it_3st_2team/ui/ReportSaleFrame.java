@@ -76,7 +76,7 @@ public class ReportSaleFrame extends JFrame implements ActionListener {
 	}
 
 	private void initComponents() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 779, 503);
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(null, "\uC601\uC5C5 \uBCF4\uACE0\uC11C", TitledBorder.LEADING, TitledBorder.TOP, null, null));

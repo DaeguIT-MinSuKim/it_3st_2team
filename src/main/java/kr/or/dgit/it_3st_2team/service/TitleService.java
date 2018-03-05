@@ -66,5 +66,4 @@ public class TitleService {
 			return TitleDao.selectTitle2();
 		}
 	}
-
 }

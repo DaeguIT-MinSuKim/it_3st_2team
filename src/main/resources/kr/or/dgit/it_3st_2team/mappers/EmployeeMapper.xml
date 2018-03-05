@@ -10,7 +10,7 @@
 		<result property="addr" column="addr" />
 		<result property="id" column="id" />
 		<result property="password" column="epassword" />
-		<result property="eOff" column="eoff"/>
+		<result property="eOff" column="eoff" />
 		<result property="eTf" column="e_tf" />
 	</resultMap>
 
@@ -30,6 +30,8 @@
 			</if>
 		</where>
 	</sql>
+
+
 
 	<select id="selectEmpNo" resultType="int">
 		<include refid="selectEmpNoSql" />
@@ -90,16 +92,17 @@
 	<sql id="EmployeeTfSql">
 		<where>
 			<if test="eTf == 0">
-				e_tf = "퇴사"
+				e_tf = #{eTf}
 			</if>
 		</where>
 	</sql>
 
 	<select id="selecteNowEmplyoee" parameterType="Employee"
 		resultMap="employeeResultAddTitle">
-		select e.emp_no ,
-		e.emp_name,e.join_date,e.addr,id,e.epassword,t.title_no,e.eoff,e_tf
-		from employee e join
+		select emp_no ,
+		emp_name,join_date,addr,id,epassword,t.title_name,eoff,e_tf
+		from
+		employee e join
 		Title t
 		on e.title_no=t.title_no
 	</select>
@@ -107,16 +110,21 @@
 
 	<!--bjh -->
 	<sql id="updateNowEmplyoeeSql">
-		update Employee 
-		set
-		epassword=#{password},e.title_no=#{e_tf
-		from
-		employee e join
-		Title t on e.title_no=t.title_no
-		where e.emp_no=#{empNo}
+	<set>
+			<if test="password !=null">epassword=#{password},</if>
+			<if test="titleName !=null">title_Name=#{titleName},</if>
+			<if test="eOff !=null">e_off=#{eOff},</if>
+			<if test="eTf !=null">e_tf=#{eTf},</if>
+		</set>
+	<include refid="whereeTfSql"></include>
 	</sql>
-	<update id="updateNowEmplyoee" parameterType="Employee">
-		<include refid="updateNowEmplyoeeSql"></include>
-	</update>
+
+	<sql id="EmployeeSizeNoSql">
+		select count(*) from employee
+	</sql>
+
+	<select id="EmployeeSizeNo" resultType="int">
+		<include refid="EmployeeSizeNoSql"></include>
+	</select>
 
 </mapper>

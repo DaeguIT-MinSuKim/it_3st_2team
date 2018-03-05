@@ -60,6 +60,10 @@ public class Employee {
 		this.empNo = empNo;
 	}
 
+	public Employee(String string, String string2, String string3) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getEmpNo() {
 		return empNo;
 	}
@@ -154,6 +158,7 @@ public class Employee {
 
 	public Object[] toArray() {
 		String Sdf = new SimpleDateFormat("yyyy-mm-dd").format(joinDate);
-		return new Object[] { empNo, empName, Sdf, addr,id, epassword, title.getTitleNo(),eOff,eTf };
+		return new Object[] { empNo, empName, Sdf, addr,id, epassword, title.getTitleName(),eOff,eTf };
 	}
+
 }

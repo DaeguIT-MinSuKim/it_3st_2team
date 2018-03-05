@@ -52,7 +52,7 @@ public class AddressJFrame extends JFrame implements ActionListener, MouseListen
 	private CustomerJPanel cjpanel;
 	private String addr1;
 	private String addr2;
-	private NowEmployee Nowemjpanel;
+	private EmployeeJoin empjoin;
 	
 	
 	
@@ -90,12 +90,10 @@ public class AddressJFrame extends JFrame implements ActionListener, MouseListen
 	}
 
 
-
-	public AddressJFrame(NowEmployee nowEmployee) {
-		Nowemjpanel = nowEmployee;
+	public AddressJFrame(EmployeeJoin employeeJoin) {
+		empjoin = employeeJoin;
 		aservice = new AddressService();	
 		initComponents();
-		
 	}
 
 	private void initComponents() {
@@ -348,8 +346,10 @@ public class AddressJFrame extends JFrame implements ActionListener, MouseListen
 		addr2 = tfAddr2.getText();
 		cjpanel.setTfaddr(addr1+" "+addr2);
 		setVisible(false);
-		
-		
-		Nowemjpanel.setTfaddr(addr1+" "+addr2);
+		/*
+		if()
+		empjoin.setaddr(addr1+" "+addr2);
+		setVisible(false);
+		*/
 	}
 }

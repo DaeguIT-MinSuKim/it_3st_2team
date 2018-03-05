@@ -37,6 +37,13 @@ public class Title {
 	public Object[] toArray() {
 		return new Object[] {titleNo, titleName};
 	}
+
+
+	@Override
+	public String toString() {
+		return String.format("%s", titleName);
+	}
+	
 	
 
 }

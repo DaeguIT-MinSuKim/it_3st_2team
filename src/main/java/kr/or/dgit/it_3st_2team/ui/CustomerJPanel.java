@@ -45,6 +45,7 @@ import kr.or.dgit.it_3st_2team.service.CustomerService;
 import kr.or.dgit.it_3st_2team.service.EmployeeService;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
+import java.awt.Dimension;
 /*yyj*/
 @SuppressWarnings("serial")
 public class CustomerJPanel extends JPanel implements ActionListener, KeyListener, MouseListener {
@@ -114,7 +115,8 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		panel_1.add(lblNo);
 
 		tfNo = new JTextField();
-	//	tfNo.setFocusable(false);
+		tfNo.setFocusTraversalKeysEnabled(false);
+		tfNo.setFocusable(false);
 		panel_1.add(tfNo);
 		tfNo.setColumns(10);
 		tfNo.setEditable(false);
@@ -210,12 +212,12 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		panel_4.add(tfphone3);
 		tfphone3.setColumns(5);
 
-		JLabel lblNewLabel = new JLabel("                     ");
-		panel_4.add(lblNewLabel);
-
 		JPanel panel_5 = new JPanel();
 		panel_6.add(panel_5, BorderLayout.CENTER);
 		panel_5.setLayout(new FlowLayout(FlowLayout.CENTER, 3, 3));
+		
+		JLabel lblNewLabel_2 = new JLabel("                                        ");
+		panel_5.add(lblNewLabel_2);
 
 		JLabel lblAddr = new JLabel("주소");
 		panel_5.add(lblAddr);
@@ -283,7 +285,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		panel_10.setLayout(new BorderLayout(0, 0));
 
 		scrollPane = new JScrollPane();
-		panel_10.add(scrollPane, BorderLayout.NORTH);
+		panel_10.add(scrollPane, BorderLayout.CENTER);
 
 		table = new JTable();
 		table.addMouseListener(this);
@@ -542,7 +544,8 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 			cList = cservice.SelectAllCustomerEmpName(new Customer(true));
 			showTables();
 			addtfNo();
-			clear();		
+			clear();	
+			tfName.setFocusable(true);
 		}	
 	}
 

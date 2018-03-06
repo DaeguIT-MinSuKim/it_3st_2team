@@ -9,7 +9,7 @@
 		<result property="joinDate" column="join_date" />
 		<result property="addr" column="addr" />
 		<result property="id" column="id" />
-		<result property="password" column="epassword" />
+		<result property="epassword" column="epassword" />
 		<result property="eTf" column="e_tf" />
 	</resultMap>
 
@@ -68,22 +68,28 @@
 		<include refid="JoinEmpTitleNameSql"></include>
 		<include refid="whereeTfSql"></include>
 	</select>
-	<resultMap id="employeeResultAddTitle" type="Employee"
+ 	<resultMap id="employeeResultAddTitle" type="Employee"
 		extends="employeeResult">
 		<association property="titleNo"
 			resultMap="kr.or.dgit.it_3st_2team.dao.TitleDao.TitleResult" />
 	</resultMap>
 
-	<select id="selectEmpByLoginId" parameterType="Employee"
+	<!-- khj 180306 -->
+	<!-- <select id="selectEmpByLoginId" parameterType="Employee"
 		resultMap="employeeResultAddTitle">
 		select id,password from employee where id=#{id}
+	</select> -->
+	<select id="selectEmployeeByLoginId" resultMap="EmployeeAddTitle">
+		<!-- select id, epassword, title_no from employee -->
+		select id, epassword, t.title_name from employee e
+		left join title t on e.title_no=t.title_no
 	</select>
-
+	
 	<select id="selectAllEmployee" resultType="Employee">
 		select emp_no,
 		emp_name from employee;
 	</select>
-
+	
 	<!--bjh -->
 
 	<select id="selecteNowEmplyoee" parameterType="Employee"

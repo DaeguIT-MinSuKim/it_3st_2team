@@ -21,11 +21,17 @@ public class EmployeeService {
 			return sqlSession.selectList(namespace + "selectAllEmployee");
 		}
 	}
-	public Employee selectEmployeeByLoginId(Employee emp) {
+	/*public Employee selectEmployeeByLoginId(Employee emp) {
 		log.debug("selectEmployeeByLoginId()");
 		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
 			EmployeeDao employeeDao = sqlSession.getMapper(EmployeeDao.class);
 			return employeeDao.selectEmpByLoginId(emp);
+		}
+	}*/
+	public List<Employee> selectEmployeeByLoginId() {
+		log.debug("selectEmployeeByLoginId()");
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			return sqlSession.selectList(namespace+"selectEmployeeByLoginId");
 		}
 	}
 	

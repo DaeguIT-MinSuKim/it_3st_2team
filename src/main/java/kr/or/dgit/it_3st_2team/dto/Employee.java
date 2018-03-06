@@ -107,14 +107,14 @@ public class Employee {
 	public void setEpassword(String epassword) {
 		this.epassword = epassword;
 	}
-
-	public String getPassword() {
+	//khj epassword이기 때문에 주석처리함
+/*	public String getPassword() {
 		return epassword;
 	}
 
 	public void setPassword(String password) {
 		this.epassword = password;
-	}
+	}*/
 
 	public Title getTitleNo() {
 		return title;
@@ -156,4 +156,13 @@ public class Employee {
 		String Sdf = new SimpleDateFormat("yyyy-mm-dd").format(joinDate);
 		return new Object[] { empNo, empName, Sdf, id, epassword, title.getTitleNo() };
 	}
+	//khj 180306
+	public Title getTitle() {
+		return title;
+	}
+
+	public void setTitle(Title title) {
+		this.title = title;
+	}
+	
 }

@@ -8,12 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
-import org.jfree.chart.ChartFrame;
-import org.jfree.chart.ChartPanel;
+/*import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.CategoryLabelPositions;
@@ -27,11 +24,11 @@ import org.jfree.chart.plot.DatasetRenderingOrder;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.ui.TextAnchor;
+import org.jfree.ui.TextAnchor;*/
 
 import kr.or.dgit.it_3st_2team.dto.Enroll;
-import kr.or.dgit.it_3st_2team.service.EnrollService;
 import kr.or.dgit.it_3st_2team.dto.Hair;
+import kr.or.dgit.it_3st_2team.service.EnrollService;
 //khj
 public class PolylineBarChart extends JPanel {
 
@@ -58,37 +55,21 @@ public class PolylineBarChart extends JPanel {
 	 * Create the frame.
 	 */
 	public PolylineBarChart() {
-		enrollService = new EnrollService();
+		/*enrollService = new EnrollService();
 		setLayout(new BorderLayout());
 	
 		JFreeChart chart = this.getChart();
-		//ChartFrame frame1 = new ChartFrame("차트 현황", chart);
 		
 		ChartPanel cp = new ChartPanel(chart);
-		add(cp);
-		//frame1.setSize(1000, 400);
-		//frame1.setVisible(true);
+		add(cp);*/
 	}
 	
-	public JFreeChart getChart() {
+	/*public JFreeChart getChart() {
 		DefaultCategoryDataset dataset1 = new DefaultCategoryDataset();
 		DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
 		DefaultCategoryDataset dataset3 = new DefaultCategoryDataset();
 		
 		//그래프1
-		/*dataset1.addValue(1.0, "S1", "1월");
-		dataset1.addValue(4.0, "S1", "2월");
-		dataset1.addValue(3.0, "S1", "3월");
-		dataset1.addValue(5.0, "S1", "4월");
-		dataset1.addValue(5.0, "S1", "5월");
-		dataset1.addValue(7.0, "S1", "6월");
-		dataset1.addValue(7.0, "S1", "7월");
-		dataset1.addValue(8.0, "S1", "8월");
-		dataset1.addValue(0, "S1", "9월");
-		dataset1.addValue(0, "S1", "10월");
-		dataset1.addValue(0, "S1", "11월");
-		dataset1.addValue(0, "S1", "12월");*/
-		
 		List<Enroll> list = enrollService.selectChart();
 		List<Hair> hlist = new ArrayList<>();
 		for(Enroll e:list) {
@@ -152,6 +133,6 @@ public class PolylineBarChart extends JPanel {
 		
 		final JFreeChart chart = new JFreeChart(plot);
 		return chart;
-	}
+	}*/
 
 }

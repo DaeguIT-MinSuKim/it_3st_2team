@@ -1,5 +1,6 @@
 package kr.or.dgit.it_3st_2team.dto;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -163,9 +164,14 @@ public class Sale { //Foreign key에 대한 변수타입 수정 kim 2018-02-22
 		}
 		return hairList.toString();
 	}
-	
+	//khj 천단위 표시
+	public String convertPriceFormat(int price) {
+		DecimalFormat df = new DecimalFormat("#,###");
+		return df.format(price);
+	}
 	public Object[] toArraySelectAllSale() {
-		return new Object[] {saleNo,dateToString(sDate),timeToString(sTime),cus.getCusName(),emp.getEmpName(), evn.getEvnName(), sPrice, getHairElement()};		
+		//return new Object[] {saleNo,dateToString(sDate),timeToString(sTime),cus.getCusName(),emp.getEmpName(), evn.getEvnName(), sPrice, getHairElement()};
+		return new Object[] {saleNo,dateToString(sDate),timeToString(sTime),cus.getCusName(),emp.getEmpName(), evn.getEvnName(), convertPriceFormat(sPrice), getHairElement()};
 	}
 	/*	yyj*/
 	public Object[] toArrayMonth() {

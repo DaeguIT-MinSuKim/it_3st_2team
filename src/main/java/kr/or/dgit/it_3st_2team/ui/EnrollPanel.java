@@ -181,7 +181,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import kr.or.dgit.it_3st_2team.dto.Customer;
 import kr.or.dgit.it_3st_2team.dto.Employee;
@@ -195,6 +197,7 @@ import kr.or.dgit.it_3st_2team.service.EnrollService;
 import kr.or.dgit.it_3st_2team.service.EventService;
 import kr.or.dgit.it_3st_2team.service.HairService;
 import kr.or.dgit.it_3st_2team.service.SaleService;
+import kr.or.dgit.it_3st_2team.ui.CustomerSearchUI.NonEditableModel;
 //khj 180306
 public class EnrollPanel extends JPanel implements ActionListener {
 
@@ -743,8 +746,32 @@ public class EnrollPanel extends JPanel implements ActionListener {
 	private void drawTable(List<Sale> saleList) {
 		//saleList = saleService.selectAllSale();
 		String[] columnType = new String[] {"영업번호","영업일","방문시간","고객명","직원명","이벤트명","금액","헤어"};
-		table.setModel(new NonEditableModel(getRows(saleList), columnType));
+		NonEditableModel neModel = new NonEditableModel(getRows(saleList), columnType);
+		table.setModel(neModel);
+		setAlignWidth();
 		scrollPane.setViewportView(table);
+	}
+	
+	public void setAlignWidth() {
+		tableCellAlign(SwingConstants.CENTER, 0, 1, 2, 3, 4, 5, 6, 7);
+		tableCellWidth(50, 100, 100, 100, 100, 100, 100, 100);
+	}
+	
+	protected void tableCellAlign(int align, int... idx) {
+		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+		dtcr.setHorizontalAlignment(align);
+
+		TableColumnModel model = table.getColumnModel();
+		for (int i = 0; i < idx.length; i++) {
+			model.getColumn(idx[i]).setCellRenderer(dtcr);
+		}
+	}
+
+	protected void tableCellWidth(int... width) {
+		TableColumnModel model = table.getColumnModel();
+		for (int i = 0; i < width.length; i++) {
+			model.getColumn(i).setPreferredWidth(width[i]);
+		}
 	}
 	
 	public Object[][] getRows(List<Sale> list) {

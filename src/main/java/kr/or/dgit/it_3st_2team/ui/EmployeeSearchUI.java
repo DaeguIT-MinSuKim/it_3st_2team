@@ -91,7 +91,8 @@ public class EmployeeSearchUI extends JFrame {
 	
 	private void drawTable(List<Employee> lists) {
 		String[] columnType = new String[] {"직원번호","직원명"};
-		table.setModel(new NonEditableModel(getRows(lists), columnType));
+		NonEditableModel neModel = new NonEditableModel(getRows(lists), columnType);
+		table.setModel(neModel);
 		setAlignWidth();
 		scrollPane.setViewportView(table);
 	}
@@ -134,7 +135,7 @@ public class EmployeeSearchUI extends JFrame {
 	
 	public void setAlignWidth() {
 		tableCellAlign(SwingConstants.CENTER, 0, 1);
-		tableCellWidth(100, 200); //안먹음...
+		tableCellWidth(30, 100);
 	}
 	
 	protected void tableCellAlign(int align, int... idx) {

@@ -20,7 +20,7 @@ import kr.or.dgit.it_3st_2team.dto.Customer;
 import kr.or.dgit.it_3st_2team.service.CustomerService;
 import java.awt.BorderLayout;
 
-//khj 2018-02-26
+//khj 180226
 public class CustomerSearchUI extends JFrame {
 
 	private JPanel contentPane;
@@ -58,7 +58,8 @@ public class CustomerSearchUI extends JFrame {
 		panel_1.add(scrollPane);
 		table.addMouseListener(new TableMouseListener());
 	
-		lists = service.selectAllCustomer();
+//		lists = service.selectAllCustomer();
+		lists = service.SelectAllCustomerEmpName(new Customer(true)); //c_tf가 1인 고객만
 		drawTable(lists);
 		
 		panel_2 = new JPanel();
@@ -86,7 +87,8 @@ public class CustomerSearchUI extends JFrame {
 	
 	private void drawTable(List<Customer> lists) {
 		String[] columnType = new String[] {"고객번호","고객명"};
-		table.setModel(new NonEditableModel(getRows(lists), columnType));
+		NonEditableModel neModel = new NonEditableModel(getRows(lists), columnType);
+		table.setModel(neModel);
 		setAlignWidth();
 		scrollPane.setViewportView(table);
 	}
@@ -129,7 +131,7 @@ public class CustomerSearchUI extends JFrame {
 	
 	public void setAlignWidth() {
 		tableCellAlign(SwingConstants.CENTER, 0, 1);
-		tableCellWidth(100, 200); //안먹음...
+		tableCellWidth(50, 100);
 	}
 	
 	protected void tableCellAlign(int align, int... idx) {

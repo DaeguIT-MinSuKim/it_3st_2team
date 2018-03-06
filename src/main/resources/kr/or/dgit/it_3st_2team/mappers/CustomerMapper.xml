@@ -151,4 +151,9 @@
 		</set>
 		<include refid="whereCusnoSql"></include>
 	</update>
+	
+	<!-- khj -->
+	<select id="selectCusNoByName" resultType="int">
+		select cus_no from customer where cus_name=#{cusName}
+	</select>
 </mapper>

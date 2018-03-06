@@ -1,23 +1,37 @@
 package kr.or.dgit.it_3st_2team.t;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import kr.or.dgit.it_3st_2team.dto.Sale;
 import kr.or.dgit.it_3st_2team.service.SaleService;
+import kr.or.dgit.it_3st_2team.ui.ReportSaleFrame;
 
-public class TableSaleRe extends AbstractTable<Sale> {
+public class TableSaleReAll extends AbstractTable<Sale> {
 	private SaleService sservice = new SaleService();
+	private ReportSaleFrame resaleframe;
+	
+	
+	public TableSaleReAll() {
 
-	public TableSaleRe() {
+	}
+
+	public TableSaleReAll(ReportSaleFrame reportSaleFrame) {
+		this.resaleframe= reportSaleFrame;
 	}
 
 	@Override
 	public void setAlignWidth() {
 		tableCellAlign(SwingConstants.CENTER, 0, 1, 2, 3, 4, 5, 6);
 		tableCellAlign(SwingConstants.RIGHT, 6);
-		tableCellWidth(100, 200, 150, 150, 150, 150, 200);
+		tableCellWidth(100, 200, 150, 150, 300, 150, 200);
+		
 	}
 
 	@Override
@@ -27,27 +41,27 @@ public class TableSaleRe extends AbstractTable<Sale> {
 
 	@Override
 	public Object[][] getRows(List<Sale> list) {
+		
+		List<Integer> count = sservice.SelectAllCount();
 		Object[][] rows = null;
-		List<Integer> count = sservice.selectCount();
-
 		int countindex = 0;
-
 		int tcount = 0;
 		int sum = 0;
 		int toTalcount=0;
 		int toTalSum=0;
+		Date year =new Date();
 		rows = new Object[list.size()+count.size()+1][];
-
 		int listindex=0;
 		for(int i=0; i<rows.length-1;){		
 			rows[i] = list.get(listindex).toArrayMonth(); 
 			sum+= list.get(listindex).getsPrice();
+			year = list.get(listindex).getsDate();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 			listindex++;
 			tcount++;
 			 i++;
-			if (tcount == count.get(countindex)) {
-				
-				rows[i++] = new Object[] {"",(countindex+1)+"월 합계","","","",tcount+"건",toString().format("%,3d", sum)};			
+			if (tcount == count.get(countindex)) {			
+				rows[i++] = new Object[] {"",sdf.format(year)+"년  합계","","","",tcount+"건",toString().format("%,3d", sum)};			
 				toTalcount+=tcount;
 				toTalSum+=sum;
 				countindex++;

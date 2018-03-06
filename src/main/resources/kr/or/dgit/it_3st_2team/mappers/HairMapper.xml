@@ -37,5 +37,8 @@
 	<update id="updateHair">
 		<include refid="updateHairsql"></include>
 	</update>
-
+	
+	<select id="selectChartHair">
+		
+	</select>
 </mapper>

@@ -114,7 +114,7 @@ public class CustomerTest {
 		int res=service.deleteCustomer(ctm);
 		Assert.assertEquals(1, res);
 	}*/
-	@Test
+	/*@Test
 	public void test9SelectCustomerName() {
 		Customer ctm = new Customer();
 		ctm.setCusName("김수찬");
@@ -123,5 +123,10 @@ public class CustomerTest {
 		Assert.assertNotNull(list);
 
 		System.out.println(list);
+	}*/
+	@Test
+	public void test10SelectCusNobyName() {
+		Customer customer = new Customer("박경완");
+		service.selectCusNoByName(customer);
 	}
 }

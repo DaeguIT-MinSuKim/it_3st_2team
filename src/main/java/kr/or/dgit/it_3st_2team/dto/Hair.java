@@ -5,12 +5,21 @@ public class Hair {
 	private String hairName;
 	private int price;
 	
-	private Hair() {
+	
+	public Hair() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 	public Hair(int hairNo, String hairName, int price) {
 		this.hairNo = hairNo;
 		this.hairName = hairName;
 		this.price = price;
+	}
+	//khj 180305
+	public Hair(int hairNo, String hairName) {
+		super();
+		this.hairNo = hairNo;
+		this.hairName = hairName;
 	}
 	public int getHairNo() {
 		return hairNo;

@@ -8,7 +8,38 @@
 	</resultMap>
 	
 	<insert id="insertEnroll" parameterType="Enroll">
-		insert into enroll(enroll_no, sale_no, hair_no) 
-		values (#{enrollNo},#{saleNo},#{hairNo})
+		insert into enroll(sale_no, hair_no) 
+		values (#{saleNo},#{hairNo})
 	</insert>
+	
+	<!-- delete khj 180228 -->
+	<sql id="deleteSql">
+		delete from enroll where sale_no=#{saleNo}
+	</sql>
+	<update id="deleteEnroll" parameterType="Enroll">
+		<include refid="deleteSql"/>
+	</update>	
+	
+	<!-- select khj 180301 -->
+	<select id="selectEnrollBySaleNo" resultType="Enroll">
+		select sale_no, enroll_no, hair_no from enroll where sale_no=#{saleNo}
+	</select>
+	
+	<!-- update khj -->
+	<update id="updateEnrollofHair" parameterType="Enroll">
+		update enroll set hair_no=#{hairNo} where sale_no=#{saleNo}
+	</update>
+	
+	<!-- chart khj 180305 -->
+	<resultMap id="enrollResultAddHairCount" type="Enroll" extends="enrollResult">
+		<association property="hair" resultMap="kr.or.dgit.it_3st_2team.dao.HairDao.hairResult"></association>
+	</resultMap>
+	<select id="selectChart" resultMap="enrollResultAddHairCount">
+		select e.hair_no, h.hair_name from enroll e 
+		join hair h on e.hair_no=h.hair_no
+		group by e.hair_no
+	</select>
+	<select id="selectChartCount" resultType="int" parameterType="int">
+		select count(hair_no) from enroll where hair_no=#{hairNo}
+	</select>
 </mapper>

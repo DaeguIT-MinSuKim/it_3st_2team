@@ -7,7 +7,7 @@
 		<result property="sDate" column="sdate"/>
 		<result property="sTime" column="stime"/>
 		<result property="sPrice" column="sprice"/>
-
+		<collection property="hairs" resultMap="kr.or.dgit.it_3st_2team.dao.HairDao.hairResult"/> <!-- khj 일대다 -->
 	</resultMap> 
 
 	<!-- khj -->
@@ -23,22 +23,48 @@
 	</select>
 
 	<!-- yyj 02-27 -->
-	<resultMap type="Sale" id="selectRMonth" extends="saleResult">
+	<resultMap type="Sale" id="selectRe" extends="saleResult">
 		<association property="cus" resultMap="kr.or.dgit.it_3st_2team.dao.CustomerDao.cusNameResult"></association>
 		<association property="emp" resultMap="kr.or.dgit.it_3st_2team.dao.EmployeeDao.employeeResult"></association>
 		<association property="evn" resultMap="kr.or.dgit.it_3st_2team.dao.EventDao.eventResult"></association>
 		<association property="hair" resultMap="kr.or.dgit.it_3st_2team.dao.HairDao.hairResult"></association>
 	</resultMap>
 	
-	<select id="selectReportMonth" resultMap="selectRMonth">
+	<sql id="selectYearSql">
 		select s.sale_no,sdate,stime,c.cus_name,h.hair_name,ev.evn_name,s.sprice
 			from sale s 
 			join enroll e on s.sale_no=e.sale_no
 			join customer c on s.cus_no=c.cus_no
 			join hair h on h.hair_no=e.hair_no
 			join event ev on ev.evn_no=s.evn_no
-			order by sdate
+	</sql>
+	
+	<sql id="whereYearSql">
+		<where>
+			<if test="sDate != null">
+				sdate like #{sDate} order by sdate
+			</if>
+		</where>
+	</sql>
+		
+	<select id="selectReportYear" resultMap="selectRe" parameterType="map">
+			<include refid="selectYearSql"></include>
+			<include refid="whereYearSql"></include>
 	</select>
+	<!-- select all yyj 03-01 -->
+	
+	<sql id="selectAllSql">
+		select s.sale_no,sdate,stime,c.cus_name,h.hair_name,ev.evn_name,s.sprice
+			from sale s 
+			join enroll e on s.sale_no=e.sale_no
+			join customer c on s.cus_no=c.cus_no
+			join hair h on h.hair_no=e.hair_no
+			join event ev on ev.evn_no=s.evn_no order by sdate
+	</sql>
+	<select id="selectReportAll" resultMap="selectRe">
+		<include refid="selectAllSql"></include>
+	</select>
+
 
 	<!--khj 안쓸수도 있음 -->
 	<insert id="insertSale" parameterType="Sale">
@@ -49,21 +75,105 @@
 	<!-- khj 20180227 -->
 	<select id="selectAllSale" resultMap="saleResultAddOthers">
 		<!-- select sale_no, sdate, stime, cus_no, emp_no, evn_no, sprice from sale -->
-		select sale_no, sdate, stime, c.cus_name, e.emp_name, v.evn_name, sprice from sale s 
+		<!-- select sale_no, sdate, stime, c.cus_name, e.emp_name, v.evn_name, sprice from sale s 
 		join customer c on s.cus_no=c.cus_no
-		join employee e on e.emp_no=c.emp_no
-		join event v on v.evn_no=s.evn_no order by sale_no;
-		<!-- select s.sale_no, s.sdate, s.stime, c.cus_name, e.emp_name, v.evn_name, s.sprice, h.hair_name from sale s 
-		join customer c on s.cus_no=c.cus_no
-		join employee e on e.emp_no=c.emp_no
-		join event v on v.evn_no=s.evn_no
-		join enroll n on n.sale_no=s.sale_no
-		join hair h on h.hair_no=n.hair_no
-		order by s.sale_no; -->
+		join employee e on s.emp_no=e.emp_no
+		join event v on s.evn_no=v.evn_no order by sale_no; -->
+		select s.sale_no, s.sdate, s.stime, c.cus_name, m.emp_name, n.evn_name, s.sprice, h.hair_name 
+			from sale s 
+			join enroll e on s.sale_no=e.sale_no 
+			join hair h on e.hair_no=h.hair_no 
+			join event n on s.evn_no=n.evn_no
+			join employee m on s.emp_no=m.emp_no
+			join customer c on s.cus_no=c.cus_no
+			order by s.sale_no;
+	</select>
+
+
+	<!-- select count yyj 02-27-->
+	
+		<sql id="selectYearCountSql">
+		select  count(*) as 'count' from sale
+		</sql>
+	<sql id="whereYearCountSql">
+		<where>
+			<if test="sDate != null">
+				sdate like #{sDate} group by Month(sdate)
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="whereMonthCountSql">
+		<where>
+			<if test="sDate != null">
+				sdate like #{sDate} group by year(sdate)
+			</if>
+		</where>
+	</sql>
+	<!-- yyj 03-01 -->
+	<sql id="selectAllCountSql">
+		select  count(*) as 'count' from sale group by year(sdate)
+	</sql>
+	<select id="SelectAllCount" resultType="int">
+		<include refid="selectAllCountSql"></include>
 	</select>
 	
-	<!-- select count yyj 02-27-->
+	
+	<!-- khj 20180228 -->
+	<sql id="deleteSql">
+		delete from sale where sale_no=#{saleNo};
+	</sql>
+	<update id="deleteSale" parameterType="Sale">
+		<include refid="deleteSql"/>
+	</update>
+	<sql id="updateSql">
+		update sale set cus_no=#{cus.cusNo}, emp_no=#{emp.empNo}, evn_no=#{evn.evnNo}, sprice=#{sPrice} 
+		where sale_no=#{saleNo}
+	</sql>
+	<update id="updateSale" parameterType="Sale">
+		<include refid="updateSql"/>
+	</update>
+	<select id="selectSaleByCusNo" resultMap="saleResultAddOthers">
+		select s.sale_no, sdate, stime, c.cus_name, e.emp_name, n.evn_name, s.sprice, h.hair_name from sale s
+		join customer c on s.cus_no=c.cus_no
+		join employee e on s.emp_no=e.emp_no
+		join event n on s.evn_no=n.evn_no
+		join enroll r on s.sale_no=r.sale_no
+		join hair h on r.hair_no=h.hair_no
+		where s.cus_no=#{cus.cusNo};
+	</select>
+	<select id="selectSaleByDate" resultMap="saleResultAddOthers">
+		select s.sale_no, s.sdate, s.stime, s.sprice, c.cus_name, e.emp_name, n.evn_name, h.hair_name from sale s
+		join customer c on s.cus_no=c.cus_no
+		join employee e on s.emp_no=e.emp_no
+		join event n on s.evn_no=n.evn_no
+		left join enroll r on s.sale_no=r.sale_no
+		left join hair h on r.hair_no=h.hair_no
+		where s.sdate between #{param1} and #{param2} order by s.sale_no;
+	</select>
+	<select id="selectSaleByCusNoAndDate" resultMap="saleResultAddOthers">
+		select s.sale_no, sdate, stime, c.cus_name, e.emp_name, n.evn_name, s.sprice, h.hair_name from sale s
+		join customer c on s.cus_no=c.cus_no
+		join employee e on s.emp_no=e.emp_no
+		join event n on s.evn_no=n.evn_no
+		join enroll r on s.sale_no=r.sale_no
+		join hair h on r.hair_no=h.hair_no
+		where c.cus_name=#{param1} and 
+		s.sdate between #{param2} and #{param3}
+	</select>
+	
 	<select id="selectCount" resultType="int">
-		select  count(*) as 'count' from sale group by Month(sdate)
+		<include refid="selectYearCountSql"></include>
+		<include refid="whereYearCountSql"></include>
+	</select>
+	<!-- yyj 02-28 -->
+	<select id="selectCountMonth" resultType="int">
+		<include refid="selectYearCountSql"></include>
+		<include refid="whereMonthCountSql"></include>
+	</select>
+	
+	<!-- yyj 03-02 -->
+	<select id="selectYearExist" resultType="String">
+		select  sdate from sale group by year(sdate)
 	</select>
 </mapper>

@@ -8,8 +8,8 @@
 	</resultMap>
 	
 	<insert id="insertEnroll" parameterType="Enroll">
-		insert into enroll(enroll_no, sale_no, hair_no) 
-		values (#{enrollNo},#{saleNo},#{hairNo})
+		insert into enroll(sale_no, hair_no) 
+		values (#{saleNo},#{hairNo})
 	</insert>
 	
 	<!-- delete khj 180228 -->

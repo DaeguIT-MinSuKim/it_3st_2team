@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.FlowLayout;
 
-
+//khj (테스트용. 삭제예정)
 public class MainFrame extends JFrame implements ActionListener {
 
 
@@ -93,5 +93,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 	protected void actionPerformedMntmNewMenuItem_1(ActionEvent e) {
 		PolylineBarChart cf = new PolylineBarChart();
+		setContentPane(cf);
+		validate();
 	}
 }

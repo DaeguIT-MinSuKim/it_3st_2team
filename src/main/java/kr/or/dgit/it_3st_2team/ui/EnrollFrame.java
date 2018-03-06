@@ -54,7 +54,7 @@ import kr.or.dgit.it_3st_2team.service.EnrollService;
 import kr.or.dgit.it_3st_2team.service.EventService;
 import kr.or.dgit.it_3st_2team.service.HairService;
 import kr.or.dgit.it_3st_2team.service.SaleService;
-//khj
+//khj 삭제 예정(EnrollPanel로 교체..)
 public class EnrollFrame extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
@@ -498,12 +498,12 @@ public class EnrollFrame extends JFrame implements ActionListener {
 			actionPerformedCmbEvent(e);
 		}
 		if (e.getSource() == btnSearchEmp) { //직원찾기
-			EmployeeSearchUI empUi = new EmployeeSearchUI(this);
-			empUi.setVisible(true);
+			/*EmployeeSearchUI empUi = new EmployeeSearchUI(this);
+			empUi.setVisible(true);*/
 		}
 		if (e.getSource() == btnSearchCus) { //고객찾기
-			CustomerSearchUI cusUi = new CustomerSearchUI(this);
-			cusUi.setVisible(true);
+			/*CustomerSearchUI cusUi = new CustomerSearchUI(this);
+			cusUi.setVisible(true);*/
 		}
 	}
 	

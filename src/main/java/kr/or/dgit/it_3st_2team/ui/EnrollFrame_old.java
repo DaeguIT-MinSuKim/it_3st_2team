@@ -38,7 +38,7 @@ import kr.or.dgit.it_3st_2team.service.EnrollService;
 import kr.or.dgit.it_3st_2team.service.EventService;
 import kr.or.dgit.it_3st_2team.service.HairService;
 import kr.or.dgit.it_3st_2team.service.SaleService;
-//khj 삭제 예정 (EnrollFrame이 진짜)
+//khj 삭제 예정
 public class EnrollFrame_old extends JFrame implements ActionListener {
 
 	private JPanel contentPane;

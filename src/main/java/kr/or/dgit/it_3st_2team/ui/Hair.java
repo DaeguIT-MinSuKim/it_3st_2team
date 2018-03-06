@@ -22,6 +22,7 @@ public class Hair extends JFrame implements ActionListener {
 	private JMenuItem itemRe;
 	private JMenuItem itemHair;
 	private JMenuItem itemCus;
+	private JMenuItem itemChart;
 
 	/**
 	 * Launch the application.
@@ -86,6 +87,10 @@ public class Hair extends JFrame implements ActionListener {
 		JMenuItem itemEmp = new JMenuItem("직원현황");
 		mnHair.add(itemEmp);
 		
+		itemChart = new JMenuItem("트랜드/차트");
+		itemChart.addActionListener(this);
+		mnHair.add(itemChart);
+		
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -98,10 +103,13 @@ public class Hair extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == itemChart) { //차트
+			actionPerformedItemChart(arg0);
+		}
 		if (arg0.getSource() == itemCus) {
 			actionPerformedItemCus_1(arg0);
 		}
-		if (arg0.getSource() == itemHair) {
+		if (arg0.getSource() == itemHair) { //헤어주문
 			actionPerformedItemHair(arg0);
 		}
 		if (arg0.getSource() == itemRe) {
@@ -133,13 +141,21 @@ public class Hair extends JFrame implements ActionListener {
 		JFrame jf = new ReportSaleFrame();
 		jf.setVisible(true);
 	}
-	protected void actionPerformedItemHair(ActionEvent arg0) {
-		JFrame jf = new EnrollFrame();		
-		jf.setVisible(true);
+	protected void actionPerformedItemHair(ActionEvent arg0) { //헤어주문
+		/*JFrame jf = new EnrollFrame();		
+		jf.setVisible(true);*/
+		JPanel enrollPanel = new EnrollPanel();
+		setContentPane(enrollPanel);
+		validate();
 	}
 	protected void actionPerformedItemCus_1(ActionEvent arg0) {
 		JPanel cpanel = new CustomerJPanel();
 		setContentPane(cpanel);
+		validate();
+	}
+	protected void actionPerformedItemChart(ActionEvent arg0) { //차트
+		PolylineBarChart cf = new PolylineBarChart();
+		setContentPane(cf);
 		validate();
 	}
 }

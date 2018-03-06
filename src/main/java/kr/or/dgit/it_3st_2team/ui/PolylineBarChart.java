@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import org.jfree.chart.ChartFrame;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.CategoryLabelPositions;
@@ -32,7 +33,7 @@ import kr.or.dgit.it_3st_2team.dto.Enroll;
 import kr.or.dgit.it_3st_2team.service.EnrollService;
 import kr.or.dgit.it_3st_2team.dto.Hair;
 //khj
-public class PolylineBarChart extends JFrame {
+public class PolylineBarChart extends JPanel {
 
 	private JPanel contentPane;
 	private EnrollService enrollService;
@@ -58,18 +59,15 @@ public class PolylineBarChart extends JFrame {
 	 */
 	public PolylineBarChart() {
 		enrollService = new EnrollService();
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
-		
+		setLayout(new BorderLayout());
+	
 		JFreeChart chart = this.getChart();
-		ChartFrame frame1 = new ChartFrame("차트 현황", chart);
-		frame1.setSize(1000, 400);
-		frame1.setVisible(true);
+		//ChartFrame frame1 = new ChartFrame("차트 현황", chart);
+		
+		ChartPanel cp = new ChartPanel(chart);
+		add(cp);
+		//frame1.setSize(1000, 400);
+		//frame1.setVisible(true);
 	}
 	
 	public JFreeChart getChart() {

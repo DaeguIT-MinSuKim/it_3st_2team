@@ -163,14 +163,14 @@ public class NowEmployee extends JFrame implements ActionListener {
 		JLabel lblid = new JLabel("아이디");
 		panel_2.add(lblid);
 
-		id = new TextField(5);
+		id = new TextField(8);
 		id.setEnabled(false);
 		panel_2.add(id);
 
 		JLabel lblepassword = new JLabel("패스워드");
 		panel_2.add(lblepassword);
 
-		epassword = new TextField(5);
+		epassword = new TextField(8);
 		panel_2.add(epassword);
 
 		JPanel panel_4 = new JPanel();
@@ -242,7 +242,6 @@ public class NowEmployee extends JFrame implements ActionListener {
 	}
 
 	public void clearData() {
-
 		empno.setText(""); // 텍스트필드 창을 지운다.
 		empname.setText("");
 		joindate.setText("");
@@ -271,7 +270,16 @@ public class NowEmployee extends JFrame implements ActionListener {
 					JOptionPane.QUESTION_MESSAGE);
 			if (b == 0) {
 				// model.removeRow(row);
-
+				Object updateempname = table.getValueAt(row, 7);
+				String st = null;
+				for (int i = 0; i < list.size(); i++) {
+					st = list.get(i).getTitleName();
+					Boolean s = st.equals(updateempname);
+					if (s) {
+						empfind.setSelectedIndex(i);
+						return;
+					}
+				}
 				lNow();
 			}
 		}
@@ -285,11 +293,9 @@ public class NowEmployee extends JFrame implements ActionListener {
 
 		str[4] = id.getText();
 		str[5] = epassword.getText();
-		str[9] = e_tf.getText();
+		str[7] = e_tf.getText();
 
-		
-		
-		eservice.updateNowEmplyoee(new Employee((str[4]), str[5]));
+		eservice.updateNowEmplyoee(new Employee((str[4]), str[5], str[7]));
 
 		lNow();
 

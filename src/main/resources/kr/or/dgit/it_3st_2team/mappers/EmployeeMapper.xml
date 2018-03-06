@@ -97,8 +97,9 @@
 		</where>
 	</sql>
 
+
 	<select id="selecteNowEmplyoee" parameterType="Employee"
-		resultMap="employeeResultAddTitle">
+		resultMap="employeeResultAddTitle" >
 		select emp_no ,
 		emp_name,join_date,addr,id,epassword,t.title_name,eoff,e_tf
 		from
@@ -125,6 +126,11 @@
 
 	<select id="EmployeeSizeNo" resultType="int">
 		<include refid="EmployeeSizeNoSql"></include>
+	</select>
+	
+	<select id="selectemployeeoff" resultMap="EmployeeAddTitle">
+		select eoff
+		from employee
 	</select>
 
 </mapper>

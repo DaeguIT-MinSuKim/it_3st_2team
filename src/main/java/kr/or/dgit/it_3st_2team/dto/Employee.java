@@ -33,6 +33,8 @@ public class Employee {
 		this.eTf = eTf;
 	}
 
+	
+	
 	public Employee(String id, String password) {
 		super();
 		this.id = id;
@@ -144,12 +146,22 @@ public class Employee {
 		this.eTf = eTf;
 	}
 
-	@Override
-	public String toString() {
-		return String.format(
-
-				"Employee [empNo=%s, empName=%s, joinDate=%s, addr=%s, id=%s, epassword=%s, titleNo=%s, eOff=%s, eTf=%s]",
-				empNo, empName, joinDate, addr, id, epassword, title, eOff, eTf);
+	public String getEOffToString() {
+		if(eOff==0) {
+			return String.format("월","%s", eOff);
+		}else if(eOff==1) {
+			return String.format("화","%s", eOff);
+		}else if(eOff==2) {
+			return String.format("수","%s", eOff);
+		}else if(eOff==3) {
+			return String.format("목","%s", eOff);
+		}else if(eOff==4) {
+			return String.format("금","%s", eOff);
+		}else if(eOff==5) {
+			return String.format("토","%s", eOff);
+		}else {
+			return String.format("일","%s", eOff);
+		}
 	}
 	
 	public Object[] toArrayNoandName() {
@@ -158,7 +170,8 @@ public class Employee {
 
 	public Object[] toArray() {
 		String Sdf = new SimpleDateFormat("yyyy-mm-dd").format(joinDate);
-		return new Object[] { empNo, empName, Sdf, addr,id, epassword, title.getTitleName(),eOff,eTf };
+		return new Object[] { empNo, empName, Sdf, addr,id, epassword, title.getTitleName(),getEOffToString(),eTf };
 	}
+	
 
 }

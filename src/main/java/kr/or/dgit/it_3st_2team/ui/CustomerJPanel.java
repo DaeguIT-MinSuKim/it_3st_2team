@@ -242,6 +242,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		panel_7.add(btnCancel);
 
 		JPanel panel_11 = new JPanel();
+		panel_11.setFocusCycleRoot(true);
 		panel_11.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "\uACE0\uAC1D\uC815\uBCF4",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		add(panel_11, BorderLayout.CENTER);

@@ -76,4 +76,14 @@ public class EmployeeService {
 
 		}
 	}
+
+	
+	public List<Employee> selectemployeeoff() {
+		log.debug("selectemployeeoff()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			EmployeeDao EmployeeDao = sqlSession.getMapper(EmployeeDao.class);
+			sqlSession.commit();
+			return EmployeeDao.selectemployeeoff();
+		}
+	}
 }

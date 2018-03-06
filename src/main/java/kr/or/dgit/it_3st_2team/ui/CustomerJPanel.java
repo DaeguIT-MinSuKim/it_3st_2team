@@ -45,7 +45,9 @@ import kr.or.dgit.it_3st_2team.service.CustomerService;
 import kr.or.dgit.it_3st_2team.service.EmployeeService;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
+
 import java.awt.Dimension;
+
 /*yyj*/
 @SuppressWarnings("serial")
 public class CustomerJPanel extends JPanel implements ActionListener, KeyListener, MouseListener {
@@ -76,13 +78,14 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 	private JButton btnSearch;
 	private JButton btnAll;
 	private JFrame jf;
+
 	/**
 	 * Create the panel.
 	 */
 	public CustomerJPanel() {
 		cservice = new CustomerService();
 		eservice = new EmployeeService();
-		
+
 		initComponents();
 
 	}
@@ -115,8 +118,12 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		panel_1.add(lblNo);
 
 		tfNo = new JTextField();
+
+		// tfNo.setFocusable(false);
+
 		tfNo.setFocusTraversalKeysEnabled(false);
 		tfNo.setFocusable(false);
+
 		panel_1.add(tfNo);
 		tfNo.setColumns(10);
 		tfNo.setEditable(false);
@@ -130,7 +137,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		tfName.addKeyListener(this);
 		tfName.setColumns(10);
 		panel_1.add(tfName);
-		/*focus*/
+		/* focus */
 		tfName.setFocusable(true);
 		tfName.requestFocus();
 
@@ -177,7 +184,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		panel_1.add(cmbEmp);
 		cmbEmp.setModel(cModel);
 		cmbEmp.setSelectedIndex(0);
-		
+
 		JPanel panel_6 = new JPanel();
 		panel_3.add(panel_6, BorderLayout.WEST);
 		panel_6.setLayout(new BorderLayout(0, 0));
@@ -215,7 +222,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		JPanel panel_5 = new JPanel();
 		panel_6.add(panel_5, BorderLayout.CENTER);
 		panel_5.setLayout(new FlowLayout(FlowLayout.CENTER, 3, 3));
-		
+
 		JLabel lblNewLabel_2 = new JLabel("                                        ");
 		panel_5.add(lblNewLabel_2);
 
@@ -242,6 +249,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		panel_7.add(btnCancel);
 
 		JPanel panel_11 = new JPanel();
+		panel_11.setFocusCycleRoot(true);
 		panel_11.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "\uACE0\uAC1D\uC815\uBCF4",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		add(panel_11, BorderLayout.CENTER);
@@ -261,7 +269,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		tfSearch = new JTextField();
 		panel_9.add(tfSearch);
 		tfSearch.setColumns(10);
-	
+
 		btnSearch = new JButton("고객찾기");
 		btnSearch.addActionListener(this);
 		panel_9.add(btnSearch);
@@ -387,22 +395,18 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 	protected void actionPerformedBtnNewButton(ActionEvent arg0) {
 		jf = new AddressJFrame(this);
 		jf.setVisible(true);
-		//pack();
+		// pack();
 	}
-	
-	
 
 	public JTextField getTfaddr() {
 		return tfaddr;
 	}
-	
+
 	public void setTfaddr(String addr) {
 		tfaddr.setText(addr);
 	}
 
-
-
-	private class SimpleEmp {
+	public class SimpleEmp {
 		int empNo;
 		String empName;
 		String titleName;
@@ -412,7 +416,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 			// TODO Auto-generated constructor stub
 		}
 
-		private SimpleEmp(int empNo, String empName, String titleName) {
+		SimpleEmp(int empNo, String empName, String titleName) {
 			super();
 			this.empNo = empNo;
 			this.empName = empName;
@@ -534,9 +538,9 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 	}
 
 	protected void actionPerformedBtnAdd(ActionEvent arg0) {
-		if(isEmpty()) {
+		if (isEmpty()) {
 			JOptionPane.showMessageDialog(null, "고객정보를 입력해주세요.");
-		}else {
+		} else {
 			Customer ctm = addCustomers();
 			cservice.inSertCustomer(ctm);
 			JOptionPane.showMessageDialog(null, "고객이 등록 되었습니다.");
@@ -544,9 +548,11 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 			cList = cservice.SelectAllCustomerEmpName(new Customer(true));
 			showTables();
 			addtfNo();
-			clear();	
+
+			clear();
 			tfName.setFocusable(true);
-		}	
+		}
+
 	}
 
 	private Customer addCustomers() {
@@ -599,12 +605,13 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 			jp.add(updateMenu);
 			JMenuItem delMenu = new JMenuItem("고객 탈퇴");
 			jp.add(delMenu);
-			 updateMenu.addActionListener(menuListener);
-			 delMenu.addActionListener(menuListener);
+			updateMenu.addActionListener(menuListener);
+			delMenu.addActionListener(menuListener);
 			jp.show((java.awt.Component) e.getSource(), e.getX(), e.getY());
 
 		}
 	}
+
 	ActionListener menuListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -617,6 +624,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		}
 
 	};
+
 	public void mouseEntered(MouseEvent arg0) {
 	}
 
@@ -672,7 +680,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 
 	protected void do_cmbEmp_actionPerformed(ActionEvent e) {
 		SimpleEmp selectedSimpleEmp = (SimpleEmp) cmbEmp.getSelectedItem();
-		cmbEmpNo =selectedSimpleEmp.getEmpNo();
+		cmbEmpNo = selectedSimpleEmp.getEmpNo();
 	}
 
 	protected void actionPerformedBtnDelete(ActionEvent e) {
@@ -713,9 +721,10 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		cList = cservice.SelectAllCustomerEmpName(new Customer(true));
 		showTables();
 	}
+
 	public boolean isEmpty() {
-		return tfName.getText().equals("") || tfBirth.getText().equals("")|| tfphone2.getText().equals("")
-				|| tfphone3.getText().equals("")|| tfaddr.getText().equals("");
+		return tfName.getText().equals("") || tfBirth.getText().equals("") || tfphone2.getText().equals("")
+				|| tfphone3.getText().equals("") || tfaddr.getText().equals("");
 	}
-	
+
 }

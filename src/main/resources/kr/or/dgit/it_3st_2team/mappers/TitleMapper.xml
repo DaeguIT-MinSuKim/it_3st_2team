@@ -12,6 +12,12 @@
 		select title_no,title_name
 		from title
 	</select>
+	
+	<select id="selectTitle2" resultMap="TitleResult">
+		select title_no,title_name
+		from title
+	</select>
+
 
 	<sql id="insertTitlesql">
 		insert into title(title_no,title_name)
@@ -38,5 +44,7 @@
 	<delete id="deleteTitle">
 		<include refid="deleteTitlesql"></include>
 	</delete>
+	
+	
 
 </mapper>

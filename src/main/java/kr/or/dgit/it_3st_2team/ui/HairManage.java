@@ -78,7 +78,7 @@ public class HairManage extends JFrame implements ActionListener {
 	}
 
 	private void initComponents() {
-		setTitle("이벤트등록");
+		setTitle("헤어등록");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 406, 374);
 		EventManage = new JPanel();

@@ -2,27 +2,30 @@ package kr.or.dgit.it_3st_2team.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.Point;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.AbstractButton;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -34,7 +37,7 @@ import kr.or.dgit.it_3st_2team.service.TitleService;
 @SuppressWarnings("serial")
 public class NowEmployee extends JFrame implements ActionListener {
 
-	private static final AbstractButton tftitleno = null;
+	private AbstractButton tftitleno = null;
 	private JPanel contentPane;
 	private JTable table;
 	private TextField empno;
@@ -42,19 +45,22 @@ public class NowEmployee extends JFrame implements ActionListener {
 	private TextField joindate;
 	private TextField id;
 	private TextField epassword;
-	private TextField titlename;
 	int row = -1;
 	private EmployeeService eservice;
 	private TitleService tservice;
+	private List<Title> list;
+	JComboBox<Title> Jcomtitle;
 
-	private String title[] = { "직책번호", "이름", "입사일", "아이디", "패스워드", "직책명" };
+	private String title[] = { "직책번호", "이름", "입사일", "주소", "아이디", "패스워드", "직책번호", "희망휴무요일", "퇴사유무" };
 
 	JScrollPane jsp;
 	DefaultTableModel model;
-
-	private JButton btnAdd;
-	private JButton btnDel;
 	private JButton btnMod;
+	private JTextField tfaddr;
+	private JFrame jf;
+	private JTextField e_tf;
+	public JComboBox empfind;
+	public JComboBox hday;
 
 	/**
 	 * Launch the application.
@@ -84,7 +90,7 @@ public class NowEmployee extends JFrame implements ActionListener {
 	private void initComponents() {
 		setTitle("직원현황");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 708, 300);
+		setBounds(100, 100, 1317, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -119,48 +125,97 @@ public class NowEmployee extends JFrame implements ActionListener {
 		panel_2.add(lbltitleno);
 
 		empno = new TextField(5);
+		empno.setEnabled(false);
 		panel_2.add(empno);
 
 		JLabel lblname = new JLabel("이름");
 		panel_2.add(lblname);
 
 		empname = new TextField(5);
+		empname.setEnabled(false);
 		panel_2.add(empname);
 
-		JLabel lbljoindate = new JLabel("입사일");
-		panel_2.add(lbljoindate);
+		JPanel panel_5 = new JPanel();
+		panel_2.add(panel_5);
+		panel_5.setLayout(new FlowLayout(FlowLayout.CENTER, 3, 3));
 
-		joindate = new TextField(5);
-		panel_2.add(joindate);
+		JLabel lbljoindate = new JLabel("입사일");
+		lbljoindate.setHorizontalAlignment(SwingConstants.LEFT);
+		panel_5.add(lbljoindate);
+
+		joindate = new TextField(15);
+		joindate.setEnabled(false);
+		panel_5.add(joindate);
+		joindate.setPreferredSize(new Dimension(6, 21));
+
+		JPanel panel_3 = new JPanel();
+		panel_2.add(panel_3);
+		panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 3, 3));
+
+		JLabel lbladdr = new JLabel("주소");
+		panel_3.add(lbladdr);
+
+		tfaddr = new JTextField();
+		tfaddr.setEnabled(false);
+		tfaddr.setColumns(20);
+		panel_3.add(tfaddr);
 
 		JLabel lblid = new JLabel("아이디");
 		panel_2.add(lblid);
 
-		id = new TextField(5);
+		id = new TextField(8);
+		id.setEnabled(false);
 		panel_2.add(id);
 
 		JLabel lblepassword = new JLabel("패스워드");
 		panel_2.add(lblepassword);
 
-		epassword = new TextField(5);
+		epassword = new TextField(8);
 		panel_2.add(epassword);
 
-		JLabel lbltitlename = new JLabel("직책번호");
-		panel_2.add(lbltitlename);
+		JPanel panel_4 = new JPanel();
+		panel_2.add(panel_4);
+		panel_4.setLayout(new FlowLayout(FlowLayout.CENTER, 3, 3));
 
-		titlename = new TextField(5);
-		panel_2.add(titlename);
+		JLabel label_1 = new JLabel("직책");
+		panel_4.add(label_1);
+
+		list = tservice.selectTitle2();
+		JComboBox<Title> empfind = new JComboBox<Title>();
+		Title[] items = new Title[list.size()];
+		list.toArray(items);
+
+		System.out.println(items);
+
+		DefaultComboBoxModel<Title> cModel = new DefaultComboBoxModel<>(items);
+
+		empfind.addActionListener(this);
+		empfind.setLocation(new Point(5, 0));
+		empfind.setMaximumSize(new Dimension(80, 30));
+		empfind.setPreferredSize(new Dimension(85, 21));
+		panel_4.add(empfind);
+		empfind.setModel(cModel);
+
+		JLabel label = new JLabel("희망휴무요일");
+		label.setMaximumSize(new Dimension(100, 15));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_2.add(label);
+
+		JComboBox hday = new JComboBox();
+		hday.setModel(new DefaultComboBoxModel(new String[] { "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일" }));
+		hday.setMaximumSize(new Dimension(150, 30));
+		hday.setToolTipText("희망휴무요일");
+		panel_2.add(hday);
+
+		JLabel lblE_tf = new JLabel("퇴사유무");
+		panel_2.add(lblE_tf);
+
+		e_tf = new JTextField();
+		panel_2.add(e_tf);
+		e_tf.setColumns(5);
 
 		JPanel pBottom = new JPanel();
 		contentPane.add(pBottom, BorderLayout.SOUTH);
-
-		btnAdd = new JButton("추가");
-		btnAdd.addActionListener(this);
-		pBottom.add(btnAdd);
-
-		btnDel = new JButton("삭제");
-		btnDel.addActionListener(this);
-		pBottom.add(btnDel);
 
 		btnMod = new JButton("수정");
 		btnMod.addActionListener(this);
@@ -187,9 +242,7 @@ public class NowEmployee extends JFrame implements ActionListener {
 	}
 
 	public void clearData() {
-
 		empno.setText(""); // 텍스트필드 창을 지운다.
-		titlename.setText("");
 		empname.setText("");
 		joindate.setText("");
 		id.setText("");
@@ -198,119 +251,52 @@ public class NowEmployee extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnAdd) {
-			actionPerformedBtnAdd(e);
-		}
-		if (e.getSource() == btnDel) {
-			actionPerformedBtnDel(e);
-		}
 		if (e.getSource() == btnMod) {
 			actionPerformedBtnMod(e);
 		}
 	}
 
 	private void actionPerformedBtnMod(ActionEvent e) {
-		String[] str = new String[6];
+		int row = table.getSelectedRow();
+		String[] str = new String[9];
 		Object ob = e.getSource();
+		boolean emp = (boolean) (table.getValueAt(row, 8));
 		if (row == -1) {
 			JOptionPane.showConfirmDialog(this, "먼저 수정할 행을 선택해주세요", "수정확인", JOptionPane.INFORMATION_MESSAGE);
 
 			return;
-		}
-		/*model.setValueAt(empno.getText(), row, 0);
-		model.setValueAt(empname.getText(), row, 1);
-		model.setValueAt(joindate.getText(), row, 2);
-		model.setValueAt(id.getText(), row, 3);
-		model.setValueAt(epassword.getText(), row, 4);
-		model.setValueAt(titlename.getText(), row, 5);*/
-		str[0] = empno.getText();
-		str[1] = empname.getText();
-		str[2] = joindate.getText();
-		str[3] = id.getText();
-		str[4] = epassword.getText();
-		str[5] = titlename.getText();
-
-	}
-
-	private void actionPerformedBtnDel(ActionEvent e) {
-		int row = table.getSelectedRow();
-		int neno = (int) (table.getValueAt(row, 0));
-		if (row == -1) {
-			JOptionPane.showMessageDialog(this, "먼저 삭제할 행을 선택해주세요");
-
-			return;
-		}
-
-		else {
-			int b = JOptionPane.showConfirmDialog(this, "데이터를 삭제할까요?", "삭제", JOptionPane.YES_NO_OPTION,
+		} else {
+			int b = JOptionPane.showConfirmDialog(this, "수정하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE);
 			if (b == 0) {
 				// model.removeRow(row);
-				tservice.deleteTitle(neno);
-				row = -1;
-				this.clearData();
+				Object updateempname = table.getValueAt(row, 7);
+				String st = null;
+				for (int i = 0; i < list.size(); i++) {
+					st = list.get(i).getTitleName();
+					Boolean s = st.equals(updateempname);
+					if (s) {
+						empfind.setSelectedIndex(i);
+						return;
+					}
+				}
 				lNow();
 			}
 		}
+		/*
+		 * model.setValueAt(empno.getText(), row, 0);
+		 * model.setValueAt(empname.getText(), row, 1);
+		 * model.setValueAt(joindate.getText(), row, 2); model.setValueAt(id.getText(),
+		 * row, 3); model.setValueAt(epassword.getText(), row, 4);
+		 * model.setValueAt(titlename.getText(), row, 5);
+		 */
 
-	}
+		str[4] = id.getText();
+		str[5] = epassword.getText();
+		str[7] = e_tf.getText();
 
-	@SuppressWarnings("deprecation")
-	protected void actionPerformedBtnAdd(ActionEvent e) {
-		String[] str = new String[6];
-		Object ob = e.getSource();
-		if (empno.getText().equals("")) // titleno를 비교하는 것이므로 equals로 비교한다.
-		{
-			JOptionPane.showMessageDialog(this, "직책번호를 입력해주세요");
-			empno.requestFocus();
-			return;
-		}
-		if (empname.getText().equals("")) // empname를 비교하는 것이므로 equals로 비교한다.
-		{
-			JOptionPane.showMessageDialog(this, "이름을 입력해주세요");
-			empname.requestFocus();
-			return;
-		}
-		if (joindate.getText().equals("")) // joindate를 비교하는 것이므로 equals로 비교한다.
-		{
-			JOptionPane.showMessageDialog(this, "입사일을 입력해주세요");
-			joindate.requestFocus();
-			return;
-		}
-		if (id.getText().equals("")) // id를 비교하는 것이므로 equals로 비교한다.
-		{
-			JOptionPane.showMessageDialog(this, "아이디를 입력해주세요");
-			id.requestFocus();
-			return;
-		}
-		if (epassword.getText().equals("")) // epassword를 비교하는 것이므로 equals로 비교한다.
-		{
-			JOptionPane.showMessageDialog(this, "비밀번호를 입력해주세요");
-			epassword.requestFocus();
-			return;
-		}
-		if (titlename.getText().equals("")) // titlename를 비교하는 것이므로 equals로 비교한다.
-		{
-			JOptionPane.showMessageDialog(this, "직책명을 입력해주세요");
-			titlename.requestFocus();
-			return;
-		}
-		str[0] = empno.getText();
-		str[1] = empname.getText();
-		str[2] = joindate.getText();
-		str[3] = id.getText();
-		str[4] = epassword.getText();
-		str[5] = titlename.getText();
+		eservice.updateNowEmplyoee(new Employee((str[4]), str[5], str[7]));
 
-		// model.addRow(str);
-		Date date = new Date();
-		SimpleDateFormat Sdf = new SimpleDateFormat("yyyy-mm-dd");
-		try {
-			date = Sdf.parse(str[2]);
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		lNow();
 
 	}
@@ -325,10 +311,23 @@ public class NowEmployee extends JFrame implements ActionListener {
 			empno.setText(table.getValueAt(row, 0).toString());
 			empname.setText(table.getValueAt(row, 1).toString());
 			joindate.setText(table.getValueAt(row, 2).toString());
-			id.setText(table.getValueAt(row, 3).toString());
-			epassword.setText(table.getValueAt(row, 4).toString());
-			titlename.setText(table.getValueAt(row, 5).toString());
+			tfaddr.setText(toString().format("%s", table.getValueAt(row, 3)));
+			id.setText(table.getValueAt(row, 4).toString());
+			epassword.setText(table.getValueAt(row, 5).toString());
+			/*
+			 * empfind.setSelectedItem(anchor); hday.setSelectedItem(anchor);
+			 */
+			e_tf.setText(table.getValueAt(row, 8).toString());
+			// joindate.setText(table.getValueAt(row, 6).toString());
+			// joindate.setText(table.getValueAt(row, 7).toString());
 		}
 
 	}
+
+	/*
+	 * public JTextField getTfaddr() { return tfaddr; }
+	 * 
+	 * public void setTfaddr(String addr) { tfaddr.setText(addr); }
+	 */
+
 }

@@ -71,9 +71,9 @@ public class TitleManage extends JFrame implements ActionListener {
 	}
 
 	private void initComponents() {
-		setTitle("직원현황");
+		setTitle("직책등록");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 708, 300);
+		setBounds(100, 100, 385, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -104,7 +104,7 @@ public class TitleManage extends JFrame implements ActionListener {
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2);
 
-		JLabel lbltitleno = new JLabel("직원번호");
+		JLabel lbltitleno = new JLabel("직책번호");
 		panel_2.add(lbltitleno);
 
 		Titleno = new TextField(5);
@@ -135,7 +135,7 @@ public class TitleManage extends JFrame implements ActionListener {
 	private void lTitle() {
 		List<Title> lists = null;
 		TitleService service = new TitleService();
-		lists = service.selectAllTitle();
+		lists = service.selectTitle();
 		System.out.println(lists);
 		Object[][] data = getRows(lists);
 

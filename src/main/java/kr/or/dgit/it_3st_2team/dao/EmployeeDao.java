@@ -12,8 +12,15 @@ public interface EmployeeDao {
 	List<Employee> selecteNowEmplyoee();
 
 	List<Employee> selectTitleName(Employee emp);
+
+	List<Employee> insertStudent();
+
+	int selectEmpNo(Employee emp);
+
+	int updateNowEmplyoee(Employee emp);
 	
-	 List<Employee>insertStudent();
-	
-	 int selectEmpNo(Employee emp);
+	int EmployeeSizeNo();
+
+	List<Employee> selectemployeeoff();
+
 }

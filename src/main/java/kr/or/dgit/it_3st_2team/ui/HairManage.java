@@ -202,7 +202,11 @@ public class HairManage extends JFrame implements ActionListener {
 		System.out.println(lists);
 		Object[][] data = getRows(lists);
 
-		model = new DefaultTableModel(data, title);
+		model = new DefaultTableModel(data, title) {
+			public boolean isCellEditable(int rowIndex, int mColIndex) {
+				return false;
+			}
+		};
 		table.setModel(model);
 	}
 
@@ -290,9 +294,11 @@ public class HairManage extends JFrame implements ActionListener {
 
 			return;
 		}
-		/*model.setValueAt(HairNo.getText(), row, 0);
-		model.setValueAt(HairName.getText(), row, 1);
-		model.setValueAt(Price.getText(), row, 2);*/
+		/*
+		 * model.setValueAt(HairNo.getText(), row, 0);
+		 * model.setValueAt(HairName.getText(), row, 1);
+		 * model.setValueAt(Price.getText(), row, 2);
+		 */
 		str[0] = HairNo.getText();
 		str[1] = HairName.getText();
 		str[2] = Price.getText();

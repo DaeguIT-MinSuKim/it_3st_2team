@@ -23,11 +23,10 @@ public class EmployeeService {
 		}
 	}
 
-
 	public List<Employee> selectEmployeeByLoginId() {
 		log.debug("selectEmployeeByLoginId()");
-		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
-			return sqlSession.selectList(namespace+"selectEmployeeByLoginId");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			return sqlSession.selectList(namespace + "selectEmployeeByLoginId");
 		}
 	}
 
@@ -56,28 +55,16 @@ public class EmployeeService {
 		}
 	}
 
-	public int updateNowEmplyoee(Employee employee) {
-		log.debug("updateNowEmplyoee()");
-		int res = -1;
-		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
-			EmployeeDao employeeDao = sqlSession.getMapper(EmployeeDao.class);
-			res = employeeDao.updateNowEmplyoee(namespace + "updateNowEmplyoee",employee);
-			sqlSession.commit();
-		}
-		return res;
-	}
-
 	public int EmployeeSizeNo() {
 		log.debug("EmployeeSizeNo()");
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
 			sqlSession.commit();
-			
+
 			return sqlSession.selectOne(namespace + "EmployeeSizeNo");
 
 		}
 	}
 
-	
 	public List<Employee> selectemployeeoff() {
 		log.debug("selectemployeeoff()");
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
@@ -86,4 +73,25 @@ public class EmployeeService {
 			return EmployeeDao.selectemployeeoff();
 		}
 	}
+
+	public Object updateNowEmplyoee(Employee employee) {
+		log.debug("updateNowEmplyoee()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			EmployeeDao EmployeeDao = sqlSession.getMapper(EmployeeDao.class);
+			sqlSession.commit();
+			return EmployeeDao.updateNowEmplyoee(namespace + "updateNowEmplyoee");
+		}
+
+	}
+
+	public Object InsertEmployee(Employee emp) {
+		log.debug("updateNowEmplyoee()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			EmployeeDao EmployeeDao = sqlSession.getMapper(EmployeeDao.class);
+			sqlSession.commit();
+			return EmployeeDao.InsertEmployee(namespace + "InsertEmployee");
+		}
+		
+	}
+
 }

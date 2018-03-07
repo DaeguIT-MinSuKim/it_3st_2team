@@ -3,6 +3,10 @@ package kr.or.dgit.it_3st_2team.dto;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.JComboBox;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
 public class Employee {
 	private int empNo;
 	private String empName;
@@ -33,14 +37,12 @@ public class Employee {
 		this.eTf = eTf;
 	}
 
-	
-	
 	public Employee(String id, String password) {
 		super();
 		this.id = id;
 		this.epassword = password;
 	}
-	
+
 	public Employee(Boolean eTf) {
 		super();
 		this.eTf = eTf;
@@ -62,9 +64,12 @@ public class Employee {
 		this.empNo = empNo;
 	}
 
-
-
 	public Employee(String string, String string2, String string3, String string4) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Employee(JTextField tfNo, JTextField tfName, JTextField empJoin_day, JTextField tfid, JTextField tfAddr,
+			JPasswordField pw, JComboBox<String> empfind, JComboBox<String> hday) {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -115,14 +120,12 @@ public class Employee {
 	public void setEpassword(String epassword) {
 		this.epassword = epassword;
 	}
-	//khj epassword이기 때문에 주석처리함
-/*	public String getPassword() {
-		return epassword;
-	}
-
-	public void setPassword(String password) {
-		this.epassword = password;
-	}*/
+	// khj epassword이기 때문에 주석처리함
+	/*
+	 * public String getPassword() { return epassword; }
+	 * 
+	 * public void setPassword(String password) { this.epassword = password; }
+	 */
 
 	public Title getTitleNo() {
 		return title;
@@ -149,37 +152,36 @@ public class Employee {
 	}
 
 	public String getEOffToString() {
-		if(eOff==0) {
-			return String.format("월","%s", eOff);
-		}else if(eOff==1) {
-			return String.format("화","%s", eOff);
-		}else if(eOff==2) {
-			return String.format("수","%s", eOff);
-		}else if(eOff==3) {
-			return String.format("목","%s", eOff);
-		}else if(eOff==4) {
-			return String.format("금","%s", eOff);
-		}else if(eOff==5) {
-			return String.format("토","%s", eOff);
-		}else {
-			return String.format("일","%s", eOff);
+		if (eOff == 0) {
+			return String.format("월", "%s", eOff);
+		} else if (eOff == 1) {
+			return String.format("화", "%s", eOff);
+		} else if (eOff == 2) {
+			return String.format("수", "%s", eOff);
+		} else if (eOff == 3) {
+			return String.format("목", "%s", eOff);
+		} else if (eOff == 4) {
+			return String.format("금", "%s", eOff);
+		} else if (eOff == 5) {
+			return String.format("토", "%s", eOff);
+		} else {
+			return String.format("일", "%s", eOff);
 		}
 	}
-	
+
 	public Object[] toArrayNoandName() {
-		return new Object[] {empNo, empName};
+		return new Object[] { empNo, empName };
 	}
 
 	public Object[] toArray() {
 		String Sdf = new SimpleDateFormat("yyyy-mm-dd").format(joinDate);
-		return new Object[] { empNo, empName, Sdf, addr,id, epassword, title.getTitleName(),getEOffToString(),eTf };
+		return new Object[] { empNo, empName, Sdf, addr, id, epassword, title.getTitleName(), getEOffToString(), eTf };
 	}
 
-	//khj 180306
+	// khj 180306
 	public Title getTitle() {
 		return title;
 	}
-
 
 	public void setTitle(Title title) {
 		this.title = title;

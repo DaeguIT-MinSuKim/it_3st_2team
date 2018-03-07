@@ -139,7 +139,11 @@ public class TitleManage extends JFrame implements ActionListener {
 		System.out.println(lists);
 		Object[][] data = getRows(lists);
 
-		model = new DefaultTableModel(data, title);
+		model = new DefaultTableModel(data, title) {
+			public boolean isCellEditable(int rowIndex, int mColIndex) {
+				return false;
+			}
+		};
 		table.setModel(model);
 	}
 
@@ -178,7 +182,6 @@ public class TitleManage extends JFrame implements ActionListener {
 
 			return;
 		}
-
 
 		str[0] = Titleno.getText();
 		str[1] = Titlename.getText();

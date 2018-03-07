@@ -158,14 +158,12 @@ public class EventManage extends JFrame implements ActionListener {
 		JScrollPane scrollPane = new JScrollPane();
 		panel.add(scrollPane);
 
-		
-		
 		table = new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
 
 		lEvent();
-		
+
 		table.setSelectionBackground(Color.yellow);
 		table.setSelectionForeground(Color.MAGENTA);
 
@@ -206,7 +204,11 @@ public class EventManage extends JFrame implements ActionListener {
 		System.out.println(lists);
 		Object[][] data = getRows(lists);
 
-		model = new DefaultTableModel(data, title);
+		model = new DefaultTableModel(data, title) {
+			public boolean isCellEditable(int rowIndex, int mColIndex) {
+				return false;
+			}
+		};
 		table.setModel(model);
 	}
 
@@ -254,7 +256,7 @@ public class EventManage extends JFrame implements ActionListener {
 		str[2] = eventdis.getText();
 
 		eservice.insertEvent(new Event(Integer.parseInt(str[0]), str[1], Float.parseFloat(str[2])));
-		//model.addRow(str);
+		// model.addRow(str);
 		lEvent();
 
 	}
@@ -273,7 +275,7 @@ public class EventManage extends JFrame implements ActionListener {
 					JOptionPane.QUESTION_MESSAGE);
 			if (b == 0) {
 				eservice.deleteEvent(Eno);
-				//model.removeRow(row);
+				// model.removeRow(row);
 				row = -1;
 				this.clearData();
 				lEvent();
@@ -296,16 +298,17 @@ public class EventManage extends JFrame implements ActionListener {
 
 			return;
 		}
-		/*model.setValueAt(eventNo.getText(), row, 0);
-		model.setValueAt(eventName.getText(), row, 1);
-		model.setValueAt(eventdis.getText(), row, 2);
-		*/
+		/*
+		 * model.setValueAt(eventNo.getText(), row, 0);
+		 * model.setValueAt(eventName.getText(), row, 1);
+		 * model.setValueAt(eventdis.getText(), row, 2);
+		 */
 		str[0] = eventNo.getText();
 		str[1] = eventName.getText();
 		str[2] = eventdis.getText();
 
 		eservice.UpdateEvent(new Event(Integer.parseInt(str[0]), str[1], Float.parseFloat(str[2])));
-		//model.addRow(str);
+		// model.addRow(str);
 		lEvent();
 	}
 

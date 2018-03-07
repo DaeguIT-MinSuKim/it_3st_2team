@@ -32,8 +32,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import org.jfree.util.HashNMap;
-
 import kr.or.dgit.it_3st_2team.dto.Employee;
 import kr.or.dgit.it_3st_2team.dto.Title;
 import kr.or.dgit.it_3st_2team.service.EmployeeService;
@@ -114,9 +112,9 @@ public class NowEmployee extends JFrame implements ActionListener {
 		table = new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
-
+	
 		lNow();
-
+		
 		table.setSelectionBackground(Color.yellow);
 		table.setSelectionForeground(Color.MAGENTA);
 
@@ -227,7 +225,6 @@ public class NowEmployee extends JFrame implements ActionListener {
 				new DefaultComboBoxModel<String>(new String[] { "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일" }));
 		System.out.println(hday);
 
-
 		hday.setMaximumSize(new Dimension(150, 30));
 		hday.setToolTipText("희망휴무요일");
 		panel_2.add(hday);
@@ -253,7 +250,12 @@ public class NowEmployee extends JFrame implements ActionListener {
 		lists = service.selecteNowEmplyoee();
 		Object[][] data = getRows(lists);
 
-		model = new DefaultTableModel(data, title);
+		model = new DefaultTableModel(data, title) {
+			  public boolean isCellEditable(int rowIndex, int mColIndex) {
+	                return false;
+	            }
+		};
+		
 		table.setModel(model);
 	}
 
@@ -294,21 +296,26 @@ public class NowEmployee extends JFrame implements ActionListener {
 			int b = JOptionPane.showConfirmDialog(this, "수정하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE);
 			if (b == 0) {
+				str[5] = epassword.getText();
+				str[8] = (String) e_tf.getText();
 
-				lNow();
+				Object updateTitlename = table.getValueAt(row, 6);
+				String st = null;
+				for (int i = 0; i < tlist.size(); i++) {
+					st = tlist.get(i).getTitleName();
+					Boolean s = st.equals(updateTitlename);
+					if (s) {
+						empfind.setSelectedIndex(i);
+						return;
+					} else {
+						empfind.setSelectedIndex(0);
+					}
+					lNow();
+				}
 			}
+
 		}
-
-		str[5] = epassword.getText();
-		str[6] = (String) empfind.getSelectedItem();
-
-		str[7] = (String) hday.getSelectedItem();
-		str[8] = (String) e_tf.getText();
-
-		eservice.updateNowEmplyoee(new Employee((str[4]), str[5], str[7], str[8]));
-
-		lNow();
-
+		eservice.updateNowEmplyoee(new Employee((str[5]), str[8]));
 	}
 
 	class TableSelect extends MouseAdapter {
@@ -332,8 +339,9 @@ public class NowEmployee extends JFrame implements ActionListener {
 
 			String eoff = (String) table.getValueAt(row, 7);
 			System.out.println(eoff);
-			/*int eoffNo = map.get(eoff);
-			empfind.setSelectedIndex(eoffNo - 1);*/
+			/*
+			 * int eoffNo = map.get(eoff); empfind.setSelectedIndex(eoffNo - 1);
+			 */
 
 			if (eoff.equals("월")) {
 				hday.setSelectedIndex(0);

@@ -113,15 +113,16 @@
 
 
 	<!--bjh -->
-	<sql id="updateNowEmplyoeeSql">
+	<update id="updateNowEmplyoee" parameterType="Employee">
+	update Employee
 	<set>
-			<if test="password !=null">epassword=#{password},</if>
+			<if test="password !=null">epassword=#{epassword},</if>
 			<if test="titleName !=null">title_Name=#{titleName},</if>
 			<if test="eOff !=null">e_off=#{eOff},</if>
 			<if test="eTf !=null">e_tf=#{eTf},</if>
 		</set>
 	<include refid="whereeTfSql"></include>
-	</sql>
+	</update>
 
 	<sql id="EmployeeSizeNoSql">
 		select count(*) from employee
@@ -135,5 +136,14 @@
 		select eoff
 		from employee
 	</select>
+
+	<sql id= "InsertEmployeeSql">
+		insert into employee(emp_no,emp_name,join_date,addr,id,epassword,eoff,e_tf)
+		values(#{empNo,#{empName},#{joinDate},#{addr},#{id},#{epassword},#{eOff},#{eTf})
+	</sql>
+	
+	<insert id="InsertEmployee" parameterType="Employee">
+		<include refid="InsertEmployeeSql"></include>
+	</insert>
 
 </mapper>

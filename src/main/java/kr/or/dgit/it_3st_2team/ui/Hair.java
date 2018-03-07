@@ -50,7 +50,7 @@ public class Hair extends JFrame implements ActionListener {
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 978, 711);
+		setBounds(100, 100, 950, 800);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -72,12 +72,6 @@ public class Hair extends JFrame implements ActionListener {
 		
 		JMenu mnHair = new JMenu("미용실운영");
 		menuBar.add(mnHair);
-		
-		/*if(titleName.equals("admin")) {
-			mnHair.setEnabled(true);
-		}else if(!titleName.equals("사장")) { //khj 직급별 기능제한
-			mnHair.setEnabled(false);
-		}*/
 	
 		
 		itemEvent = new JMenuItem("이벤트등록");
@@ -121,7 +115,7 @@ public class Hair extends JFrame implements ActionListener {
 		validate();
 		setContentPane(contentPane);
 		
-		
+		/*yyj 03-07 수정  setEnabled -> setVisible*/
 		if(titleName.equals("admin")) {
 			mnHair.setEnabled(true);
 		}else if(!titleName.equals("사장")) { //khj 직급별 기능제한
@@ -175,8 +169,9 @@ public class Hair extends JFrame implements ActionListener {
 		jf.setVisible(true);
 	}
 	protected void actionPerformedItemRe(ActionEvent arg0) {
-		JFrame jf = new ReportSaleFrame();
-		jf.setVisible(true);
+		JPanel jp = new ReportSaleJPanel();
+		setContentPane(jp);
+		validate();
 	}
 	protected void actionPerformedItemHair(ActionEvent arg0) { //헤어주문
 		/*JFrame jf = new EnrollFrame();		

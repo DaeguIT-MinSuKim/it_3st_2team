@@ -10,6 +10,7 @@
 		<result property="addr" column="addr" />
 		<result property="id" column="id" />
 		<result property="epassword" column="epassword" />
+		<result property="eOff" column="eoff" />
 		<result property="eTf" column="e_tf" />
 	</resultMap>
 
@@ -70,6 +71,7 @@
 		<include refid="JoinEmpTitleNameSql"></include>
 		<include refid="whereeTfSql"></include>
 	</select>
+
  	<resultMap id="employeeResultAddTitle" type="Employee"
 		extends="employeeResult">
 		<association property="titleNo"

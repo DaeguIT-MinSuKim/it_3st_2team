@@ -1,7 +1,6 @@
 package kr.or.dgit.it_3st_2team.ui;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -52,27 +51,7 @@ public class AddressJFrame extends JFrame implements ActionListener, MouseListen
 	private String addr1;
 	private String addr2;
 	private EmployeeJoin empjoin;
-	private Class<? extends ActionEvent> CustomerJPanel;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AddressJFrame frame = new AddressJFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public AddressJFrame() {
 		aservice = new AddressService();
 		cjpanel = new CustomerJPanel();
@@ -82,6 +61,7 @@ public class AddressJFrame extends JFrame implements ActionListener, MouseListen
 	}
 
 	public AddressJFrame(CustomerJPanel customerJPanel) {
+		System.out.println("CustomerJPanel");
 		cjpanel = customerJPanel;
 		aservice = new AddressService();
 		initComponents();
@@ -89,6 +69,7 @@ public class AddressJFrame extends JFrame implements ActionListener, MouseListen
 	}
 
 	public AddressJFrame(EmployeeJoin employeeJoin) {
+		System.out.println("EmployeeJoin");
 		empjoin = employeeJoin;
 		aservice = new AddressService();
 		initComponents();
@@ -344,15 +325,16 @@ public class AddressJFrame extends JFrame implements ActionListener, MouseListen
 	protected void actionPerformedBtnAddrAdd(ActionEvent e) {
 		addr1 = tfAddr1.getText();
 		addr2 = tfAddr2.getText();
-		
-		if(e.getClass()==CustomerJPanel) {
+
+		if (cjpanel != null) {
 			cjpanel.setTfaddr(addr1 + " " + addr2);
+
 			setVisible(false);
+
 
 		}else {
 			empjoin.setaddr(addr1 + " " + addr2);
 			setVisible(false);
 		}
-		
 	}
 }

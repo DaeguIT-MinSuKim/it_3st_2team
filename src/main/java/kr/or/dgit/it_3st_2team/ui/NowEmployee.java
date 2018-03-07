@@ -11,7 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.AbstractButton;
 import javax.swing.DefaultComboBoxModel;
@@ -28,6 +31,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import org.jfree.util.HashNMap;
 
 import kr.or.dgit.it_3st_2team.dto.Employee;
 import kr.or.dgit.it_3st_2team.dto.Title;
@@ -48,7 +53,8 @@ public class NowEmployee extends JFrame implements ActionListener {
 	int row = -1;
 	private EmployeeService eservice;
 	private TitleService tservice;
-	private List<Title> list;
+	private List<Title> tlist;
+	private List<Employee> elist;
 	JComboBox<Title> Jcomtitle;
 
 	private String title[] = { "직책번호", "이름", "입사일", "주소", "아이디", "패스워드", "직책번호", "희망휴무요일", "퇴사유무" };
@@ -61,6 +67,7 @@ public class NowEmployee extends JFrame implements ActionListener {
 	private JTextField e_tf;
 	public JComboBox empfind;
 	public JComboBox hday;
+	private Map<String, Integer> map;
 
 	/**
 	 * Launch the application.
@@ -180,21 +187,34 @@ public class NowEmployee extends JFrame implements ActionListener {
 		JLabel label_1 = new JLabel("직책");
 		panel_4.add(label_1);
 
-		list = tservice.selectTitle2();
-		JComboBox<Title> empfind = new JComboBox<Title>();
-		Title[] items = new Title[list.size()];
-		list.toArray(items);
+		tlist = tservice.selectTitle2();
+		List<String> titleName = new ArrayList<>();
+		for (Title t : tlist) {
+			titleName.add(t.getTitleName());
+		}
+		map = new HashMap<>();
+		for (Title t : tlist) {
+			map.put(t.getTitleName(), t.getTitleNo());
+		}
+		for (String key : map.keySet()) {
+			int value = map.get(key);
+			// System.out.println(key+":"+value);
+		}
+		// JComboBox<Title> empfind = new JComboBox<Title>();
+		empfind = new JComboBox(titleName.toArray());
+		Title[] items = new Title[tlist.size()];
+		tlist.toArray(items);
 
 		System.out.println(items);
 
-		DefaultComboBoxModel<Title> cModel = new DefaultComboBoxModel<>(items);
+		// DefaultComboBoxModel<Title> cModel = new DefaultComboBoxModel<>(items);
 
 		empfind.addActionListener(this);
 		empfind.setLocation(new Point(5, 0));
 		empfind.setMaximumSize(new Dimension(80, 30));
 		empfind.setPreferredSize(new Dimension(85, 21));
 		panel_4.add(empfind);
-		empfind.setModel(cModel);
+		// empfind.setModel(cModel);
 
 		JLabel label = new JLabel("희망휴무요일");
 		label.setMaximumSize(new Dimension(100, 15));
@@ -203,6 +223,22 @@ public class NowEmployee extends JFrame implements ActionListener {
 
 		JComboBox hday = new JComboBox();
 		hday.setModel(new DefaultComboBoxModel(new String[] { "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일" }));
+		System.out.println(hday);
+
+	/*	List<String> eoffday = new ArrayList<>();
+		for (Employee e : elist) {
+			eoffday.add((String) hday.getSelectedItem());
+
+		}
+		map = new HashMap<>();
+		for (Employee e : elist) {
+			map.put(eoffday.toString(), e.geteOff());
+		}
+		for (String key : map.keySet()) {
+			int value = map.get(key);
+			// System.out.println(key+":"+value);
+		}*/
+
 		hday.setMaximumSize(new Dimension(150, 30));
 		hday.setToolTipText("희망휴무요일");
 		panel_2.add(hday);
@@ -269,33 +305,18 @@ public class NowEmployee extends JFrame implements ActionListener {
 			int b = JOptionPane.showConfirmDialog(this, "수정하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE);
 			if (b == 0) {
-				// model.removeRow(row);
-				Object updateempname = table.getValueAt(row, 7);
-				String st = null;
-				for (int i = 0; i < list.size(); i++) {
-					st = list.get(i).getTitleName();
-					Boolean s = st.equals(updateempname);
-					if (s) {
-						empfind.setSelectedIndex(i);
-						return;
-					}
-				}
+
 				lNow();
 			}
 		}
-		/*
-		 * model.setValueAt(empno.getText(), row, 0);
-		 * model.setValueAt(empname.getText(), row, 1);
-		 * model.setValueAt(joindate.getText(), row, 2); model.setValueAt(id.getText(),
-		 * row, 3); model.setValueAt(epassword.getText(), row, 4);
-		 * model.setValueAt(titlename.getText(), row, 5);
-		 */
 
-		str[4] = id.getText();
 		str[5] = epassword.getText();
-		str[7] = e_tf.getText();
+		str[6] = (String) empfind.getSelectedItem();
 
-		eservice.updateNowEmplyoee(new Employee((str[4]), str[5], str[7]));
+		str[7] = (String) hday.getSelectedItem();
+		str[8] = (String) e_tf.getText();
+
+		eservice.updateNowEmplyoee(new Employee((str[4]), str[5], str[7], str[8]));
 
 		lNow();
 
@@ -305,8 +326,9 @@ public class NowEmployee extends JFrame implements ActionListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			row = table.getSelectedRow(); // 테이블에서 선택된 행의 값을 row에 저장한다.
-
+			// 테이블에서 선택된 행의 값을 row에 저장한다.
+			int row = table.getSelectedRow();
+			String[] str = new String[9];
 			// 행번호와 행의 데이터 텍스트 필드에 출력하기
 			empno.setText(table.getValueAt(row, 0).toString());
 			empname.setText(table.getValueAt(row, 1).toString());
@@ -314,20 +336,33 @@ public class NowEmployee extends JFrame implements ActionListener {
 			tfaddr.setText(toString().format("%s", table.getValueAt(row, 3)));
 			id.setText(table.getValueAt(row, 4).toString());
 			epassword.setText(table.getValueAt(row, 5).toString());
-			/*
-			 * empfind.setSelectedItem(anchor); hday.setSelectedItem(anchor);
-			 */
-			e_tf.setText(table.getValueAt(row, 8).toString());
-			// joindate.setText(table.getValueAt(row, 6).toString());
-			// joindate.setText(table.getValueAt(row, 7).toString());
-		}
 
+			String title = (String) table.getValueAt(row, 6);
+			int titleNo = map.get(title);
+			empfind.setSelectedIndex(titleNo - 1);
+
+			String eoff = (String) table.getValueAt(row, 7);
+			int eoffNo = map.get(eoff);
+			empfind.setSelectedIndex(eoffNo - 1);
+
+			/*
+			 * if(eoff.equals("월")) { hday.setSelectedIndex(0); }else if (eoff.equals("화"))
+			 * { hday.setSelectedIndex(1); }else if (eoff.equals("수")) {
+			 * hday.setSelectedIndex(2); }else if (eoff.equals("목")) {
+			 * hday.setSelectedIndex(3); }else if (eoff.equals("금")) {
+			 * hday.setSelectedIndex(4); }else if (eoff.equals("토")) {
+			 * hday.setSelectedIndex(5); }else if (eoff.equals("일")) {
+			 * hday.setSelectedIndex(6); } System.out.println(hday);
+			 */
+
+			e_tf.setText(table.getValueAt(row, 8).toString());
+
+		}
 	}
 
-	/*
-	 * public JTextField getTfaddr() { return tfaddr; }
-	 * 
-	 * public void setTfaddr(String addr) { tfaddr.setText(addr); }
-	 */
-
 }
+/*
+ * public JTextField getTfaddr() { return tfaddr; }
+ * 
+ * public void setTfaddr(String addr) { tfaddr.setText(addr); }
+ */

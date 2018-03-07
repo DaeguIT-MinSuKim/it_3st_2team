@@ -17,7 +17,7 @@ public interface EmployeeDao {
 
 	int selectEmpNo(Employee emp);
 
-	int updateNowEmplyoee(Employee emp);
+	int updateNowEmplyoee(String string, Employee emp);
 	
 	int EmployeeSizeNo();
 

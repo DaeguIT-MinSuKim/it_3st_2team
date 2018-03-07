@@ -62,7 +62,9 @@ public class Employee {
 		this.empNo = empNo;
 	}
 
-	public Employee(String string, String string2, String string3) {
+
+
+	public Employee(String string, String string2, String string3, String string4) {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -172,6 +174,8 @@ public class Employee {
 		String Sdf = new SimpleDateFormat("yyyy-mm-dd").format(joinDate);
 		return new Object[] { empNo, empName, Sdf, addr,id, epassword, title.getTitleName(),getEOffToString(),eTf };
 	}
+
+	
 	
 
 }

@@ -31,6 +31,7 @@ import java.awt.ComponentOrientation;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.border.MatteBorder;
+import javax.swing.JPasswordField;
 
 @SuppressWarnings("serial")
 public class EmployeeJoin extends JFrame implements ActionListener {
@@ -40,8 +41,8 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 	private JTextField tfName;
 	private JTextField empJoin_day;
 	private JTextField id;
-	private JTextField pw;
-	private JTextField repw;
+	private JPasswordField pw;
+	private JPasswordField repw;
 	private JTextField tfAddr;
 	private JButton findaddr;
 	private JFrame jf;
@@ -203,8 +204,9 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 		password.setPreferredSize(new Dimension(250, 0));
 		password.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_9.add(password);
-
-		pw = new JTextField();
+		
+		
+		pw = new JPasswordField();
 		pw.setBorder(new MatteBorder(0, 1, 0, 0, (Color) new Color(0, 0, 0)));
 		pw.setPreferredSize(new Dimension(10, 21));
 		pw.setHorizontalAlignment(SwingConstants.CENTER);
@@ -221,7 +223,7 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 		cheackPassword.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_10.add(cheackPassword);
 
-		repw = new JTextField();
+		repw = new JPasswordField();
 		repw.setBorder(new MatteBorder(0, 1, 0, 0, (Color) new Color(0, 0, 0)));
 		repw.setPreferredSize(new Dimension(10, 21));
 		repw.setHorizontalAlignment(SwingConstants.CENTER);
@@ -294,6 +296,13 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 		// now.set(year,month,day);
 		empJoin_day.setText(toString().format("%s-%s-%s", year, month, day));
 
+	}
+
+	
+	
+	
+	public void setTfAddrValue(String value) {
+		tfAddr.setText(value);
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -380,5 +389,15 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 		 */
 	}
 	protected void actionPerformedCkid(ActionEvent e) {
+		Employee employee = new Employee();
+		Employee searchEmployee = eservice.selectEmployeeByLoginId(employee);
+		
+		if (employee.getId().equals(searchEmployee.getId())) {
+			JOptionPane.showMessageDialog(this, "아이디가 이미 있습니다.");
+
+		}else {
+
+			System.out.println("사용가능한 아이디 입니다.");
+		} 
 	}
 }

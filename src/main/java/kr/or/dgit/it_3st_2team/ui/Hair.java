@@ -9,6 +9,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 
 
@@ -27,6 +28,8 @@ public class Hair extends JFrame implements ActionListener {
 	private JMenuItem itemAdimin;
 	private JMenuItem itemEmp;
 	private JMenuItem itemLogout;
+	public JPanel01 jpanel01 = null; //직원별 매출그래프
+	public JPanel02 jpanel02 = null; //월별 매출그래프
 
 	/**
 	 * Launch the application.
@@ -199,8 +202,19 @@ public class Hair extends JFrame implements ActionListener {
 		validate();
 	}
 	protected void actionPerformedItemChart(ActionEvent arg0) { //차트
-		PolylineBarChart cf = new PolylineBarChart();
+		/*PolylineBarChart cf = new PolylineBarChart();
 		setContentPane(cf);
+		validate();*/
+		this.jpanel01 = new JPanel01();
+		this.jpanel02 = new JPanel02();
+		
+		JTabbedPane jTab = new JTabbedPane();
+		PolylineBarChart cf = new PolylineBarChart();
+		jTab.addTab("헤어서비스별", cf);
+		jTab.addTab("직원별", this.jpanel01);
+		jTab.addTab("기간별", this.jpanel02);
+		
+		setContentPane(jTab);
 		validate();
 	}
 	protected void actionPerformedItemAdimin(ActionEvent arg0) {
@@ -216,4 +230,21 @@ public class Hair extends JFrame implements ActionListener {
 		lf.setVisible(true);
 		this.dispose();
 	}
+	
+	class JPanel01 extends JPanel{ //직원별 
+		public JPanel01() {
+			super();
+			// TODO Auto-generated constructor stub
+			setLayout(null);
+		}		
+	}
+
+	class JPanel02 extends JPanel{ //기간별
+		public JPanel02() {
+			super();
+			// TODO Auto-generated constructor stub
+			setLayout(null);
+		}		
+	}
+
 }

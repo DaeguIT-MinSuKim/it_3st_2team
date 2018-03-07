@@ -103,6 +103,8 @@ public class Hair extends JFrame implements ActionListener {
 		
 		if(!titleName.equals("사장")) { //khj 직급별 기능제한
 			mnHair.setEnabled(false);
+		}else if(titleName.equals("admin")) {
+			
 		}
 	}
 

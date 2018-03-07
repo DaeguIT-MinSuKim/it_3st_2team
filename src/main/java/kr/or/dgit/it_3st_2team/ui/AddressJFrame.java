@@ -348,12 +348,10 @@ public class AddressJFrame extends JFrame implements ActionListener, MouseListen
 		if(e.getClass()==CustomerJPanel) {
 			cjpanel.setTfaddr(addr1 + " " + addr2);
 			setVisible(false);
-			return;
 
 		}else {
 			empjoin.setaddr(addr1 + " " + addr2);
 			setVisible(false);
-			return;
 		}
 		
 	}

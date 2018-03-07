@@ -96,9 +96,9 @@ public class Hair extends JFrame implements ActionListener {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-	//	JPanel cpanel = new CustomerJPanel();
-	//	contentPane.add(cpanel);
-	//	validate();
+		JPanel cpanel = new CustomerJPanel();
+		contentPane.add(cpanel);
+		validate();
 		setContentPane(contentPane);
 		
 		if(!titleName.equals("사장")) { //khj 직급별 기능제한

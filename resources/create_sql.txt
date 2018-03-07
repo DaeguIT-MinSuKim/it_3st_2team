@@ -8,58 +8,38 @@ use hairshop;
 
 -- 고객
 CREATE TABLE hairshop.customer (
-	cus_no    INTEGER      NOT NULL COMMENT '고객번호',
-	cus_name  VARCHAR(16)  NOT NULL COMMENT '고객명',
-	birth     DATE         NOT NULL COMMENT '생년월일',
-	age       INTEGER      NULL     COMMENT '나이',
-	join_date DATE         NOT NULL COMMENT '가입일자',
-	phone     VARCHAR(30)  NOT NULL COMMENT '연락처',
-	addr      VARCHAR(100) NULL     COMMENT '주소',
-	emp_no    INTEGER      NOT NULL COMMENT '직원번호',
-	c_tf      BOOLEAN      NOT NULL COMMENT '유효'
+	cus_no    INTEGER      NOT NULL PRIMARY KEY COMMENT '고객번호', 
+	cus_name  VARCHAR(16)  NOT NULL COMMENT '고객명', 
+	birth     DATE         NOT NULL COMMENT '생년월일', 
+	age       INTEGER      NULL     COMMENT '나이', 
+	join_date DATE         NOT NULL COMMENT '가입일자', 
+	phone     VARCHAR(30)  NOT NULL COMMENT '연락처', 
+	addr      VARCHAR(100) NULL     COMMENT '주소', 
+	emp_no    INTEGER      NOT NULL COMMENT '직원번호', 
+	c_tf      BOOLEAN      NOT NULL COMMENT '유효' 
 )
 COMMENT '고객';
 
--- 고객
-ALTER TABLE hairshop.customer
-	ADD CONSTRAINT PK_customer 
-		PRIMARY KEY (
-			cus_no 
-		);
-
 -- 이벤트
 CREATE TABLE hairshop.event (
-	evn_no   INTEGER     NOT NULL COMMENT '이벤트번호', 
+	evn_no   INTEGER     NOT NULL PRIMARY KEY COMMENT '이벤트번호', 
 	evn_name VARCHAR(30) NOT NULL COMMENT '이벤트명', 
-	discount FLOAT       NOT NULL COMMENT '할인율'
+	discount FLOAT       NOT NULL COMMENT '할인율' 
 )
 COMMENT '이벤트';
 
--- 이벤트
-ALTER TABLE hairshop.event
-	ADD CONSTRAINT PK_event 
-		PRIMARY KEY (
-			evn_no 
-		);
-
 -- 헤어정보
 CREATE TABLE hairshop.hair (
-	hair_no   INTEGER     NOT NULL COMMENT '헤어번호',
+	hair_no   INTEGER     NOT NULL PRIMARY KEY COMMENT '헤어번호', 
 	hair_name VARCHAR(30) NOT NULL COMMENT '헤어명', 
 	price     INTEGER     NOT NULL COMMENT '원가' 
 )
 COMMENT '헤어정보';
 
--- 헤어정보
-ALTER TABLE hairshop.hair
-	ADD CONSTRAINT PK_hair 
-		PRIMARY KEY (
-			hair_no 
-		);
 
 -- 영업
 CREATE TABLE hairshop.sale (
-	sale_no     INTEGER      NOT NULL COMMENT '영업번호', 
+	sale_no     INTEGER      NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '영업번호', 
 	description VARCHAR(255) NULL     COMMENT '예약메모', 
 	sdate       DATE         NOT NULL COMMENT '영업일자', 
 	stime       TIME         NOT NULL COMMENT '영업시간', 
@@ -70,16 +50,10 @@ CREATE TABLE hairshop.sale (
 )
 COMMENT '영업';
 
--- 영업
-ALTER TABLE hairshop.sale
-	ADD CONSTRAINT PK_sale 
-		PRIMARY KEY (
-			sale_no 
-		);
 
 -- 직원
 CREATE TABLE hairshop.employee (
-	emp_no    INTEGER      NOT NULL COMMENT '직원번호',
+	emp_no    INTEGER      NOT NULL PRIMARY KEY COMMENT '직원번호', 
 	emp_name  VARCHAR(16)  NOT NULL COMMENT '직원명', 
 	join_date DATE         NOT NULL COMMENT '입사일자', 
 	addr      VARCHAR(100) NULL     COMMENT '주소', 
@@ -91,17 +65,11 @@ CREATE TABLE hairshop.employee (
 )
 COMMENT '직원';
 
--- 직원
-ALTER TABLE hairshop.employee
-	ADD CONSTRAINT PK_employee 
-		PRIMARY KEY (
-			emp_no 
-		);
 
 -- 주소
 CREATE TABLE hairshop.address (
 	zipcode   CHAR(5)     NULL COMMENT '우편번호', 
-	sido      VARCHAR(20) NULL COMMENT '시도',
+	sido      VARCHAR(20) NULL COMMENT '시도', 
 	sigungu   VARCHAR(20) NULL COMMENT '시군구', 
 	doro      VARCHAR(20) NULL COMMENT '도로', 
 	building1 INT(5)      NULL COMMENT '건물명1', 
@@ -111,32 +79,19 @@ COMMENT '주소';
 
 --  헤어주문
 CREATE TABLE hairshop.enroll (
-	enroll_no INTEGER NOT NULL COMMENT '헤어주문번호', 
+	enroll_no int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '헤어주문번호', 
 	sale_no   INTEGER NOT NULL COMMENT '영업번호', 
 	hair_no   INTEGER NOT NULL COMMENT '헤어번호' 
 )
 COMMENT ' 헤어주문';
 
---  헤어주문
-ALTER TABLE hairshop.enroll
-	ADD CONSTRAINT PK_enroll 
-		PRIMARY KEY (
-			enroll_no
-		);
 
 -- 직책
 CREATE TABLE hairshop.title (
-	title_no   INTEGER     NOT NULL COMMENT '직책번호', 
-	title_name VARCHAR(16) NULL     COMMENT '직책명'
+	title_no   INTEGER     NOT NULL PRIMARY KEY COMMENT '직책번호', 
+	title_name VARCHAR(16) NULL     COMMENT '직책명' 
 )
 COMMENT '직책';
-
--- 직책
-ALTER TABLE hairshop.title
-	ADD CONSTRAINT PK_title 
-		PRIMARY KEY (
-			title_no 
-		);
 
 -- 고객
 ALTER TABLE hairshop.customer
@@ -174,8 +129,8 @@ ALTER TABLE hairshop.sale
 		FOREIGN KEY (
 			emp_no 
 		)
-		REFERENCES hairshop.employee (
-			emp_no
+		REFERENCES hairshop.employee ( 
+			emp_no 
 		);
 
 -- 직원
@@ -194,7 +149,7 @@ ALTER TABLE hairshop.enroll
 		FOREIGN KEY (
 			hair_no 
 		)
-		REFERENCES hairshop.hair (
+		REFERENCES hairshop.hair ( 
 			hair_no 
 		);
 
@@ -204,9 +159,11 @@ ALTER TABLE hairshop.enroll
 		FOREIGN KEY (
 			sale_no 
 		)
-		REFERENCES hairshop.sale (
+		REFERENCES hairshop.sale ( 
 			sale_no 
 		);
+
+
 
 create view hairshop.v_sale as 
 select s.sale_no, round(sum(h.price)-sum(h.price)* e.discount) as price 

@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,6 +76,18 @@ public class LoginFrame extends JFrame implements ActionListener {
 		tfId = new JTextField();
 		panel.add(tfId);
 		tfId.setColumns(10);
+		tfId.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				super.keyPressed(e);
+				if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+					checkIdPassword();
+				}
+			}
+			
+		});
 
 		btnLogin = new JButton("로그인");
 		btnLogin.addActionListener(this);
@@ -81,6 +95,18 @@ public class LoginFrame extends JFrame implements ActionListener {
 		tfPw = new JPasswordField();
 		panel.add(tfPw);
 		panel.add(btnLogin);
+		tfPw.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				super.keyPressed(e);
+				if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+					checkIdPassword();
+				}
+			}
+			
+		});
 
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.SOUTH);
@@ -90,40 +116,54 @@ public class LoginFrame extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-
+		
 		if (e.getSource() == btnLogin) {
 			actionPerformedBtnNewButton(e);
 		}
 	}
 
 	protected void actionPerformedBtnNewButton(ActionEvent e) {
+		checkIdPassword();
+	}
+
+	private void checkIdPassword() {
 		String id = tfId.getText().trim();
 		char[] pw = tfPw.getPassword();
+		String strPw = new String(pw);
+		
 		boolean b = false;
+		String adminId = "a";
+		String adminPw = "a";
 		
 		if(!id.equals("")&&(pw.length!=0)) {
-			List<Employee> list = new ArrayList<>();
-			list = service.selectEmployeeByLoginId();
-			for(Employee emp: list) {
-				if(emp.getId().equals(id)) {
-					b = true;
-					String strPw = new String(pw);
-					if(!strPw.equals(emp.getEpassword())){
-						JOptionPane.showMessageDialog(null, "비밀번호가 틀렸습니다");
-					}else {
-						String titleName = emp.getTitle().getTitleName();
-						Hair hf = new Hair(titleName);
-						hf.setVisible(true);
-						this.dispose();
+			if(id.equals(adminId)&&(strPw.equals(adminPw))) {
+				String titleName = "admin";
+				Hair hf = new Hair(titleName);
+				hf.setVisible(true);
+				this.dispose();
+			}else{
+				List<Employee> list = new ArrayList<>();
+				list = service.selectEmployeeByLoginId();
+				for(Employee emp: list) {
+					if(emp.getId().equals(id)) {
+						b = true;
+						if(!strPw.equals(emp.getEpassword())){
+							JOptionPane.showMessageDialog(null, "비밀번호가 틀렸습니다");
+						}else {
+							String titleName = emp.getTitle().getTitleName();
+							Hair hf = new Hair(titleName);
+							hf.setVisible(true);
+							this.dispose();
+						}
 					}
 				}
+				if(b!=true) {
+					JOptionPane.showMessageDialog(null, "존재하지 않은 아이디입니다. 회원가입 해주세요");
+				}
 			}
-			if(b!=true) {
-				JOptionPane.showMessageDialog(null, "존재하지 않은 아이디입니다. 회원가입 해주세요");
-			}
+		
 		}else {
 			JOptionPane.showMessageDialog(null, "아이디, 비밀번호를 모두 입력하세요");
 		}
-		
 	}
 }

@@ -158,6 +158,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -537,9 +538,9 @@ public class EnrollPanel extends JPanel implements ActionListener {
 		btnDelete.addActionListener(this);
 		
 		btnUpdate = new JButton("수정");
+		btnUpdate.setEnabled(false);
 		btnUpdate.addActionListener(this);
 		panel_7.add(btnUpdate);
-		btnUpdate.setEnabled(false);
 		panel_7.add(btnDelete);
 		
 		scrollPane = new JScrollPane();
@@ -581,8 +582,10 @@ public class EnrollPanel extends JPanel implements ActionListener {
 		tfEmpNo.setText(Integer.toString(getEmpNo(empName)));
 		String event = (String) table.getValueAt(row, 5);
 		cmbEvent.setSelectedItem(event);
-		int price = (int) table.getValueAt(row, 6);
-		tfPrice.setText(Integer.toString(price));
+		/*int price = (int) table.getValueAt(row, 6);
+		tfPrice.setText(Integer.toString(price));*/
+		String price = (String) table.getValueAt(row, 6);
+		tfPrice.setText(price);
 		String hairs = (String) table.getValueAt(row, 7); //JList는 어떻게 처리할래?
 	}
 	
@@ -658,9 +661,9 @@ public class EnrollPanel extends JPanel implements ActionListener {
 		discount = mapEventDiscount.get(selectedEventName);
 		tfDiscount.setText(Float.toString(discount)); //할인율
 		if(!tfDanga.getText().equals("")) {
-			int danga = Integer.parseInt(tfDanga.getText());
+			int danga = Integer.parseInt(tfDanga.getText().replaceAll(",", ""));
 			int price = (int) Math.ceil(danga-(danga*discount));
-			tfPrice.setText(Integer.toString(price)); //할인후 금액
+			tfPrice.setText(convertPriceFormat(price)); //할인후 금액
 		}
 	}
 	
@@ -679,10 +682,10 @@ public class EnrollPanel extends JPanel implements ActionListener {
 			for(Integer integer :arrPrice) {
 				totalDanga+=integer;
 			}
-			tfDanga.setText(Integer.toString(totalDanga)); //단가
+			tfDanga.setText(convertPriceFormat(totalDanga)); //단가
 			if(!tfDiscount.getText().equals("")) { //할인율 선택값이 있을때
 				int price = (int) Math.ceil(totalDanga-(totalDanga*discount));
-				tfPrice.setText(Integer.toString(price));
+				tfPrice.setText(convertPriceFormat(price));
 
 			}
 		}
@@ -697,6 +700,7 @@ public class EnrollPanel extends JPanel implements ActionListener {
 		tfPrice.setText("");
 		tfDanga.setText("");
 		cmbEvent.setSelectedIndex(0); //JList 초기화는?
+		listHair.setSelectedIndex(0);
 		renewtfDate(); //날짜 초기화
 		renewtfTime(); //시간 초기화
 	}
@@ -719,11 +723,13 @@ public class EnrollPanel extends JPanel implements ActionListener {
 		int emp = Integer.parseInt(tfEmpNo.getText());
 		String selectedEventName = cmbEvent.getSelectedItem().toString();
 		int evn = mapNoEvent.get(selectedEventName);
-		int price = Integer.parseInt(tfPrice.getText());
+		//int price = Integer.parseInt(tfPrice.getText());
+		String price = tfPrice.getText().replaceAll(",", "");
+		int price2 = Integer.parseInt(price);
 		Customer customer = new Customer(cus);
 		Employee employee = new Employee(emp);
 		Event event = new Event(evn);
-		Sale sale = new Sale(saleNo, calender.getTime(), calender.getTime(), customer, employee, event, price);
+		Sale sale = new Sale(saleNo, calender.getTime(), calender.getTime(), customer, employee, event, price2);
 		saleService.insertSale(sale);
 				
 		//enroll 테이블 넣기 (여러 헤어)
@@ -875,8 +881,10 @@ public class EnrollPanel extends JPanel implements ActionListener {
 		String eventName = cmbEvent.getSelectedItem().toString();
 		int eventNo = mapNoEvent.get(eventName);
 		Event event = new Event(eventNo);
-		int price = Integer.parseInt(tfPrice.getText());
-		Sale sale = new Sale(saleNo, customer, employee, event, price);
+		//int price = Integer.parseInt(tfPrice.getText());
+		String price = tfPrice.getText().replaceAll(",", "");
+		int price2 = Integer.parseInt(price);
+		Sale sale = new Sale(saleNo, customer, employee, event, price2);
 		saleService.updateSale(sale);
 		
 		saleList = saleService.selectAllSale();
@@ -891,5 +899,10 @@ public class EnrollPanel extends JPanel implements ActionListener {
 	public int getEmpNo(String empName) {
 		Employee employee = new Employee(empName);
 		return employeeService.selectEmpNo(employee);
+	}
+	
+	public String convertPriceFormat(int price) {
+		DecimalFormat df = new DecimalFormat("#,###");
+		return df.format(price);
 	}
 }

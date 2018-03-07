@@ -81,7 +81,8 @@ public class EventManage extends JFrame implements ActionListener {
 
 	private void initComponents() {
 		setTitle("이벤트등록");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		/*yyj 03-07수정 이창만 닫기*/
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 406, 374);
 		EventManage = new JPanel();
 		EventManage.setBorder(new EmptyBorder(5, 5, 5, 5));

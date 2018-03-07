@@ -1,20 +1,19 @@
-package kr.or.dgit.it_3st_2team;
+package kr.or.dgit.it_3st_2team.ui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-/*import kr.or.dgit.hair_setting.dao.service.InitService;
-import kr.or.dgit.hair_setting.dao.service.LoadService;*/
-
-import javax.swing.JButton;
-import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import kr.or.dgit.hair_setting.dao.service.InitService;
+import kr.or.dgit.hair_setting.dao.service.LoadService;
 
 public class SettingMain extends JFrame implements ActionListener {
 
@@ -44,7 +43,7 @@ public class SettingMain extends JFrame implements ActionListener {
 		initComponents();
 	}
 	private void initComponents() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 177, 160);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -63,8 +62,8 @@ public class SettingMain extends JFrame implements ActionListener {
 		}
 	}
 	protected void actionPerformedBtnNewButton(ActionEvent arg0) {
-		/*InitService.getInstance().service();
+		InitService.getInstance().service();
 		LoadService.getInstance().service();
-		JOptionPane.showMessageDialog(null, "초기화 성공!");*/
+		JOptionPane.showMessageDialog(null, "초기화 성공!");
 	}
 }

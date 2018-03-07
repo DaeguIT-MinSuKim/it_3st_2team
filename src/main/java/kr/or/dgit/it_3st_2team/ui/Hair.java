@@ -1,16 +1,17 @@
 package kr.or.dgit.it_3st_2team.ui;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JMenuBar;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.border.EmptyBorder;
+
 
 public class Hair extends JFrame implements ActionListener {
 
@@ -23,6 +24,12 @@ public class Hair extends JFrame implements ActionListener {
 	private JMenuItem itemHair;
 	private JMenuItem itemCus;
 	private JMenuItem itemChart;
+	private JMenu mnAdmin;
+	private JMenuItem itemAdimin;
+	private JMenuItem itemEmp;
+	private JMenuItem itemLogout;
+	public JPanel01 jpanel01 = null; //직원별 매출그래프
+	public JPanel02 jpanel02 = null; //월별 매출그래프
 
 	/**
 	 * Launch the application.
@@ -44,8 +51,10 @@ public class Hair extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public Hair(String titleName) {
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 978, 583);
+		setBounds(100, 100, 978, 711);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -65,8 +74,19 @@ public class Hair extends JFrame implements ActionListener {
 		itemHair.addActionListener(this);
 		mnEmp.add(itemHair);
 		
+		itemLogout = new JMenuItem("로그아웃");
+		itemLogout.addActionListener(this);
+		mnEmp.add(itemLogout);
+		
 		JMenu mnHair = new JMenu("미용실운영");
 		menuBar.add(mnHair);
+		
+		/*if(titleName.equals("admin")) {
+			mnHair.setEnabled(true);
+		}else if(!titleName.equals("사장")) { //khj 직급별 기능제한
+			mnHair.setEnabled(false);
+		}*/
+	
 		
 		itemEvent = new JMenuItem("이벤트등록");
 		itemEvent.addActionListener(this);
@@ -84,12 +104,20 @@ public class Hair extends JFrame implements ActionListener {
 		itemRe.addActionListener(this);
 		mnHair.add(itemRe);
 		
-		JMenuItem itemEmp = new JMenuItem("직원현황");
+		itemEmp = new JMenuItem("직원현황");
+		itemEmp.addActionListener(this);
 		mnHair.add(itemEmp);
 		
 		itemChart = new JMenuItem("트랜드/차트");
 		itemChart.addActionListener(this);
 		mnHair.add(itemChart);
+		
+		mnAdmin = new JMenu("Admin");
+		menuBar.add(mnAdmin);
+		
+		itemAdimin = new JMenuItem("DB초기화");
+		itemAdimin.addActionListener(this);
+		mnAdmin.add(itemAdimin);
 		
 		
 		contentPane = new JPanel();
@@ -101,12 +129,28 @@ public class Hair extends JFrame implements ActionListener {
 		validate();
 		setContentPane(contentPane);
 		
-		if(!titleName.equals("사장")) { //khj 직급별 기능제한
-			mnHair.setEnabled(false);
+		
+		if(titleName.equals("admin")) {
+			mnHair.setEnabled(true);
+		}else if(!titleName.equals("사장")) { //khj 직급별 기능제한
+			mnHair.setVisible(false);
+			mnAdmin.setVisible(false);
+		}else if(titleName.equals("사장")) { //khj 직급별 기능제한
+			mnAdmin.setVisible(false);
 		}
+		
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == itemLogout) {
+			actionPerformedItemLogout(arg0);
+		}
+		if (arg0.getSource() == itemEmp) {
+			actionPerformedItemEmp(arg0);
+		}
+		if (arg0.getSource() == itemAdimin) {
+			actionPerformedItemAdimin(arg0);
+		}
 		if (arg0.getSource() == itemChart) { //차트
 			actionPerformedItemChart(arg0);
 		}
@@ -158,8 +202,49 @@ public class Hair extends JFrame implements ActionListener {
 		validate();
 	}
 	protected void actionPerformedItemChart(ActionEvent arg0) { //차트
-		PolylineBarChart cf = new PolylineBarChart();
+		/*PolylineBarChart cf = new PolylineBarChart();
 		setContentPane(cf);
+		validate();*/
+		this.jpanel01 = new JPanel01();
+		this.jpanel02 = new JPanel02();
+		
+		JTabbedPane jTab = new JTabbedPane();
+		PolylineBarChart cf = new PolylineBarChart();
+		jTab.addTab("헤어서비스별", cf);
+		jTab.addTab("직원별", this.jpanel01);
+		jTab.addTab("기간별", this.jpanel02);
+		
+		setContentPane(jTab);
 		validate();
 	}
+	protected void actionPerformedItemAdimin(ActionEvent arg0) {
+		SettingMain se = new SettingMain();
+		se.setVisible(true);
+	}
+	protected void actionPerformedItemEmp(ActionEvent arg0) {
+		NowEmployee ne = new NowEmployee();
+		ne.setVisible(true);
+	}
+	protected void actionPerformedItemLogout(ActionEvent arg0) { //로그아웃
+		LoginFrame lf = new LoginFrame();
+		lf.setVisible(true);
+		this.dispose();
+	}
+	
+	class JPanel01 extends JPanel{ //직원별 
+		public JPanel01() {
+			super();
+			// TODO Auto-generated constructor stub
+			setLayout(null);
+		}		
+	}
+
+	class JPanel02 extends JPanel{ //기간별
+		public JPanel02() {
+			super();
+			// TODO Auto-generated constructor stub
+			setLayout(null);
+		}		
+	}
+
 }

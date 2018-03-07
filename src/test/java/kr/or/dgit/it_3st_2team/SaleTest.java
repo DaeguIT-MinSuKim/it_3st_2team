@@ -3,6 +3,8 @@ package kr.or.dgit.it_3st_2team;
 
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import kr.or.dgit.it_3st_2team.dto.Sale;
 import kr.or.dgit.it_3st_2team.service.SaleService;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -77,7 +80,7 @@ public class SaleTest {
 	    	}
 
 		}*/
-	@Test
+/*	@Test
 	public void test4SelectCountMonth() {
 		Map<String,Object> map = new HashMap<>();	
 		map.put("sDate","%-01-%");
@@ -86,7 +89,7 @@ public class SaleTest {
 	    for(Integer se : lists) {
 	    	System.out.println(se);
 	    	}
-		}
+		}*/
 
 
 	
@@ -143,4 +146,10 @@ public class SaleTest {
 	    	}
 		}
 */
+	@Test
+	public void test7SelectMonthlyChart() {
+		Map<String,String> map = new HashMap<>();	
+		map.put("xx","2018%");
+		List<Sale> lists = service.selectMonthlyChart(map);
+	}
 }

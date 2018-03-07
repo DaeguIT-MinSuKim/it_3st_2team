@@ -122,4 +122,10 @@ public class SaleService {
 			return sqlSession.selectList(namespace+"selectYearExist");
 		}
 	}
+	//khj
+	public List<Sale> selectMonthlyChart(Map<String,String> map){
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			return sqlSession.selectList(namespace+"selectMonthlyChart",map);
+		}
+	}
 }

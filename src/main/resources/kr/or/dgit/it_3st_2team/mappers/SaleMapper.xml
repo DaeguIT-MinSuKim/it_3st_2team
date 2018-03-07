@@ -176,4 +176,11 @@
 	<select id="selectYearExist" resultType="String">
 		select  sdate from sale group by year(sdate)
 	</select>
+	
+	<!-- khj 180307 -->
+	<select id="selectMonthlyChart" resultMap="saleResult">
+		select date_format(sdate, '%Y-%m') m, sum(sprice) from sale 
+		where sdate like #{xx}
+		group by m;
+	</select>
 </mapper>

@@ -31,6 +31,7 @@ import java.awt.ComponentOrientation;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.border.MatteBorder;
+import javax.swing.JPasswordField;
 
 @SuppressWarnings("serial")
 public class EmployeeJoin extends JFrame implements ActionListener {
@@ -39,9 +40,9 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 	private JTextField tfNo;
 	private JTextField tfName;
 	private JTextField empJoin_day;
-	private JTextField id;
-	private JTextField pw;
-	private JTextField repw;
+	private JTextField tfid;
+	private JPasswordField pw;
+	private JPasswordField repw;
 	private JTextField tfAddr;
 	private JButton findaddr;
 	private JFrame jf;
@@ -182,12 +183,12 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 		Id.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_8.add(Id);
 
-		id = new JTextField();
-		id.setBorder(new MatteBorder(0, 1, 0, 1, (Color) new Color(0, 0, 0)));
-		id.setPreferredSize(new Dimension(10, 21));
-		id.setHorizontalAlignment(SwingConstants.CENTER);
-		id.setColumns(10);
-		panel_8.add(id);
+		tfid = new JTextField();
+		tfid.setBorder(new MatteBorder(0, 1, 0, 1, (Color) new Color(0, 0, 0)));
+		tfid.setPreferredSize(new Dimension(10, 21));
+		tfid.setHorizontalAlignment(SwingConstants.CENTER);
+		tfid.setColumns(10);
+		panel_8.add(tfid);
 
 		ckid = new JButton("중복검사");
 		ckid.addActionListener(this);
@@ -204,7 +205,7 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 		password.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_9.add(password);
 
-		pw = new JTextField();
+		pw = new JPasswordField();
 		pw.setBorder(new MatteBorder(0, 1, 0, 0, (Color) new Color(0, 0, 0)));
 		pw.setPreferredSize(new Dimension(10, 21));
 		pw.setHorizontalAlignment(SwingConstants.CENTER);
@@ -221,7 +222,7 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 		cheackPassword.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_10.add(cheackPassword);
 
-		repw = new JTextField();
+		repw = new JPasswordField();
 		repw.setBorder(new MatteBorder(0, 1, 0, 0, (Color) new Color(0, 0, 0)));
 		repw.setPreferredSize(new Dimension(10, 21));
 		repw.setHorizontalAlignment(SwingConstants.CENTER);
@@ -296,6 +297,10 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 
 	}
 
+	public void setTfAddrValue(String value) {
+		tfAddr.setText(value);
+	}
+
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == ckid) {
 			actionPerformedCkid(e);
@@ -332,7 +337,7 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 
 	private void clear() {
 		tfName.setText("");
-		id.setText("");
+		tfid.setText("");
 		pw.setText("");
 		repw.setText("");
 		tfAddr.setText("");
@@ -347,9 +352,9 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 			tfName.requestFocus();
 			return;
 		}
-		if (id.getText().equals("")) {
+		if (tfid.getText().equals("")) {
 			JOptionPane.showMessageDialog(this, "아이디를 입력해주세요");
-			id.requestFocus();
+			tfid.requestFocus();
 			return;
 		}
 		if (pw.getText().equals("")) {
@@ -357,20 +362,20 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 			pw.requestFocus();
 			return;
 		}
-		
+
 		if (repw.getText().equals("")) {
 			JOptionPane.showMessageDialog(this, "비밀번호를 다시 입력해주세요");
 			repw.requestFocus();
 			return;
-			
+
 		} else if (repw.getText().equals(pw.getText())) {
 			JOptionPane.showMessageDialog(this, "비밀번호가 일치합니다");
-		}else {
+		} else {
 			JOptionPane.showMessageDialog(this, "비밀번호를  확인후 다시 입력해주세요 ");
 		}
 
 		str[1] = tfName.getText();
-		str[4] = id.getText();
+		str[4] = tfid.getText();
 		str[5] = pw.getText();
 		str[6] = repw.getText();
 
@@ -379,6 +384,19 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 		 * str[4],str[6],str[7])); lNow();
 		 */
 	}
+
 	protected void actionPerformedCkid(ActionEvent e) {
+		String id = tfid.getText().trim();
+		List<Employee> list = eservice.selectEmployeeByLoginId();
+
+		for (Employee emp : list) {
+			if (emp.getId().equals(id)) {
+				JOptionPane.showMessageDialog(this, "아이디가 이미 있습니다.");
+				break;	
+			} else {
+				JOptionPane.showMessageDialog(this, "사용가능한 아이디 입니다.");
+				break;
+			}
+		}
 	}
 }

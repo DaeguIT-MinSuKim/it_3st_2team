@@ -61,7 +61,7 @@ public class EmployeeService {
 		int res = -1;
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
 			EmployeeDao employeeDao = sqlSession.getMapper(EmployeeDao.class);
-			res = employeeDao.updateNowEmplyoee(employee);
+			res = employeeDao.updateNowEmplyoee(namespace + "updateNowEmplyoee",employee);
 			sqlSession.commit();
 		}
 		return res;

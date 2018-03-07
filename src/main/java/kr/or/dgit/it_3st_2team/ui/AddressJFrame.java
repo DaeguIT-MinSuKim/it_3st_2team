@@ -183,7 +183,7 @@ public class AddressJFrame extends JFrame implements ActionListener, MouseListen
 		pCenter.setLayout(new BorderLayout(0, 0));
 
 		scrollPane = new JScrollPane();
-		pCenter.add(scrollPane, BorderLayout.SOUTH);
+		pCenter.add(scrollPane, BorderLayout.CENTER);
 
 		table = new JTable();
 		table.addMouseListener(this);
@@ -348,10 +348,12 @@ public class AddressJFrame extends JFrame implements ActionListener, MouseListen
 		if(e.getClass()==CustomerJPanel) {
 			cjpanel.setTfaddr(addr1 + " " + addr2);
 			setVisible(false);
+			return;
 
 		}else {
 			empjoin.setaddr(addr1 + " " + addr2);
 			setVisible(false);
+			return;
 		}
 		
 	}

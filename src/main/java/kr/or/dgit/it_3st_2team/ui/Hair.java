@@ -26,6 +26,7 @@ public class Hair extends JFrame implements ActionListener {
 	private JMenu mnAdmin;
 	private JMenuItem itemAdimin;
 	private JMenuItem itemEmp;
+	private JMenuItem itemLogout;
 
 	/**
 	 * Launch the application.
@@ -69,6 +70,10 @@ public class Hair extends JFrame implements ActionListener {
 		itemHair = new JMenuItem("헤어주문");
 		itemHair.addActionListener(this);
 		mnEmp.add(itemHair);
+		
+		itemLogout = new JMenuItem("로그아웃");
+		itemLogout.addActionListener(this);
+		mnEmp.add(itemLogout);
 		
 		JMenu mnHair = new JMenu("미용실운영");
 		menuBar.add(mnHair);
@@ -134,6 +139,9 @@ public class Hair extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == itemLogout) {
+			actionPerformedItemLogout(arg0);
+		}
 		if (arg0.getSource() == itemEmp) {
 			actionPerformedItemEmp(arg0);
 		}
@@ -202,5 +210,10 @@ public class Hair extends JFrame implements ActionListener {
 	protected void actionPerformedItemEmp(ActionEvent arg0) {
 		NowEmployee ne = new NowEmployee();
 		ne.setVisible(true);
+	}
+	protected void actionPerformedItemLogout(ActionEvent arg0) { //로그아웃
+		LoginFrame lf = new LoginFrame();
+		lf.setVisible(true);
+		this.dispose();
 	}
 }

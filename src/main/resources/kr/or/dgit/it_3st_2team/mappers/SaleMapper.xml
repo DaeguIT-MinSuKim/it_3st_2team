@@ -86,7 +86,7 @@
 			join event n on s.evn_no=n.evn_no
 			join employee m on s.emp_no=m.emp_no
 			join customer c on s.cus_no=c.cus_no
-			order by s.sale_no;
+			order by s.sale_no desc;
 	</select>
 
 

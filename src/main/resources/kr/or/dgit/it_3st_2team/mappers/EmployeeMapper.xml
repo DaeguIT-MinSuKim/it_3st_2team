@@ -136,4 +136,27 @@
 		from employee
 	</select>
 
+	<!-- yyj 03-07 chart emp-->
+	
+	<select id="selectEmpEmpPerformance" resultMap="empNoNameResult">
+		select emp_no,emp_name from employee e where e.e_tf=1
+	</select>
+	
+	<!-- yyj 03-07 chart emp2-->
+	<sql id="SelectPriceSql">
+		select sum(s.sprice) from sale s join employee e on s.emp_no=e.emp_no
+	</sql>
+	
+		<sql id="wherePriceSql">
+		<where>
+			<if test="empNo != null">
+				s.emp_no = #{empNo}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="SelectEmpPrice" resultType="int">
+		<include refid="SelectPriceSql"/>
+		<include refid="wherePriceSql"/>
+	</select>
 </mapper>

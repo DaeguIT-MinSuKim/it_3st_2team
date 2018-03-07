@@ -27,7 +27,7 @@ import kr.or.dgit.it_3st_2team.t.TableSaleReYear;
 import java.awt.event.ActionEvent;
 
 /*yyj*/
-public class ReportSaleFrame extends JFrame implements ActionListener {
+public class ReportSaleJPanel extends JPanel implements ActionListener {
 
 	private JPanel contentPane;
 	private TableSaleReYear tbs;
@@ -42,7 +42,7 @@ public class ReportSaleFrame extends JFrame implements ActionListener {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -53,12 +53,12 @@ public class ReportSaleFrame extends JFrame implements ActionListener {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 */
-	public ReportSaleFrame() {
+	public ReportSaleJPanel() {
 		sservice = new SaleService();
 		tbs= new TableSaleReYear(this);
 		tbmonth = new TableSaleReMonth(this);
@@ -76,12 +76,14 @@ public class ReportSaleFrame extends JFrame implements ActionListener {
 	}
 
 	private void initComponents() {
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 779, 503);
+		
+		setLayout(new BorderLayout(0, 0));
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(null, "\uC601\uC5C5 \uBCF4\uACE0\uC11C", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+		add(contentPane);
+	
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.NORTH);

@@ -86,4 +86,18 @@ public class EmployeeService {
 			return EmployeeDao.selectemployeeoff();
 		}
 	}
+	/*yyj 03-07*/
+	public List<Employee>selectEmpEmpPerformance(){
+		log.debug("selectEmpEmpPerformance()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			return sqlSession.selectList(namespace + "selectEmpEmpPerformance");
+		}
+	}
+	/*yyj 03-07*/
+	public int SelectEmpPrice(Employee emp) {
+		log.debug("SelectEmpPrice()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			return sqlSession.selectOne(namespace + "SelectEmpPrice",emp);
+		}
+	}
 }

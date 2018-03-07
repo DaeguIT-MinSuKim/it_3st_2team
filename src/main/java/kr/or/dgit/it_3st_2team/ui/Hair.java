@@ -205,8 +205,9 @@ public class Hair extends JFrame implements ActionListener {
 		
 		JTabbedPane jTab = new JTabbedPane();
 		PolylineBarChart cf = new PolylineBarChart();
+		EmpChart ec = new EmpChart();
 		jTab.addTab("헤어서비스별", cf);
-		jTab.addTab("직원별", this.jpanel01);
+		jTab.addTab("직원별", ec);
 		jTab.addTab("기간별", this.jpanel02);
 		
 		setContentPane(jTab);

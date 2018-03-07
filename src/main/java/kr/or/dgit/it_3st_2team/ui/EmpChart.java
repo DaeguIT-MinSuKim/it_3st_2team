@@ -33,7 +33,7 @@ public class EmpChart extends JPanel {
 		CategoryPlot plot = chart.getCategoryPlot();
 		plot.getDomainAxis().setLabelFont(new Font("굴림",Font.BOLD,15));
 		final ChartPanel chartPanel = new ChartPanel(chart);
-	//	chartPanel.setPreferredSize(new java.awt.Dimension(700, 500));
+		chartPanel.setPreferredSize(new java.awt.Dimension(900, 700));
 	//	setContentPane(chartPanel);
 		add(chartPanel);
 	}
@@ -51,7 +51,6 @@ public class EmpChart extends JPanel {
 			String name = e.getEmpName();
 			dataset.addValue(p, name, "");
 		}
-	
 		return dataset;
 
 	}

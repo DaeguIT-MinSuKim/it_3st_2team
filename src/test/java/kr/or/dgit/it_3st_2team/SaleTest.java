@@ -3,7 +3,9 @@ package kr.or.dgit.it_3st_2team;
 
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -75,7 +77,7 @@ public class SaleTest {
 	    	}
 
 		}*/
-/*	@Test
+	@Test
 	public void test4SelectCountMonth() {
 		Map<String,Object> map = new HashMap<>();	
 		map.put("sDate","%-01-%");
@@ -85,7 +87,7 @@ public class SaleTest {
 	    	System.out.println(se);
 	    	}
 		}
-*/
+
 
 	
 
@@ -123,15 +125,15 @@ public class SaleTest {
 		service.selectSaleByDate(from, to);
 	}*/
 	
-	@Test
+	/*@Test
 	public void test7SelectSaleByCusNoAndDate(){
 		String cusName ="이연재";
 		String from = "2017-01-01";
 		String to = "2017-12-31";
 		service.selectSaleByCusNoAndDate(cusName, from, to);
 	}
-
-	@Test
+*/
+	/*@Test
 	public void test6SelectYear() {
 		
 	    List<String> lists = service.selectYearExist();
@@ -140,5 +142,5 @@ public class SaleTest {
 	    	System.out.println(se);
 	    	}
 		}
-
+*/
 }

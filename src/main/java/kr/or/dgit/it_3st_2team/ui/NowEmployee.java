@@ -66,8 +66,9 @@ public class NowEmployee extends JFrame implements ActionListener {
 	private JFrame jf;
 	private JTextField e_tf;
 	public JComboBox empfind;
-	public JComboBox hday;
+
 	private Map<String, Integer> map;
+	private JComboBox<String> hday;
 
 	/**
 	 * Launch the application.
@@ -221,23 +222,11 @@ public class NowEmployee extends JFrame implements ActionListener {
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_2.add(label);
 
-		JComboBox hday = new JComboBox();
-		hday.setModel(new DefaultComboBoxModel(new String[] { "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일" }));
+		hday = new JComboBox<>();
+		hday.setModel(
+				new DefaultComboBoxModel<String>(new String[] { "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일" }));
 		System.out.println(hday);
 
-	/*	List<String> eoffday = new ArrayList<>();
-		for (Employee e : elist) {
-			eoffday.add((String) hday.getSelectedItem());
-
-		}
-		map = new HashMap<>();
-		for (Employee e : elist) {
-			map.put(eoffday.toString(), e.geteOff());
-		}
-		for (String key : map.keySet()) {
-			int value = map.get(key);
-			// System.out.println(key+":"+value);
-		}*/
 
 		hday.setMaximumSize(new Dimension(150, 30));
 		hday.setToolTipText("희망휴무요일");
@@ -333,7 +322,7 @@ public class NowEmployee extends JFrame implements ActionListener {
 			empno.setText(table.getValueAt(row, 0).toString());
 			empname.setText(table.getValueAt(row, 1).toString());
 			joindate.setText(table.getValueAt(row, 2).toString());
-			tfaddr.setText(toString().format("%s", table.getValueAt(row, 3)));
+			tfaddr.setText(String.format("%s", table.getValueAt(row, 3)));
 			id.setText(table.getValueAt(row, 4).toString());
 			epassword.setText(table.getValueAt(row, 5).toString());
 
@@ -342,18 +331,26 @@ public class NowEmployee extends JFrame implements ActionListener {
 			empfind.setSelectedIndex(titleNo - 1);
 
 			String eoff = (String) table.getValueAt(row, 7);
-			int eoffNo = map.get(eoff);
-			empfind.setSelectedIndex(eoffNo - 1);
+			System.out.println(eoff);
+			/*int eoffNo = map.get(eoff);
+			empfind.setSelectedIndex(eoffNo - 1);*/
 
-			/*
-			 * if(eoff.equals("월")) { hday.setSelectedIndex(0); }else if (eoff.equals("화"))
-			 * { hday.setSelectedIndex(1); }else if (eoff.equals("수")) {
-			 * hday.setSelectedIndex(2); }else if (eoff.equals("목")) {
-			 * hday.setSelectedIndex(3); }else if (eoff.equals("금")) {
-			 * hday.setSelectedIndex(4); }else if (eoff.equals("토")) {
-			 * hday.setSelectedIndex(5); }else if (eoff.equals("일")) {
-			 * hday.setSelectedIndex(6); } System.out.println(hday);
-			 */
+			if (eoff.equals("월")) {
+				hday.setSelectedIndex(0);
+			} else if (eoff.equals("화")) {
+				hday.setSelectedIndex(1);
+			} else if (eoff.equals("수")) {
+				hday.setSelectedIndex(2);
+			} else if (eoff.equals("목")) {
+				hday.setSelectedIndex(3);
+			} else if (eoff.equals("금")) {
+				hday.setSelectedIndex(4);
+			} else if (eoff.equals("토")) {
+				hday.setSelectedIndex(5);
+			} else if (eoff.equals("일")) {
+				hday.setSelectedIndex(6);
+			}
+			System.out.println(hday);
 
 			e_tf.setText(table.getValueAt(row, 8).toString());
 

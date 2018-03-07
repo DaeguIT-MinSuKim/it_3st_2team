@@ -27,7 +27,7 @@ public class Hair extends JFrame implements ActionListener {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -38,12 +38,12 @@ public class Hair extends JFrame implements ActionListener {
 				}
 			}
 		});
-	}
-
+	}*/ //khj 로그인 성공해야 뜨도록
+	
 	/**
 	 * Create the frame.
 	 */
-	public Hair() {
+	public Hair(String titleName) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 978, 583);
 		
@@ -100,6 +100,10 @@ public class Hair extends JFrame implements ActionListener {
 	//	contentPane.add(cpanel);
 	//	validate();
 		setContentPane(contentPane);
+		
+		if(!titleName.equals("사장")) { //khj 직급별 기능제한
+			mnHair.setEnabled(false);
+		}
 	}
 
 	public void actionPerformed(ActionEvent arg0) {

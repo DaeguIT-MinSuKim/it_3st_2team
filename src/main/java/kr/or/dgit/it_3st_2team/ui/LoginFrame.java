@@ -5,10 +5,14 @@ import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -24,13 +28,10 @@ public class LoginFrame extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 
-	private JTextField textField;
-	private JTextField textField_1;
-	private JButton btnNewButton;
-
 	private JTextField tfId;
-	private JTextField tfPw;
+	private JPasswordField tfPw;
 	private JButton btnLogin;
+	private EmployeeService service;
 
 	/**
 	 * Launch the application.
@@ -52,6 +53,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public LoginFrame() {
+		service = new EmployeeService();
 		initComponents();
 	}
 
@@ -73,25 +75,18 @@ public class LoginFrame extends JFrame implements ActionListener {
 		panel.add(tfId);
 		tfId.setColumns(10);
 
-		tfPw = new JTextField();
-		panel.add(tfPw);
-		tfPw.setColumns(10);
-
-		btnNewButton = new JButton("로그인");
-		btnNewButton.addActionListener(this);
-
 		btnLogin = new JButton("로그인");
 		btnLogin.addActionListener(this);
+		
+		tfPw = new JPasswordField();
+		panel.add(tfPw);
 		panel.add(btnLogin);
 
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.SOUTH);
 
-		JButton btnNewButton_1 = new JButton("회원가입");
-		panel_1.add(btnNewButton_1);
-
-		JButton btnNewButton_2 = new JButton("비밀번호찾기");
-		panel_1.add(btnNewButton_2);
+		JButton btnJoin = new JButton("회원가입");
+		panel_1.add(btnJoin);
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -102,30 +97,33 @@ public class LoginFrame extends JFrame implements ActionListener {
 	}
 
 	protected void actionPerformedBtnNewButton(ActionEvent e) {
-		System.out.println("로그인시도");
 		String id = tfId.getText().trim();
-		String pw = tfPw.getText().trim();
-		Employee employee = new Employee();
-		employee.setId(id);
-		employee.setEpassword(pw);
-
-		EmployeeService service = new EmployeeService();
-
-		Employee searchEmployee = service.selectEmployeeByLoginId(employee);
-		// Assert.assertSame(searchEmployee.getPassword(), employee.getPassword());
-
-		System.out.println("입력:" + employee);
-		System.out.println("DB:" + searchEmployee);
-
-
-		if (employee.getEpassword().equals(searchEmployee.getEpassword())) {
-			System.out.println("로그인 성공");
-
+		char[] pw = tfPw.getPassword();
+		boolean b = false;
+		
+		if(!id.equals("")&&(pw.length!=0)) {
+			List<Employee> list = new ArrayList<>();
+			list = service.selectEmployeeByLoginId();
+			for(Employee emp: list) {
+				if(emp.getId().equals(id)) {
+					b = true;
+					String strPw = new String(pw);
+					if(!strPw.equals(emp.getEpassword())){
+						JOptionPane.showMessageDialog(null, "비밀번호가 틀렸습니다");
+					}else {
+						String titleName = emp.getTitle().getTitleName();
+						Hair hf = new Hair(titleName);
+						hf.setVisible(true);
+						this.dispose();
+					}
+				}
+			}
+			if(b!=true) {
+				JOptionPane.showMessageDialog(null, "존재하지 않은 아이디입니다. 회원가입 해주세요");
+			}
 		}else {
-
-			System.out.println("비밀번호가 틀렸습니다");
-		} 
-
-
+			JOptionPane.showMessageDialog(null, "아이디, 비밀번호를 모두 입력하세요");
+		}
+		
 	}
 }

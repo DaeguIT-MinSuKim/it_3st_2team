@@ -10,7 +10,7 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
-/*import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.CategoryLabelPositions;
@@ -24,7 +24,7 @@ import org.jfree.chart.plot.DatasetRenderingOrder;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.ui.TextAnchor;*/
+import org.jfree.ui.TextAnchor;
 
 import kr.or.dgit.it_3st_2team.dto.Enroll;
 import kr.or.dgit.it_3st_2team.dto.Hair;
@@ -55,16 +55,16 @@ public class PolylineBarChart extends JPanel {
 	 * Create the frame.
 	 */
 	public PolylineBarChart() {
-		/*enrollService = new EnrollService();
+		enrollService = new EnrollService();
 		setLayout(new BorderLayout());
 	
 		JFreeChart chart = this.getChart();
 		
 		ChartPanel cp = new ChartPanel(chart);
-		add(cp);*/
+		add(cp);
 	}
 	
-	/*public JFreeChart getChart() {
+	public JFreeChart getChart() {
 		DefaultCategoryDataset dataset1 = new DefaultCategoryDataset();
 		DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
 		DefaultCategoryDataset dataset3 = new DefaultCategoryDataset();
@@ -133,6 +133,6 @@ public class PolylineBarChart extends JPanel {
 		
 		final JFreeChart chart = new JFreeChart(plot);
 		return chart;
-	}*/
+	}
 
 }

@@ -9,12 +9,8 @@
 		<result property="joinDate" column="join_date" />
 		<result property="addr" column="addr" />
 		<result property="id" column="id" />
-<<<<<<< HEAD
 		<result property="epassword" column="epassword" />
-=======
-		<result property="password" column="epassword" />
 		<result property="eOff" column="eoff" />
->>>>>>> refs/remotes/origin/master
 		<result property="eTf" column="e_tf" />
 	</resultMap>
 

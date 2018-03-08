@@ -3,10 +3,6 @@ package kr.or.dgit.it_3st_2team.dto;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.JComboBox;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-
 public class Employee {
 	private int empNo;
 	private String empName;
@@ -16,15 +12,14 @@ public class Employee {
 	private String epassword;
 	private Title title;
 	private int eOff;
-	private Boolean eTf;
+	private boolean eTf;
 
 	public Employee() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	private Employee(int empNo, String empName, Date joinDate, String addr, String id, String epassword, Title title,
-			int eOff, Boolean eTf) {
+	public Employee(int empNo, String empName, Date joinDate, String addr, String id, String epassword, Title title,
+			int eOff, boolean eTf) {
 		super();
 		this.empNo = empNo;
 		this.empName = empName;
@@ -37,6 +32,7 @@ public class Employee {
 		this.eTf = eTf;
 	}
 
+	
 	public Employee(String id, String password) {
 		super();
 		this.id = id;
@@ -62,15 +58,6 @@ public class Employee {
 	public Employee(int empNo) {
 		super();
 		this.empNo = empNo;
-	}
-
-	public Employee(String string, String string2, String string3, String string4) {
-		// TODO Auto-generated constructor stub
-	}
-
-	public Employee(JTextField tfNo, JTextField tfName, JTextField empJoin_day, JTextField tfid, JTextField tfAddr,
-			JPasswordField pw, JComboBox<String> empfind, JComboBox<String> hday) {
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getEmpNo() {

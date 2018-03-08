@@ -12,6 +12,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +26,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -32,7 +35,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import kr.or.dgit.it_3st_2team.dto.Customer;
 import kr.or.dgit.it_3st_2team.dto.Employee;
+import kr.or.dgit.it_3st_2team.dto.PhoneNumber;
 import kr.or.dgit.it_3st_2team.dto.Title;
 import kr.or.dgit.it_3st_2team.service.EmployeeService;
 import kr.or.dgit.it_3st_2team.service.TitleService;
@@ -47,7 +52,7 @@ public class NowEmployee extends JFrame implements ActionListener {
 	private TextField empname;
 	private TextField joindate;
 	private TextField id;
-	private TextField epassword;
+	private JPasswordField epassword;
 	int row = -1;
 	private EmployeeService eservice;
 	private TitleService tservice;
@@ -55,7 +60,7 @@ public class NowEmployee extends JFrame implements ActionListener {
 	private List<Employee> elist;
 	JComboBox<Title> Jcomtitle;
 
-	private String title[] = { "직책번호", "이름", "입사일", "주소", "아이디", "패스워드", "직책번호", "희망휴무요일", "퇴사유무" };
+	private String title[] = { "직원번호", "이름", "입사일", "주소", "아이디", "패스워드", "직책번호", "희망휴무요일", "퇴사유무" };
 
 	JScrollPane jsp;
 	DefaultTableModel model;
@@ -63,9 +68,8 @@ public class NowEmployee extends JFrame implements ActionListener {
 	private JTextField tfaddr;
 	private JFrame jf;
 	private JTextField e_tf;
-	public JComboBox empfind;
+	public JComboBox<Title> empfind;
 
-	private Map<String, Integer> map;
 	private JComboBox<String> hday;
 
 	/**
@@ -95,7 +99,7 @@ public class NowEmployee extends JFrame implements ActionListener {
 
 	private void initComponents() {
 		setTitle("직원현황");
-		/*yyj 03-07수정 이창만 닫기*/
+		/* yyj 03-07수정 이창만 닫기 */
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1317, 300);
 		contentPane = new JPanel();
@@ -113,9 +117,9 @@ public class NowEmployee extends JFrame implements ActionListener {
 		table = new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
-	
+
 		lNow();
-		
+
 		table.setSelectionBackground(Color.yellow);
 		table.setSelectionForeground(Color.MAGENTA);
 
@@ -177,7 +181,7 @@ public class NowEmployee extends JFrame implements ActionListener {
 		JLabel lblepassword = new JLabel("패스워드");
 		panel_2.add(lblepassword);
 
-		epassword = new TextField(8);
+		epassword = new JPasswordField(8);
 		panel_2.add(epassword);
 
 		JPanel panel_4 = new JPanel();
@@ -187,28 +191,11 @@ public class NowEmployee extends JFrame implements ActionListener {
 		JLabel label_1 = new JLabel("직책");
 		panel_4.add(label_1);
 
-		tlist = tservice.selectTitle2();
-		List<String> titleName = new ArrayList<>();
-		for (Title t : tlist) {
-			titleName.add(t.getTitleName());
-		}
-		map = new HashMap<>();
-		for (Title t : tlist) {
-			map.put(t.getTitleName(), t.getTitleNo());
-		}
-		for (String key : map.keySet()) {
-			int value = map.get(key);
-			// System.out.println(key+":"+value);
-		}
-		// JComboBox<Title> empfind = new JComboBox<Title>();
-		empfind = new JComboBox(titleName.toArray());
-		Title[] items = new Title[tlist.size()];
-		tlist.toArray(items);
+		List<Title> list = tservice.selectTitle();
+		Title[] items = list.toArray(new Title[list.size()]);
+		DefaultComboBoxModel<Title> model = new DefaultComboBoxModel<>(items);
 
-		System.out.println(items);
-
-		// DefaultComboBoxModel<Title> cModel = new DefaultComboBoxModel<>(items);
-
+		empfind = new JComboBox<>(model);
 		empfind.addActionListener(this);
 		empfind.setLocation(new Point(5, 0));
 		empfind.setMaximumSize(new Dimension(80, 30));
@@ -252,11 +239,11 @@ public class NowEmployee extends JFrame implements ActionListener {
 		Object[][] data = getRows(lists);
 
 		model = new DefaultTableModel(data, title) {
-			  public boolean isCellEditable(int rowIndex, int mColIndex) {
-	                return false;
-	            }
+			public boolean isCellEditable(int rowIndex, int mColIndex) {
+				return false;
+			}
 		};
-		
+
 		table.setModel(model);
 	}
 
@@ -286,9 +273,8 @@ public class NowEmployee extends JFrame implements ActionListener {
 
 	private void actionPerformedBtnMod(ActionEvent e) {
 		int row = table.getSelectedRow();
-		String[] str = new String[9];
 		Object ob = e.getSource();
-		boolean emp = (boolean) (table.getValueAt(row, 8));
+		boolean emp2 = (boolean) (table.getValueAt(row, 8));
 		if (row == -1) {
 			JOptionPane.showConfirmDialog(this, "먼저 수정할 행을 선택해주세요", "수정확인", JOptionPane.INFORMATION_MESSAGE);
 
@@ -297,26 +283,63 @@ public class NowEmployee extends JFrame implements ActionListener {
 			int b = JOptionPane.showConfirmDialog(this, "수정하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE);
 			if (b == 0) {
-				str[5] = epassword.getText();
-				str[8] = (String) e_tf.getText();
-
 				Object updateTitlename = table.getValueAt(row, 6);
 				String st = null;
-				for (int i = 0; i < tlist.size(); i++) {
-					st = tlist.get(i).getTitleName();
-					Boolean s = st.equals(updateTitlename);
-					if (s) {
-						empfind.setSelectedIndex(i);
-						return;
-					} else {
-						empfind.setSelectedIndex(0);
-					}
-					lNow();
-				}
-			}
 
+				Employee Emp = modNowEmployee();
+				eservice.updateNowEmployee(Emp);
+				lNow();
+			}
 		}
-		eservice.updateNowEmplyoee(new Employee((str[5]), str[8]));
+
+	}
+
+	private Employee modNowEmployee() {
+
+		int tfno = Integer.parseInt(empno.getText().trim());
+		String tfname = empname.getText();
+
+		Calendar calender = GregorianCalendar.getInstance();
+		String date = joindate.getText();
+		String[] arrDate = date.split("-");
+		int year = Integer.parseInt(arrDate[0]);
+		int month = Integer.parseInt(arrDate[1]);
+		int day = Integer.parseInt(arrDate[2]);
+		calender.set(year, month - 1, day);
+
+		String idw = id.getText();
+		String addr = tfaddr.getText();
+		// String tfpw = pw.getText();
+		char[] pw2 = epassword.getPassword();
+		String strPw = new String(pw2);
+
+		Title selectedEventempch = (Title) empfind.getSelectedItem();
+
+		System.out.println(selectedEventempch);
+		if (hday.equals("월")) {
+			hday.setSelectedIndex(0);
+		} else if (hday.equals("화")) {
+			hday.setSelectedIndex(1);
+		} else if (hday.equals("수")) {
+			hday.setSelectedIndex(2);
+		} else if (hday.equals("목")) {
+			hday.setSelectedIndex(3);
+		} else if (hday.equals("금")) {
+			hday.setSelectedIndex(4);
+		} else if (hday.equals("토")) {
+			hday.setSelectedIndex(5);
+		} else if (hday.equals("일")) {
+			hday.setSelectedIndex(6);
+		}
+
+		int selectedEventhdaych = hday.getSelectedIndex();
+		
+		boolean etf = e_tf.getText() != null;
+
+		Employee Emp = new Employee(tfno, tfname, calender.getTime(), idw, addr, strPw, selectedEventempch,
+				selectedEventhdaych, etf);
+		System.out.println(tfno);
+		return Emp;
 	}
 
 	class TableSelect extends MouseAdapter {
@@ -334,9 +357,14 @@ public class NowEmployee extends JFrame implements ActionListener {
 			id.setText(table.getValueAt(row, 4).toString());
 			epassword.setText(table.getValueAt(row, 5).toString());
 
-			String title = (String) table.getValueAt(row, 6);
-			int titleNo = map.get(title);
-			empfind.setSelectedIndex(titleNo - 1);
+			//empfind = table.getValueAt(row, 6);
+			empfind.setSelectedItem(table.getValueAt(row, 6).toString());  
+			
+			
+		
+					
+			
+			System.out.println(empfind);
 
 			String eoff = (String) table.getValueAt(row, 7);
 			System.out.println(eoff);

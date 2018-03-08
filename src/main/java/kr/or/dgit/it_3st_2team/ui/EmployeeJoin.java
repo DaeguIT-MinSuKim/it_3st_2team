@@ -8,8 +8,12 @@ import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
@@ -25,9 +29,10 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
-import kr.or.dgit.it_3st_2team.dto.Customer;
 import kr.or.dgit.it_3st_2team.dto.Employee;
+import kr.or.dgit.it_3st_2team.dto.Title;
 import kr.or.dgit.it_3st_2team.service.EmployeeService;
+import kr.or.dgit.it_3st_2team.service.TitleService;
 
 @SuppressWarnings("serial")
 public class EmployeeJoin extends JFrame implements ActionListener {
@@ -52,9 +57,12 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 	private int empnameCk = 0;
 	private int pwCk = 0;
 	private int repwCk = 0;
-	private JComboBox<String> empfind;
+	private JComboBox<Title> empfind;
+	private List<Title> tlist;
 	private JComboBox<String> hday;
+	private TitleService tservice;
 
+	
 	/**
 	 * Launch the application.
 	 */
@@ -75,7 +83,7 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public EmployeeJoin() {
-
+		tservice = new TitleService();
 		eservice = new EmployeeService();
 		initComponents();
 	}
@@ -243,14 +251,22 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 		findtitle.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_11.add(findtitle);
 
-		empfind = new JComboBox<>();
+	
+		List<Title>list = tservice.selectTitle();
+		Title[] items = list.toArray(new Title[list.size()]);
+		DefaultComboBoxModel<Title> model = new DefaultComboBoxModel<>(items);
+		empfind = new JComboBox<>(model);
+		empfind.setSelectedIndex(4);
 		empfind.setBorder(new MatteBorder(1, 0, 0, 1, (Color) new Color(0, 0, 0)));
 		empfind.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		empfind.setEnabled(false);
-		empfind.setModel(new DefaultComboBoxModel<String>(new String[] { "인턴" }));
+		//empfind.setModel(new DefaultComboBoxModel<Title>(new Title[] { new Title("인턴") }));
 		empfind.setMaximumSize(new Dimension(80, 30));
 		empfind.setPreferredSize(new Dimension(25, 21));
 		panel_11.add(empfind);
+		
+		
+	
 
 		JPanel panel_14 = new JPanel();
 		panel_14.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -265,7 +281,8 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 
 		hday = new JComboBox<>();
 		hday.setBorder(new MatteBorder(0, 0, 0, 0, (Color) new Color(0, 0, 0)));
-		hday.setModel(new DefaultComboBoxModel<String>(new String[] { "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일" }));
+		hday.setModel(
+				new DefaultComboBoxModel<String>(new String[] { "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일" }));
 		hday.setToolTipText("희망휴무요일");
 		panel_14.add(hday);
 
@@ -348,6 +365,10 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 	}
 
 	protected void actionPerformedBtnJoin(ActionEvent e) {
+		char[] pw2 = pw.getPassword();
+		String strPw = new String(pw2);
+		char[] repw2 = repw.getPassword();
+		String strrePw = new String(repw2);
 		if (tfName.getText().equals("")) {
 			empnameCk = 0;
 			JOptionPane.showMessageDialog(this, "직원명을 입력해주세요");
@@ -364,7 +385,8 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 		} else {
 			idw++;
 		}
-		if (pw.getText().equals("")) {
+		if (strPw.equals("")) {
+
 			pwCk = 0;
 			JOptionPane.showMessageDialog(this, "비밀번호를 입력해주세요");
 			pw.requestFocus();
@@ -373,61 +395,105 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 			pwCk++;
 		}
 
-		if (repw.getText().equals("")) {
+		if (strrePw.equals("")) {
+
 			repwCk = 0;
-			JOptionPane.showMessageDialog(this, "비밀번호를 다시 입력해주세요");
+			JOptionPane.showMessageDialog(this, "비밀번호 확인란을 입력해주세요");
 			repw.requestFocus();
 			return;
 
-		} else if (repw.getText().equals(pw.getText())) {
+		} else if (strrePw.equals(strPw)) {
 			repwCk++;
 			JOptionPane.showMessageDialog(this, "비밀번호가 일치합니다");
-		} else {
+		} else if (strrePw != strPw) {
 			repwCk = 0;
-			JOptionPane.showMessageDialog(this, "비밀번호를  확인후 다시 입력해주세요 ");
+			System.out.println(repw);
+			JOptionPane.showMessageDialog(this, "비밀번호가 다릅니다  확인후 다시 입력해주세요 ");
+			return;
 		}
 		if (idCk == 0) {
 			JOptionPane.showMessageDialog(this, "아이디 중복을 확인 하십시오. ");
+			return;
 		} else if (idCk != 0 && idw == 0) {
 			JOptionPane.showMessageDialog(this, "아이디를 입력하십시오.");
+			return;
 		} else if (idCk != 0 && idw != 0 && empnameCk == 0) {
 			JOptionPane.showMessageDialog(this, "직원명을 입력하십시오.");
+			return;
 		} else if (idCk != 0 && idw != 0 && empnameCk != 0 && pwCk == 0) {
 			JOptionPane.showMessageDialog(this, "비밀번호를 입력하십시오.");
+			return;
 		} else if (idCk != 0 && idw != 0 && empnameCk != 0 && pwCk != 0 && repwCk == 0) {
-			JOptionPane.showMessageDialog(this, "비밀번호확인을 입력하십시오.");
+			JOptionPane.showMessageDialog(this, "비밀번호 확인을 입력하십시오.");
+			return;
 		} else if (idCk != 0 && idw != 0 && empnameCk != 0 && pwCk != 0 && repwCk != 0) {
 			JOptionPane.showMessageDialog(this, "회원가입이 성공적으로 완료 되었습니다.");
 
 			Employee Emp = addEmployee();
-			eservice.InsertEmployee(Emp);
+			eservice.insertEmployee(Emp);
+			
+			System.out.println(empfind);
 		}
 	}
 
 	private Employee addEmployee() {
-		String[] str = new String[9];
+		int tfno = Integer.parseInt(tfNo.getText().trim());
+		String tfname = tfName.getText();
 
-		str[0] = tfNo.getText();
-		str[1] = tfName.getText();
-		str[2] = empJoin_day.getText();
-		str[4] = tfid.getText();
-		str[3] = tfAddr.getText();
-		str[5] = pw.getText();
-		str[6] = repw.getText();
-		str[7] = (String) empfind.getSelectedItem();
-		str[8] = (String) hday.getSelectedItem();
+		Calendar calender = GregorianCalendar.getInstance();
+		String date = empJoin_day.getText();
+		String[] arrDate = date.split("-");
+		int year = Integer.parseInt(arrDate[0]);
+		int month = Integer.parseInt(arrDate[1]);
+		int day = Integer.parseInt(arrDate[2]);
+		calender.set(year, month - 1, day);
 
-		Employee Emp = new Employee (tfNo,tfName,empJoin_day,tfid,tfAddr,pw,empfind,hday);	
+		String id = tfid.getText();
+		String addr = tfAddr.getText();
+		// String tfpw = pw.getText();
+		char[] pw2 = pw.getPassword();
+		String strPw = new String(pw2);
+		// String tfrepw = repw.getText();
+		
+		Title selectedEventempch = (Title) empfind.getSelectedItem();
+
+		
+		System.out.println(selectedEventempch);
+		if (hday.equals("월")) {
+			hday.setSelectedIndex(0);
+		} else if (hday.equals("화")) {
+			hday.setSelectedIndex(1);
+		} else if (hday.equals("수")) {
+			hday.setSelectedIndex(2);
+		} else if (hday.equals("목")) {
+			hday.setSelectedIndex(3);
+		} else if (hday.equals("금")) {
+			hday.setSelectedIndex(4);
+		} else if (hday.equals("토")) {
+			hday.setSelectedIndex(5);
+		} else if (hday.equals("일")) {
+			hday.setSelectedIndex(6);
+		}
+
+		int selectedEventhdaych = hday.getSelectedIndex();
+
+		Employee Emp = new Employee(tfno, tfname, calender.getTime(), id, addr, strPw,selectedEventempch,
+				selectedEventhdaych, true);
+		System.out.println(tfno);
 		return Emp;
 	}
 
 	// 아이디 중복확인 검사
 	protected void actionPerformedCkid(ActionEvent check) {
 		String id = tfid.getText().trim();
-		List<Employee> list = eservice.selectEmployeeByLoginId();
+		List<Employee> list = eservice.selectEmployeeByid();
 		for (Employee emp : list) {
 			if (emp.getId().equals(id)) {
 				JOptionPane.showMessageDialog(this, "아이디가 이미 있습니다.");
+				idCk = 0;
+				break;
+			} else if (id.equals("")) {
+				JOptionPane.showMessageDialog(this, "아이디를 입력하세요.");
 				idCk = 0;
 				break;
 			} else {

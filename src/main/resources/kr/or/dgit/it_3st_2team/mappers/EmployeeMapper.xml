@@ -72,7 +72,7 @@
 		<include refid="whereeTfSql"></include>
 	</select>
 
- 	<resultMap id="employeeResultAddTitle" type="Employee"
+	<resultMap id="employeeResultAddTitle" type="Employee"
 		extends="employeeResult">
 		<association property="titleNo"
 			resultMap="kr.or.dgit.it_3st_2team.dao.TitleDao.TitleResult" />
@@ -82,27 +82,29 @@
 	<select id="selectEmployeeByLoginId" resultMap="EmployeeAddTitle">
 		<!-- select id, epassword, title_no from employee -->
 		select id, epassword, t.title_name from employee e
-		left join title t on e.title_no=t.title_no
+		left join title t on
+		e.title_no=t.title_no
 	</select>
-	
+
 	<select id="selectAllEmployee" resultType="Employee">
 		select emp_no,
 		emp_name from employee;
 	</select>
-	
+
 	<!--bjh -->
 
-	<sql id="EmployeeTfSql">
+	<sql id="EmployeeEmpnoSql">
 		<where>
-			<if test="eTf == 0">
-				e_tf = #{eTf}
+			<if test="empNo != null">
+				emp_no = #{empNo}
 			</if>
+			
 		</where>
 	</sql>
 
 
 	<select id="selecteNowEmplyoee" parameterType="Employee"
-		resultMap="employeeResultAddTitle" >
+		resultMap="employeeResultAddTitle">
 		select emp_no ,
 		emp_name,join_date,addr,id,epassword,t.title_name,eoff,e_tf
 		from
@@ -113,15 +115,22 @@
 
 
 	<!--bjh -->
-	<update id="updateNowEmplyoee" parameterType="Employee">
-	update Employee
-	<set>
-			<if test="password !=null">epassword=#{epassword},</if>
-			<if test="titleName !=null">title_Name=#{titleName},</if>
-			<if test="eOff !=null">e_off=#{eOff},</if>
+
+	<select id="selectEmployeeByid" resultMap="EmployeeAddTitle">
+		<!-- select id, epassword, title_no from employee -->
+		select id from employee
+	</select>
+
+
+	<update id="updateNowEmployee" parameterType="Employee">
+		update Employee
+		<set>
+			<if test="epassword !=null">epassword=#{epassword},</if>
+			<if test="title !=null">title_no=#{title.titleNo},</if>
+			<if test="eOff !=null">eoff=#{eOff},</if>
 			<if test="eTf !=null">e_tf=#{eTf},</if>
 		</set>
-	<include refid="whereeTfSql"></include>
+		<include refid="EmployeeEmpnoSql"></include>
 	</update>
 
 	<sql id="EmployeeSizeNoSql">
@@ -131,18 +140,19 @@
 	<select id="EmployeeSizeNo" resultType="int">
 		<include refid="EmployeeSizeNoSql"></include>
 	</select>
-	
-	<select id="selectemployeeoff" resultMap="EmployeeAddTitle">
-		select eoff
-		from employee
-	</select>
 
-	<sql id= "InsertEmployeeSql">
-		insert into employee(emp_no,emp_name,join_date,addr,id,epassword,eoff,e_tf)
-		values(#{empNo,#{empName},#{joinDate},#{addr},#{id},#{epassword},#{eOff},#{eTf})
+	<select id="selectemployeeoff" resultMap="EmployeeAddTitle">
+		select e.eoff
+		from
+		employee
+	</select>
+	<sql id="InsertEmployeeSql">
+		insert into
+		employee(emp_no,emp_name,join_date,addr,id,epassword,title_no,eoff,e_tf)
+		values(#{empNo},#{empName},#{joinDate},#{addr},#{id},#{epassword},#{title.titleNo},#{eOff},#{eTf})
 	</sql>
-	
-	<insert id="InsertEmployee" parameterType="Employee">
+
+	<insert id="insertEmployee" parameterType="Employee">
 		<include refid="InsertEmployeeSql"></include>
 	</insert>
 

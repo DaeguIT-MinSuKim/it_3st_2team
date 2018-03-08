@@ -21,8 +21,13 @@ public interface EmployeeDao {
 
 	List<Employee> selectemployeeoff();
 
-	Object InsertEmployee(String string);
 
-	Object updateNowEmplyoee(String string);
+	List<Employee> selectEmployeeByid(String string);
+
+	int insertEmployee(Employee emp);
+
+	int updateNowEmployee(Employee emp);
+	
+
 	
 }

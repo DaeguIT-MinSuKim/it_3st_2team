@@ -74,24 +74,36 @@ public class EmployeeService {
 		}
 	}
 
-	public Object updateNowEmplyoee(Employee employee) {
-		log.debug("updateNowEmplyoee()");
+	public List<Employee> selectEmployeeByid() {
+		log.debug("selectEmployeeByid()");
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
 			EmployeeDao EmployeeDao = sqlSession.getMapper(EmployeeDao.class);
 			sqlSession.commit();
-			return EmployeeDao.updateNowEmplyoee(namespace + "updateNowEmplyoee");
+			return EmployeeDao.selectEmployeeByid(namespace + "selectEmployeeByid");
 		}
 
 	}
 
-	public Object InsertEmployee(Employee emp) {
-		log.debug("updateNowEmplyoee()");
+	public int insertEmployee(Employee emp) {
+		log.debug("insertEmployee()");
+		int res = -1;
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
 			EmployeeDao EmployeeDao = sqlSession.getMapper(EmployeeDao.class);
+			res = EmployeeDao.insertEmployee(emp);
 			sqlSession.commit();
-			return EmployeeDao.InsertEmployee(namespace + "InsertEmployee");
 		}
-		
+		return res;
+	}
+
+	public int updateNowEmployee(Employee emp) {
+		log.debug("updateNowEmployee()");
+		int res = -1;
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			EmployeeDao EmployeeDao = sqlSession.getMapper(EmployeeDao.class);
+			res = EmployeeDao.updateNowEmployee(emp);
+			sqlSession.commit();
+		}
+		return res;
 	}
 
 }

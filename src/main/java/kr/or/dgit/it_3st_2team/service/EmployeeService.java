@@ -7,9 +7,7 @@ import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 
 import kr.or.dgit.it_3st_2team.dao.EmployeeDao;
-import kr.or.dgit.it_3st_2team.dao.TitleDao;
 import kr.or.dgit.it_3st_2team.dto.Employee;
-import kr.or.dgit.it_3st_2team.dto.Title;
 import kr.or.dgit.it_3st_2team.util.MyBatisSqlSessionFactory;
 
 public class EmployeeService {
@@ -106,4 +104,19 @@ public class EmployeeService {
 		return res;
 	}
 
+	/* yyj 03-07 */
+	public List<Employee> selectEmpEmpPerformance() {
+		log.debug("selectEmpEmpPerformance()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			return sqlSession.selectList(namespace + "selectEmpEmpPerformance");
+		}
+	}
+
+	/* yyj 03-07 */
+	public int SelectEmpPrice(Employee emp) {
+		log.debug("SelectEmpPrice()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			return sqlSession.selectOne(namespace + "SelectEmpPrice", emp);
+		}
+	}
 }

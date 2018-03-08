@@ -20,6 +20,12 @@ public interface EmployeeDao {
 	int EmployeeSizeNo();
 
 	List<Employee> selectemployeeoff();
+	
+	
+	/*yyj 03-07 직원성과*/
+	List<Employee>selectEmpEmpPerformance();
+	/*yyj 03-07 직원성과*/
+	int SelectEmpPrice(Employee emp);
 
 
 	List<Employee> selectEmployeeByid(String string);

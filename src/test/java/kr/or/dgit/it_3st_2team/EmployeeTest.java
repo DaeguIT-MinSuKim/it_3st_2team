@@ -66,5 +66,49 @@ public class EmployeeTest {
 	 * int re =service.insertEmployee(employee); assertEquals(1, re); }
 	 */
 
+	/*
+	 * @Test public void test1SelectAllEmployee() { List<Employee> listStd =
+	 * service.selectAllEmployee(); Assert.assertNotNull(listStd); for (Employee cs
+	 * : listStd) { System.out.println(cs); } }
+	 */
 
+	/*
+	 * @Test public void selectTitleName(){ List<Employee> listStd =
+	 * service.selectEmployeeAddTitle(); Assert.assertNotNull(listStd); for
+	 * (Employee cs : listStd) { System.out.println(cs); } }
+	 */
+
+	/*
+	 * @Test public void test2SelectempNo() { Employee emp = new Employee("이창준");
+	 * int no = service.selectEmpNo(emp); }
+	 */
+
+	@Test
+	public void test3SelectEmployeeByLoginId() {
+		List<Employee> list = new ArrayList<>();
+		list = service.selectEmployeeByLoginId();
+		String testId = "idmaster";
+		boolean b = false;
+		for (Employee e : list) {
+			if (e.getId().equals(testId)) {
+				b = true;
+				System.out.println("직급:" + e.getTitle().getTitleName());
+			}
+		}
+		if (b != true) {
+			System.out.println("존재하지 않은 아이디입니다. 회원가입 해주세요");
+		}
+	}
+
+	@Test
+	public void test4SelectEmpEmpPerformance() {
+		List<Employee> list = new ArrayList<>();
+		list = service.selectEmpEmpPerformance();
+		for (Employee e : list) {
+			Employee ee = new Employee();
+			ee.setEmpNo(e.getEmpNo());
+			int p = service.SelectEmpPrice(ee);
+			System.out.println(p);
+		}
+	}
 }

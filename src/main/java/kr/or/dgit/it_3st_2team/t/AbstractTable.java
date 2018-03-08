@@ -56,6 +56,7 @@ public abstract class AbstractTable<T> extends JPanel {
 	public void loadDatas(List<T> list) {
 		NonEditableModel model = new NonEditableModel(getRows(list), getColumNames());
 		table.setModel(model);
+		table.setRowHeight(20);
 		setAlignWidth();
 	}
 

@@ -9,15 +9,15 @@ import javax.swing.SwingConstants;
 
 import kr.or.dgit.it_3st_2team.dto.Sale;
 import kr.or.dgit.it_3st_2team.service.SaleService;
-import kr.or.dgit.it_3st_2team.ui.ReportSaleFrame;
+import kr.or.dgit.it_3st_2team.ui.ReportSaleJPanel;
 
 public class TableSaleReYear extends AbstractTable<Sale> {
 	private SaleService sservice = new SaleService();
-	private ReportSaleFrame resaleframe;
+	private ReportSaleJPanel resaleframe;
 	
 	public TableSaleReYear() {
 	}
-	public TableSaleReYear(ReportSaleFrame resale) {
+	public TableSaleReYear(ReportSaleJPanel resale) {
 		resaleframe=resale;
 	}
 	@Override

@@ -97,7 +97,7 @@ public class ReportSaleJPanel extends JPanel implements ActionListener {
 		panel_1.add(panel_2, BorderLayout.NORTH);
 		
 		JLabel lblNewLabel = new JLabel("영업 현황 보고서");
-		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 21));
+		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 25));
 		panel_2.add(lblNewLabel);
 		
 		JPanel panel_3 = new JPanel();
@@ -147,6 +147,7 @@ public class ReportSaleJPanel extends JPanel implements ActionListener {
 		List<Sale> saletable= sservice.selectReportAll();
 		tball.loadDatas(saletable);
 		tball.getRows(saletable);
+		
 		pCenter.setLayout(new BorderLayout(0, 0));	
 		pCenter.add(tball);
 	}
@@ -155,6 +156,7 @@ public class ReportSaleJPanel extends JPanel implements ActionListener {
 		
 		List<Sale> saletable= sservice.selectReportYear(map);
 		tbs.loadDatas(saletable);
+		
 		tbs.getRows(saletable);
 		pCenter.setLayout(new BorderLayout(0, 0));	
 		pCenter.add(tbs);

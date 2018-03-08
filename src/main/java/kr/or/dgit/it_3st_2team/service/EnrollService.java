@@ -7,8 +7,6 @@ import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 
 import kr.or.dgit.it_3st_2team.dto.Enroll;
-import kr.or.dgit.it_3st_2team.dto.Hair;
-import kr.or.dgit.it_3st_2team.dto.Sale;
 import kr.or.dgit.it_3st_2team.util.MyBatisSqlSessionFactory;
 
 public class EnrollService {

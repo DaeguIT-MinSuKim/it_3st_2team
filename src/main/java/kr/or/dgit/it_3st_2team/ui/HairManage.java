@@ -35,9 +35,9 @@ import kr.or.dgit.it_3st_2team.service.HairService;
 import kr.or.dgit.it_3st_2team.service.TitleService;
 
 @SuppressWarnings("serial")
-public class HairManage extends JFrame implements ActionListener {
+public class HairManage extends JPanel implements ActionListener {
 
-	private JPanel EventManage;
+	private JPanel HairManage;
 	private JTextField HairNo;
 	private JTextField HairName;
 	private JTextField Price;
@@ -52,25 +52,7 @@ public class HairManage extends JFrame implements ActionListener {
 	JScrollPane jsp;
 	DefaultTableModel model;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					HairManage frame = new HairManage();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the frame.
-	 */
 	public HairManage() {
 		hservice = new HairService();
 		initComponents();
@@ -78,17 +60,18 @@ public class HairManage extends JFrame implements ActionListener {
 	}
 
 	private void initComponents() {
-		setTitle("헤어등록");
+		//setTitle("헤어등록");
 		/*yyj 03-07수정 이창만 닫기*/
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 406, 374);
-		EventManage = new JPanel();
-		EventManage.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(EventManage);
-		EventManage.setLayout(new BorderLayout(0, 0));
+		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100,  511,583);
+		HairManage = new JPanel();
+		HairManage.setBorder(new EmptyBorder(5, 5, 5, 5));
+		//setContentPane(HairManage);
+		add(HairManage);
+		HairManage.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();
-		EventManage.add(panel, BorderLayout.CENTER);
+		HairManage.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
 
 		JPanel panel_5 = new JPanel();
@@ -169,7 +152,7 @@ public class HairManage extends JFrame implements ActionListener {
 		table.addMouseListener(new TableSelect());
 
 		JPanel panel_1 = new JPanel();
-		EventManage.add(panel_1, BorderLayout.SOUTH);
+		HairManage.add(panel_1, BorderLayout.SOUTH);
 		panel_1.setLayout(new GridLayout(0, 2, 0, 0));
 
 		JPanel panel_2 = new JPanel();
@@ -192,7 +175,7 @@ public class HairManage extends JFrame implements ActionListener {
 		panel_4.add(btnMod);
 
 		JPanel panel_3 = new JPanel();
-		EventManage.add(panel_3, BorderLayout.NORTH);
+		HairManage.add(panel_3, BorderLayout.NORTH);
 		panel_3.setLayout(new BoxLayout(panel_3, BoxLayout.X_AXIS));
 	}
 

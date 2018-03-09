@@ -38,7 +38,7 @@ import java.awt.Component;
 import java.awt.Point;
 
 @SuppressWarnings("serial")
-public class EventManage extends JFrame implements ActionListener {
+public class EventManage extends JPanel implements ActionListener {
 
 	private JPanel EventManage;
 	private JTextField eventNo;
@@ -80,13 +80,15 @@ public class EventManage extends JFrame implements ActionListener {
 	}
 
 	private void initComponents() {
-		setTitle("이벤트등록");
+		setLayout(new BorderLayout(0, 0));
+		//setTitle("이벤트등록");
 		/*yyj 03-07수정 이창만 닫기*/
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 406, 374);
+		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100,  385, 300);
 		EventManage = new JPanel();
 		EventManage.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(EventManage);
+		//setContentPane(EventManage);
+		add(EventManage);
 		EventManage.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();

@@ -27,10 +27,10 @@ import kr.or.dgit.it_3st_2team.dto.Title;
 import kr.or.dgit.it_3st_2team.service.TitleService;
 
 @SuppressWarnings("serial")
-public class TitleManage extends JFrame implements ActionListener {
+public class TitleManage extends JPanel implements ActionListener {
 
 	private static final AbstractButton tftitleno = null;
-	private JPanel contentPane;
+	private JPanel TitleManage;
 	private JTable table;
 	private TextField Titleno;
 	private TextField Titlename;
@@ -71,17 +71,18 @@ public class TitleManage extends JFrame implements ActionListener {
 	}
 
 	private void initComponents() {
-		setTitle("직책등록");
+		//setTitle("직책등록");
 		/*yyj 03-07수정 이창만 닫기*/
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 385, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		TitleManage = new JPanel();
+		TitleManage.setBorder(new EmptyBorder(5, 5, 5, 5));
+		//setContentPane(contentPane);
+		add(TitleManage);
+		TitleManage.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.CENTER);
+		TitleManage.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -99,7 +100,7 @@ public class TitleManage extends JFrame implements ActionListener {
 		table.addMouseListener(new TableSelect());
 
 		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, BorderLayout.NORTH);
+		TitleManage.add(panel_1, BorderLayout.NORTH);
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JPanel panel_2 = new JPanel();
@@ -118,7 +119,7 @@ public class TitleManage extends JFrame implements ActionListener {
 		panel_2.add(Titlename);
 
 		JPanel pBottom = new JPanel();
-		contentPane.add(pBottom, BorderLayout.SOUTH);
+		TitleManage.add(pBottom, BorderLayout.SOUTH);
 
 		btnAdd = new JButton("추가");
 		btnAdd.addActionListener(this);

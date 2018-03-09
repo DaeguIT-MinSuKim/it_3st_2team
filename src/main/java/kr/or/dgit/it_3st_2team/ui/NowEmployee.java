@@ -43,10 +43,10 @@ import kr.or.dgit.it_3st_2team.service.EmployeeService;
 import kr.or.dgit.it_3st_2team.service.TitleService;
 
 @SuppressWarnings("serial")
-public class NowEmployee extends JFrame implements ActionListener {
+public class NowEmployee extends JPanel implements ActionListener {
 
 	private AbstractButton tftitleno = null;
-	private JPanel contentPane;
+	private JPanel NowEmployee;
 	private JTable table;
 	private TextField empno;
 	private TextField empname;
@@ -98,17 +98,18 @@ public class NowEmployee extends JFrame implements ActionListener {
 	}
 
 	private void initComponents() {
-		setTitle("직원현황");
+		//setTitle("직원현황");
 		/* yyj 03-07수정 이창만 닫기 */
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1317, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		NowEmployee = new JPanel();
+		NowEmployee.setBorder(new EmptyBorder(5, 5, 5, 5));
+		//setContentPane(contentPane);
+		add(NowEmployee);
+		NowEmployee.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.CENTER);
+		NowEmployee.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -126,7 +127,7 @@ public class NowEmployee extends JFrame implements ActionListener {
 		table.addMouseListener(new TableSelect());
 
 		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, BorderLayout.NORTH);
+		NowEmployee.add(panel_1, BorderLayout.NORTH);
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JPanel panel_2 = new JPanel();
@@ -225,7 +226,7 @@ public class NowEmployee extends JFrame implements ActionListener {
 		e_tf.setColumns(5);
 
 		JPanel pBottom = new JPanel();
-		contentPane.add(pBottom, BorderLayout.SOUTH);
+		NowEmployee.add(pBottom, BorderLayout.SOUTH);
 
 		btnMod = new JButton("수정");
 		btnMod.addActionListener(this);

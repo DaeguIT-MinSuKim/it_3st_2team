@@ -3,6 +3,7 @@ package kr.or.dgit.it_3st_2team.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -63,7 +64,7 @@ public class HairManage extends JPanel implements ActionListener {
 		//setTitle("헤어등록");
 		/*yyj 03-07수정 이창만 닫기*/
 		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100,  511,583);
+		setBounds(100, 100,  366,351);
 		HairManage = new JPanel();
 		HairManage.setBorder(new EmptyBorder(5, 5, 5, 5));
 		//setContentPane(HairManage);
@@ -83,6 +84,7 @@ public class HairManage extends JPanel implements ActionListener {
 		panel_6.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_8 = new JPanel();
+		panel_8.setPreferredSize(new Dimension(200,40));
 		FlowLayout flowLayout = (FlowLayout) panel_8.getLayout();
 		panel_6.add(panel_8, BorderLayout.CENTER);
 
@@ -138,6 +140,7 @@ public class HairManage extends JPanel implements ActionListener {
 		panel_7.setLayout(new GridLayout(0, 3, 0, 0));
 
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setPreferredSize(new Dimension(250,150));
 		panel.add(scrollPane);
 
 		table = new JTable();

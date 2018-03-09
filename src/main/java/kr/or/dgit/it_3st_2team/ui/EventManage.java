@@ -86,6 +86,7 @@ public class EventManage extends JPanel implements ActionListener {
 		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100,  385, 300);
 		EventManage = new JPanel();
+		EventManage.setPreferredSize(new Dimension(200,100));
 		EventManage.setBorder(new EmptyBorder(5, 5, 5, 5));
 		//setContentPane(EventManage);
 		add(EventManage);
@@ -104,6 +105,7 @@ public class EventManage extends JPanel implements ActionListener {
 		panel_6.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_8 = new JPanel();
+		panel_8.setPreferredSize(new Dimension(200,100));
 		FlowLayout flowLayout = (FlowLayout) panel_8.getLayout();
 		panel_6.add(panel_8, BorderLayout.CENTER);
 
@@ -159,6 +161,7 @@ public class EventManage extends JPanel implements ActionListener {
 		panel_7.setLayout(new GridLayout(0, 3, 0, 0));
 
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setPreferredSize(new Dimension(200,100));
 		panel.add(scrollPane);
 
 		table = new JTable();

@@ -101,7 +101,7 @@ public class NowEmployee extends JPanel implements ActionListener {
 		//setTitle("직원현황");
 		/* yyj 03-07수정 이창만 닫기 */
 		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1317, 300);
+		setBounds(100, 100, 1350, 258);
 		NowEmployee = new JPanel();
 		NowEmployee.setBorder(new EmptyBorder(5, 5, 5, 5));
 		//setContentPane(contentPane);
@@ -113,6 +113,7 @@ public class NowEmployee extends JPanel implements ActionListener {
 		panel.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setPreferredSize(new Dimension(370,150));
 		panel.add(scrollPane, BorderLayout.CENTER);
 
 		table = new JTable();

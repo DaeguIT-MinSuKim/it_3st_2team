@@ -2,6 +2,7 @@ package kr.or.dgit.it_3st_2team.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.TextField;
@@ -25,6 +26,7 @@ import javax.swing.table.DefaultTableModel;
 
 import kr.or.dgit.it_3st_2team.dto.Title;
 import kr.or.dgit.it_3st_2team.service.TitleService;
+import java.awt.Component;
 
 @SuppressWarnings("serial")
 public class TitleManage extends JPanel implements ActionListener {
@@ -74,7 +76,7 @@ public class TitleManage extends JPanel implements ActionListener {
 		//setTitle("직책등록");
 		/*yyj 03-07수정 이창만 닫기*/
 		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 385, 300);
+		setBounds(100, 100, 313, 225);
 		TitleManage = new JPanel();
 		TitleManage.setBorder(new EmptyBorder(5, 5, 5, 5));
 		//setContentPane(contentPane);
@@ -86,6 +88,7 @@ public class TitleManage extends JPanel implements ActionListener {
 		panel.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setPreferredSize(new Dimension(250,100));
 		panel.add(scrollPane, BorderLayout.CENTER);
 
 		table = new JTable();
@@ -104,6 +107,9 @@ public class TitleManage extends JPanel implements ActionListener {
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JPanel panel_2 = new JPanel();
+		panel_2.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		FlowLayout flowLayout = (FlowLayout) panel_2.getLayout();
+		flowLayout.setHgap(3);
 		panel_1.add(panel_2);
 
 		JLabel lbltitleno = new JLabel("직책번호");

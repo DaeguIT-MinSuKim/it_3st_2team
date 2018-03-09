@@ -162,7 +162,7 @@ public class Employee {
 
 	public Object[] toArray() {
 		String Sdf = new SimpleDateFormat("yyyy-mm-dd").format(joinDate);
-		return new Object[] { empNo, empName, Sdf, addr, id, epassword, title.getTitleName(), getEOffToString(), eTf };
+		return new Object[] { empNo, empName, Sdf, addr, id, title.getTitleName(), getEOffToString(), eTf };
 	}
 
 	// khj 180306

@@ -106,7 +106,7 @@
 	<select id="selecteNowEmplyoee" parameterType="Employee"
 		resultMap="employeeResultAddTitle">
 		select emp_no ,
-		emp_name,join_date,addr,id,epassword,t.title_name,eoff,e_tf
+		emp_name,join_date,addr,id,t.title_name,eoff,e_tf
 		from
 		employee e join
 		Title t

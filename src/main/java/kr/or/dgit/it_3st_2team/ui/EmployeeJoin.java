@@ -432,6 +432,10 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 			Employee Emp = addEmployee();
 			eservice.insertEmployee(Emp);
 			
+			LoginFrame lf = new LoginFrame();
+			lf.setVisible(true);
+			this.dispose();
+			
 			System.out.println(empfind);
 		}
 	}

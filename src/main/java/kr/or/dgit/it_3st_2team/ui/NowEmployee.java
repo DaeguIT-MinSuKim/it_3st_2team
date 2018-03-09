@@ -60,7 +60,7 @@ public class NowEmployee extends JFrame implements ActionListener {
 	private List<Employee> elist;
 	JComboBox<Title> Jcomtitle;
 
-	private String title[] = { "직원번호", "이름", "입사일", "주소", "아이디", "패스워드", "직책번호", "희망휴무요일", "퇴사유무" };
+	private String title[] = { "직원번호", "이름", "입사일", "주소", "아이디", "직책번호", "희망휴무요일", "퇴사유무" };
 
 	JScrollPane jsp;
 	DefaultTableModel model;
@@ -274,7 +274,7 @@ public class NowEmployee extends JFrame implements ActionListener {
 	private void actionPerformedBtnMod(ActionEvent e) {
 		int row = table.getSelectedRow();
 		Object ob = e.getSource();
-		boolean emp2 = (boolean) (table.getValueAt(row, 8));
+		boolean emp2 = (boolean) (table.getValueAt(row, 7));
 		if (row == -1) {
 			JOptionPane.showConfirmDialog(this, "먼저 수정할 행을 선택해주세요", "수정확인", JOptionPane.INFORMATION_MESSAGE);
 
@@ -283,8 +283,9 @@ public class NowEmployee extends JFrame implements ActionListener {
 			int b = JOptionPane.showConfirmDialog(this, "수정하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE);
 			if (b == 0) {
-				Object updateTitlename = table.getValueAt(row, 6);
-				String st = null;
+				/*
+				 * Object updateTitlename = table.getValueAt(row, 6); String st = null;
+				 */
 
 				Employee Emp = modNowEmployee();
 				eservice.updateNowEmployee(Emp);
@@ -312,6 +313,10 @@ public class NowEmployee extends JFrame implements ActionListener {
 		// String tfpw = pw.getText();
 		char[] pw2 = epassword.getPassword();
 		String strPw = new String(pw2);
+		if(strPw.equals("")) {
+			strPw = null;
+		}
+		
 
 		Title selectedEventempch = (Title) empfind.getSelectedItem();
 
@@ -333,13 +338,20 @@ public class NowEmployee extends JFrame implements ActionListener {
 		}
 
 		int selectedEventhdaych = hday.getSelectedIndex();
-		
-		boolean etf = e_tf.getText() != null;
+
+		boolean etf = false;
+		if (e_tf.getText().equals("true")||e_tf.getText().equals("1")) {
+			etf = true;
+		} else if (e_tf.getText().equals("false")||e_tf.getText().equals("0")) {
+			etf = false;
+		}
+		// System.out.println(e_tf);
+		System.out.println(etf);
 
 		Employee Emp = new Employee(tfno, tfname, calender.getTime(), idw, addr, strPw, selectedEventempch,
 				selectedEventhdaych, etf);
-		System.out.println(tfno);
 		return Emp;
+
 	}
 
 	class TableSelect extends MouseAdapter {
@@ -355,18 +367,14 @@ public class NowEmployee extends JFrame implements ActionListener {
 			joindate.setText(table.getValueAt(row, 2).toString());
 			tfaddr.setText(String.format("%s", table.getValueAt(row, 3)));
 			id.setText(table.getValueAt(row, 4).toString());
-			epassword.setText(table.getValueAt(row, 5).toString());
 
-			//empfind = table.getValueAt(row, 6);
-			empfind.setSelectedItem(table.getValueAt(row, 6).toString());  
-			
-			
-		
-					
-			
+
+			// empfind = table.getValueAt(row, 6);
+			empfind.setSelectedItem(table.getValueAt(row, 5).toString());
+
 			System.out.println(empfind);
 
-			String eoff = (String) table.getValueAt(row, 7);
+			String eoff = (String) table.getValueAt(row,6);
 			System.out.println(eoff);
 			/*
 			 * int eoffNo = map.get(eoff); empfind.setSelectedIndex(eoffNo - 1);
@@ -389,7 +397,7 @@ public class NowEmployee extends JFrame implements ActionListener {
 			}
 			System.out.println(hday);
 
-			e_tf.setText(table.getValueAt(row, 8).toString());
+			e_tf.setText(table.getValueAt(row, 7).toString());
 
 		}
 	}

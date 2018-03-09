@@ -100,7 +100,7 @@ public class EmployeeTest {
 		}
 	}
 
-	@Test
+	/*@Test
 	public void test4SelectEmpEmpPerformance() {
 		List<Employee> list = new ArrayList<>();
 		list = service.selectEmpEmpPerformance();
@@ -110,5 +110,5 @@ public class EmployeeTest {
 			int p = service.SelectEmpPrice(ee);
 			System.out.println(p);
 		}
-	}
+	}*/
 }

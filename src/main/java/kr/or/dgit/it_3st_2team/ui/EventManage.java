@@ -25,6 +25,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import kr.or.dgit.it_3st_2team.dto.Event;
@@ -105,7 +106,8 @@ public class EventManage extends JPanel implements ActionListener {
 		panel_6.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_8 = new JPanel();
-		panel_8.setPreferredSize(new Dimension(200,100));
+		panel_8.setBorder(new TitledBorder("이벤트 관리"));
+		panel_8.setPreferredSize(new Dimension(200, 50));
 		FlowLayout flowLayout = (FlowLayout) panel_8.getLayout();
 		panel_6.add(panel_8, BorderLayout.CENTER);
 
@@ -161,7 +163,7 @@ public class EventManage extends JPanel implements ActionListener {
 		panel_7.setLayout(new GridLayout(0, 3, 0, 0));
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setPreferredSize(new Dimension(200,100));
+		scrollPane.setPreferredSize(new Dimension(200,50));
 		panel.add(scrollPane);
 
 		table = new JTable();

@@ -28,6 +28,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import kr.or.dgit.it_3st_2team.dto.Hair;
@@ -84,6 +85,7 @@ public class HairManage extends JPanel implements ActionListener {
 		panel_6.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_8 = new JPanel();
+		panel_8.setBorder(new TitledBorder("헤어 관리"));
 		panel_8.setPreferredSize(new Dimension(200,40));
 		FlowLayout flowLayout = (FlowLayout) panel_8.getLayout();
 		panel_6.add(panel_8, BorderLayout.CENTER);

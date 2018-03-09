@@ -22,6 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import kr.or.dgit.it_3st_2team.dto.Title;
@@ -76,7 +77,7 @@ public class TitleManage extends JPanel implements ActionListener {
 		//setTitle("직책등록");
 		/*yyj 03-07수정 이창만 닫기*/
 		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 313, 225);
+		setBounds(100, 100, 557, 297);
 		TitleManage = new JPanel();
 		TitleManage.setBorder(new EmptyBorder(5, 5, 5, 5));
 		//setContentPane(contentPane);
@@ -88,7 +89,7 @@ public class TitleManage extends JPanel implements ActionListener {
 		panel.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setPreferredSize(new Dimension(250,100));
+		scrollPane.setPreferredSize(new Dimension(450,150));
 		panel.add(scrollPane, BorderLayout.CENTER);
 
 		table = new JTable();
@@ -103,6 +104,7 @@ public class TitleManage extends JPanel implements ActionListener {
 		table.addMouseListener(new TableSelect());
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new TitledBorder("직책 관리"));
 		TitleManage.add(panel_1, BorderLayout.NORTH);
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 

@@ -83,7 +83,7 @@ public class EmployeeTest {
 	 * int no = service.selectEmpNo(emp); }
 	 */
 
-	@Test
+/*	@Test
 	public void test3SelectEmployeeByLoginId() {
 		List<Employee> list = new ArrayList<>();
 		list = service.selectEmployeeByLoginId();
@@ -98,17 +98,17 @@ public class EmployeeTest {
 		if (b != true) {
 			System.out.println("존재하지 않은 아이디입니다. 회원가입 해주세요");
 		}
-	}
+	}*/
 
-	/*@Test
+	@Test
 	public void test4SelectEmpEmpPerformance() {
 		List<Employee> list = new ArrayList<>();
 		list = service.selectEmpEmpPerformance();
 		for (Employee e : list) {
 			Employee ee = new Employee();
 			ee.setEmpNo(e.getEmpNo());
-			int p = service.SelectEmpPrice(ee);
+			Object p = service.SelectEmpPrice(ee);
 			System.out.println(p);
 		}
-	}*/
+	}
 }

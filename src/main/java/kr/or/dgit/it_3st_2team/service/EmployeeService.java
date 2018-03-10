@@ -113,7 +113,7 @@ public class EmployeeService {
 	}
 
 	/* yyj 03-07 */
-	public int SelectEmpPrice(Employee emp) {
+	public Object SelectEmpPrice(Employee emp) {
 		log.debug("SelectEmpPrice()");
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
 			return sqlSession.selectOne(namespace + "SelectEmpPrice", emp);

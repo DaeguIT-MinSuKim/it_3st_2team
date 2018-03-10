@@ -175,7 +175,7 @@
 		</where>
 	</sql>
 
-	<select id="SelectEmpPrice" resultType="int">
+	<select id="SelectEmpPrice" resultType="Object">
 		<include refid="SelectPriceSql" />
 		<include refid="wherePriceSql" />
 	</select>

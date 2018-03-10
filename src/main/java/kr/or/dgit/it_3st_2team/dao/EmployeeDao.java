@@ -25,7 +25,7 @@ public interface EmployeeDao {
 	/*yyj 03-07 직원성과*/
 	List<Employee>selectEmpEmpPerformance();
 	/*yyj 03-07 직원성과*/
-	int SelectEmpPrice(Employee emp);
+	Object SelectEmpPrice(Employee emp);
 
 
 	List<Employee> selectEmployeeByid(String string);

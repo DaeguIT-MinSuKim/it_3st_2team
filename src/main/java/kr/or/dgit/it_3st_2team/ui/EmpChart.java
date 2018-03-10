@@ -43,9 +43,12 @@ public class EmpChart extends JPanel {
 		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		for(Employee e : list) {
 			ee.setEmpNo(e.getEmpNo());
-			int p = eservice.SelectEmpPrice(ee);
+			Object p = eservice.SelectEmpPrice(ee);
+			if(p==null) {
+				p=0;
+			}
 			String name = e.getEmpName();
-			dataset.addValue(p, name, "");
+			dataset.addValue((Number) p, name, "");
 		}
 		return dataset;		
 	}

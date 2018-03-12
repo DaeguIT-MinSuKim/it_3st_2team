@@ -1,6 +1,7 @@
 package kr.or.dgit.it_3st_2team.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -147,7 +148,6 @@ public class ReportSaleJPanel extends JPanel implements ActionListener {
 		List<Sale> saletable= sservice.selectReportAll();
 		tball.loadDatas(saletable);
 		tball.getRows(saletable);
-		
 		pCenter.setLayout(new BorderLayout(0, 0));	
 		pCenter.add(tball);
 	}
@@ -163,6 +163,7 @@ public class ReportSaleJPanel extends JPanel implements ActionListener {
 		tbmonth.setVisible(false);
 		tball.setVisible(false);
 		tbs.setVisible(true);
+		
 		
 	}
 	

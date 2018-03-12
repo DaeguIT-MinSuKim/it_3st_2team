@@ -236,6 +236,7 @@ public class AddressJFrame extends JFrame implements ActionListener, MouseListen
 		table.setModel(new DefaultTableModel(getObj(list), getColumNames()));
 		NonEditableModel Nemodel = new NonEditableModel(getObj(list), getColumNames());
 		table.setModel(Nemodel);
+		table.setRowHeight(20);
 		setAlignWidth();
 		scrollPane.setViewportView(table);
 	}

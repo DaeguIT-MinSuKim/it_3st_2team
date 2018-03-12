@@ -1,6 +1,7 @@
 package kr.or.dgit.it_3st_2team.t;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -14,6 +15,7 @@ import javax.swing.table.TableColumnModel;
 
 public abstract class AbstractTable<T> extends JPanel {
 	protected JTable table;
+	protected DefaultTableCellRenderer dtcr;
 
 	public AbstractTable() {
 		initComponents();
@@ -27,6 +29,7 @@ public abstract class AbstractTable<T> extends JPanel {
 
 		table = new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
 		scrollPane.setViewportView(table);
 	}
 
@@ -44,9 +47,9 @@ public abstract class AbstractTable<T> extends JPanel {
 	}
 
 	protected void tableCellAlign(int align, int... idx) {
-		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+		dtcr = new DefaultTableCellRenderer();
 		dtcr.setHorizontalAlignment(align);
-
+	//	dtcr.setBackground(Color.orange);
 		TableColumnModel model = table.getColumnModel();
 		for (int i = 0; i < idx.length; i++) {
 			model.getColumn(idx[i]).setCellRenderer(dtcr);

@@ -17,7 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
 
 import kr.or.dgit.it_3st_2team.dto.Employee;
 import kr.or.dgit.it_3st_2team.service.EmployeeService;

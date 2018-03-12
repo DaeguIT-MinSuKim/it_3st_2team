@@ -54,7 +54,7 @@ public class Hair extends JFrame implements ActionListener {
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 950, 800);
+		setBounds(100, 100, 1000, 800);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);

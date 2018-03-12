@@ -1,5 +1,6 @@
 package kr.or.dgit.it_3st_2team.t;
 
+import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -67,9 +68,11 @@ public class TableSaleReAll extends AbstractTable<Sale> {
 				countindex++;
 				tcount = 0;
 				sum=0;
+			//	table.getColumnModel().getColumn(0).setCellRenderer(dtcr);
 			}
 		}	
 		rows[rows.length-1] = new Object[] {"","","","","총계",toTalcount+"건",toString().format("%,3d", toTalSum)};
+		
 		return rows;
 	}
 

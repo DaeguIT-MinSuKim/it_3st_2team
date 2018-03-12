@@ -2,9 +2,11 @@ package kr.or.dgit.it_3st_2team.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.Image;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,8 +15,8 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.AbstractButton;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,7 +29,6 @@ import javax.swing.table.DefaultTableModel;
 
 import kr.or.dgit.it_3st_2team.dto.Title;
 import kr.or.dgit.it_3st_2team.service.TitleService;
-import java.awt.Component;
 
 @SuppressWarnings("serial")
 public class TitleManage extends JPanel implements ActionListener {
@@ -48,6 +49,8 @@ public class TitleManage extends JPanel implements ActionListener {
 	private JButton btnAdd;
 	private JButton btnDel;
 	private JButton btnMod;
+	private Image img;
+	private ImageIcon icon;
 
 	/**
 	 * Launch the application.
@@ -68,28 +71,37 @@ public class TitleManage extends JPanel implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
+
 	public TitleManage() {
 		tservice = new TitleService();
 		initComponents();
 	}
+/*
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+	}*/
 
 	private void initComponents() {
-		//setTitle("직책등록");
-		/*yyj 03-07수정 이창만 닫기*/
-		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		// setTitle("직책등록");
+		/* yyj 03-07수정 이창만 닫기 */
+		// setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 557, 297);
 		TitleManage = new JPanel();
 		TitleManage.setBorder(new EmptyBorder(5, 5, 5, 5));
-		//setContentPane(contentPane);
+		// setContentPane(contentPane);
 		add(TitleManage);
 		TitleManage.setLayout(new BorderLayout(0, 0));
+
+	/*	icon = new ImageIcon("../background.png");
+		img = icon.getImage();*/
 
 		JPanel panel = new JPanel();
 		TitleManage.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setPreferredSize(new Dimension(450,150));
+		scrollPane.setPreferredSize(new Dimension(450, 150));
 		panel.add(scrollPane, BorderLayout.CENTER);
 
 		table = new JTable();

@@ -3,7 +3,7 @@ package kr.or.dgit.it_3st_2team.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.EventQueue;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -16,7 +16,6 @@ import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,17 +26,16 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import kr.or.dgit.it_3st_2team.dto.Hair;
-import kr.or.dgit.it_3st_2team.dto.Title;
 import kr.or.dgit.it_3st_2team.service.HairService;
-import kr.or.dgit.it_3st_2team.service.TitleService;
 
 @SuppressWarnings("serial")
-public class HairManage extends JFrame implements ActionListener {
+public class HairManage extends JPanel implements ActionListener {
 
-	private JPanel EventManage;
+	private JPanel HairManage;
 	private JTextField HairNo;
 	private JTextField HairName;
 	private JTextField Price;
@@ -52,25 +50,6 @@ public class HairManage extends JFrame implements ActionListener {
 	JScrollPane jsp;
 	DefaultTableModel model;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					HairManage frame = new HairManage();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public HairManage() {
 		hservice = new HairService();
 		initComponents();
@@ -78,34 +57,66 @@ public class HairManage extends JFrame implements ActionListener {
 	}
 
 	private void initComponents() {
-		setTitle("헤어등록");
-		/*yyj 03-07수정 이창만 닫기*/
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 406, 374);
-		EventManage = new JPanel();
-		EventManage.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(EventManage);
-		EventManage.setLayout(new BorderLayout(0, 0));
+		// setTitle("헤어등록");
+		/* yyj 03-07수정 이창만 닫기 */
+		// setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 709, 351);
+		HairManage = new JPanel();
+		HairManage.setBorder(new EmptyBorder(5, 5, 5, 5));
+		// setContentPane(HairManage);
+		add(HairManage);
+		HairManage.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();
-		EventManage.add(panel, BorderLayout.CENTER);
-		panel.setLayout(new GridLayout(0, 1, 0, 0));
+		HairManage.add(panel, BorderLayout.CENTER);
+		panel.setLayout(new BorderLayout(0, 0));
 
-		JPanel panel_5 = new JPanel();
-		panel.add(panel_5);
-		panel_5.setLayout(new BorderLayout(0, 0));
+		JScrollPane scrollPane = new JScrollPane();
+		panel.add(scrollPane, BorderLayout.CENTER);
+		scrollPane.setPreferredSize(new Dimension(500,250));
+
+		table = new JTable();
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPane.setViewportView(table);
+
+		table.setSelectionBackground(Color.yellow);
+		table.setSelectionForeground(Color.MAGENTA);
+
+		table.addMouseListener(new TableSelect());
+
+		lHair();
+
+		JPanel panel_1 = new JPanel();
+		HairManage.add(panel_1, BorderLayout.SOUTH);
+		panel_1.setLayout(new GridLayout(0, 2, 0, 0));
+
+		JPanel panel_2 = new JPanel();
+		panel_1.add(panel_2);
+
+		JPanel panel_4 = new JPanel();
+		panel_1.add(panel_4);
+		panel_4.setLayout(new GridLayout(1, 0, 0, 0));
+
+		btnAdd = new JButton("추가");
+		btnAdd.addActionListener(this);
+		panel_4.add(btnAdd);
+
+		btnDel = new JButton("삭제");
+		btnDel.addActionListener(this);
+		panel_4.add(btnDel);
+
+		btnMod = new JButton("수정");
+		btnMod.addActionListener(this);
+		panel_4.add(btnMod);
 
 		JPanel panel_6 = new JPanel();
-		panel_5.add(panel_6);
-		panel_6.setLayout(new BorderLayout(0, 0));
-
-		JPanel panel_8 = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panel_8.getLayout();
-		panel_6.add(panel_8, BorderLayout.CENTER);
+		panel_6.setBorder(new TitledBorder("헤어 관리"));
+		HairManage.add(panel_6, BorderLayout.NORTH);
+		panel_6.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JPanel panel_15 = new JPanel();
+		panel_6.add(panel_15);
 		panel_15.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_8.add(panel_15);
 		panel_15.setLayout(new GridLayout(0, 1, 0, 0));
 
 		JPanel panel_9 = new JPanel();
@@ -149,51 +160,6 @@ public class HairManage extends JFrame implements ActionListener {
 		Price = new JTextField();
 		Price.setColumns(10);
 		panel_14.add(Price);
-
-		JPanel panel_7 = new JPanel();
-		panel_6.add(panel_7, BorderLayout.SOUTH);
-		panel_7.setLayout(new GridLayout(0, 3, 0, 0));
-
-		JScrollPane scrollPane = new JScrollPane();
-		panel.add(scrollPane);
-
-		table = new JTable();
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane.setViewportView(table);
-
-		lHair();
-
-		table.setSelectionBackground(Color.yellow);
-		table.setSelectionForeground(Color.MAGENTA);
-
-		table.addMouseListener(new TableSelect());
-
-		JPanel panel_1 = new JPanel();
-		EventManage.add(panel_1, BorderLayout.SOUTH);
-		panel_1.setLayout(new GridLayout(0, 2, 0, 0));
-
-		JPanel panel_2 = new JPanel();
-		panel_1.add(panel_2);
-
-		JPanel panel_4 = new JPanel();
-		panel_1.add(panel_4);
-		panel_4.setLayout(new GridLayout(1, 0, 0, 0));
-
-		btnAdd = new JButton("추가");
-		btnAdd.addActionListener(this);
-		panel_4.add(btnAdd);
-
-		btnDel = new JButton("삭제");
-		btnDel.addActionListener(this);
-		panel_4.add(btnDel);
-
-		btnMod = new JButton("수정");
-		btnMod.addActionListener(this);
-		panel_4.add(btnMod);
-
-		JPanel panel_3 = new JPanel();
-		EventManage.add(panel_3, BorderLayout.NORTH);
-		panel_3.setLayout(new BoxLayout(panel_3, BoxLayout.X_AXIS));
 	}
 
 	private void lHair() {
@@ -203,7 +169,11 @@ public class HairManage extends JFrame implements ActionListener {
 		System.out.println(lists);
 		Object[][] data = getRows(lists);
 
-		model = new DefaultTableModel(data, title);
+		model = new DefaultTableModel(data, title) {
+			public boolean isCellEditable(int rowIndex, int mColIndex) {
+				return false;
+			}
+		};
 		table.setModel(model);
 	}
 
@@ -291,9 +261,11 @@ public class HairManage extends JFrame implements ActionListener {
 
 			return;
 		}
-		/*model.setValueAt(HairNo.getText(), row, 0);
-		model.setValueAt(HairName.getText(), row, 1);
-		model.setValueAt(Price.getText(), row, 2);*/
+		/*
+		 * model.setValueAt(HairNo.getText(), row, 0);
+		 * model.setValueAt(HairName.getText(), row, 1);
+		 * model.setValueAt(Price.getText(), row, 2);
+		 */
 		str[0] = HairNo.getText();
 		str[1] = HairName.getText();
 		str[2] = Price.getText();

@@ -13,7 +13,6 @@ import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -27,32 +26,31 @@ public class EmpChart extends JPanel {
 	public EmpChart() {
 		
 		eservice = new EmployeeService();
-		final CategoryDataset dataset = createDataset();
-		
+		final CategoryDataset dataset = createDataset();	
 		final JFreeChart chart = createChart(dataset);
 		CategoryPlot plot = chart.getCategoryPlot();
 		plot.getDomainAxis().setLabelFont(new Font("굴림",Font.BOLD,15));
 		final ChartPanel chartPanel = new ChartPanel(chart);
 		chartPanel.setPreferredSize(new java.awt.Dimension(900, 700));
-	//	setContentPane(chartPanel);
 		add(chartPanel);
 	}
 
 	private CategoryDataset createDataset() {
 
 		List<Employee> list = new ArrayList<>();
-		list = eservice.selectEmpEmpPerformance();
-		
+		list = eservice.selectEmpEmpPerformance();		
 		Employee ee = new Employee();
 		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		for(Employee e : list) {
 			ee.setEmpNo(e.getEmpNo());
-			int p = eservice.SelectEmpPrice(ee);
+			Object p = eservice.SelectEmpPrice(ee);
+			if(p==null) {
+				p=0;
+			}
 			String name = e.getEmpName();
-			dataset.addValue(p, name, "");
+			dataset.addValue((Number) p, name, "");
 		}
-		return dataset;
-
+		return dataset;		
 	}
 
 	private JFreeChart createChart(final CategoryDataset dataset) {
@@ -66,18 +64,15 @@ public class EmpChart extends JPanel {
 				true, // tooltips
 				false // urls
 		);
+		
+		
 		chart.getTitle().setFont(new Font("굴림", Font.BOLD,30));
 		chart.getLegend().setItemFont(new Font("굴림", Font.BOLD,15));
 		final CategoryPlot plot = chart.getCategoryPlot();
 		final CategoryAxis axis = plot.getDomainAxis();
 		axis.setCategoryLabelPositions(CategoryLabelPositions.createUpRotationLabelPositions(Math.PI / 8.0));
-
 		final CategoryItemRenderer renderer = plot.getRenderer();
-	//	renderer.setItemLabelsVisible(true);
-		
-	//	final BarRenderer r = (BarRenderer) renderer;
-	//	 r.setMaxBarWidth(0.05);
-
+	//	renderer.setSeriesPaint(1, Color.orange);
 		return chart;
 	}
 

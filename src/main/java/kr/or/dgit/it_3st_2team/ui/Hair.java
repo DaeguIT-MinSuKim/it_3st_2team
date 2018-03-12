@@ -63,7 +63,7 @@ public class Hair extends JFrame implements ActionListener {
 	public Hair(String titleName) {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 950, 800);
+		setBounds(100, 100, 1000, 800);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -177,16 +177,19 @@ public class Hair extends JFrame implements ActionListener {
 		}
 	}
 	protected void actionPerformedItemEvent(ActionEvent arg0) {
-		JFrame jf = new EventManage();
-		jf.setVisible(true);
+		JPanel jp = new EventManage();
+		setContentPane(jp);
+		validate();
 	}
 	protected void actionPerformedItemHair_1(ActionEvent arg0) {
-		JFrame jf = new HairManage();
-		jf.setVisible(true);
+		JPanel jp = new HairManage();
+		setContentPane(jp);
+		validate();
 	}
 	protected void actionPerformedItemTitle(ActionEvent arg0) {
-		JFrame jf = new TitleManage();
-		jf.setVisible(true);
+		JPanel jp = new TitleManage();
+		setContentPane(jp);
+		validate();
 	}
 	protected void actionPerformedItemRe(ActionEvent arg0) {
 		JPanel jp = new ReportSaleJPanel();
@@ -227,8 +230,9 @@ public class Hair extends JFrame implements ActionListener {
 		se.setVisible(true);
 	}
 	protected void actionPerformedItemEmp(ActionEvent arg0) {
-		NowEmployee ne = new NowEmployee();
-		ne.setVisible(true);
+		JPanel NowEmployee = new NowEmployee();
+		setContentPane(NowEmployee);
+		validate();
 	}
 	protected void actionPerformedItemLogout(ActionEvent arg0) { //로그아웃
 		LoginFrame lf = new LoginFrame();

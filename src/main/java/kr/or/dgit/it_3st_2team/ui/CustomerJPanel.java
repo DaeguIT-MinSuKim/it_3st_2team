@@ -8,14 +8,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.regex.Matcher;
 
-import javax.naming.RefAddr;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -36,17 +35,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-import org.apache.logging.log4j.core.config.builder.api.Component;
-
 import kr.or.dgit.it_3st_2team.dto.Customer;
 import kr.or.dgit.it_3st_2team.dto.Employee;
 import kr.or.dgit.it_3st_2team.dto.PhoneNumber;
 import kr.or.dgit.it_3st_2team.service.CustomerService;
 import kr.or.dgit.it_3st_2team.service.EmployeeService;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseEvent;
-
-import java.awt.Dimension;
 
 /*yyj*/
 @SuppressWarnings("serial")
@@ -118,9 +111,6 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		panel_1.add(lblNo);
 
 		tfNo = new JTextField();
-
-		// tfNo.setFocusable(false);
-
 		tfNo.setFocusTraversalKeysEnabled(false);
 		tfNo.setFocusable(false);
 
@@ -325,6 +315,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		table.setModel(new DefaultTableModel(getObj(cList), getColumNames()));
 		NonEditableModel Nemodel = new NonEditableModel(getObj(cList), getColumNames());
 		table.setModel(Nemodel);
+		table.setRowHeight(20);
 		setAlignWidth();
 		scrollPane.setViewportView(table);
 	}
@@ -342,7 +333,6 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		int year = now.get(Calendar.YEAR);
 		int month = now.get(Calendar.MONTH) + 1;
 		int day = now.get(Calendar.DAY_OF_MONTH);
-		// now.set(year,month,day);
 		tfJoin.setText(toString().format("%s-%s-%s", year, month, day));
 
 	}
@@ -389,13 +379,11 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		showTables();
 		addtfNo();
 		clear();
-
 	}
 
 	protected void actionPerformedBtnNewButton(ActionEvent arg0) {
 		jf = new AddressJFrame(this);
 		jf.setVisible(true);
-		// pack();
 	}
 
 	public JTextField getTfaddr() {
@@ -479,9 +467,7 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		String birth = tfBirth.getText();
 		String[] b = birth.split("-");
 		int bb = Integer.parseInt(b[0]);
-
 		int age = year - bb;
-
 		tfAge.setText(toString().format("%s", age));
 	}
 
@@ -519,7 +505,6 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		rows = new Object[cList.size()][];
 		for (int i = 0; i < cList.size(); i++) {
 			Customer cm = cList.get(i);
-
 			rows[i] = cm.toArraySelectAllCustomer();
 		}
 		return rows;
@@ -544,15 +529,12 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 			Customer ctm = addCustomers();
 			cservice.inSertCustomer(ctm);
 			JOptionPane.showMessageDialog(null, "고객이 등록 되었습니다.");
-
 			cList = cservice.SelectAllCustomerEmpName(new Customer(true));
 			showTables();
 			addtfNo();
-
 			clear();
 			tfName.setFocusable(true);
 		}
-
 	}
 
 	private Customer addCustomers() {
@@ -576,14 +558,11 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		jBirth.set(jdryear, jdrmonth - 1, jdrday);
 
 		int age = Integer.parseInt(tfAge.getText());
-
 		String phone1 = (String) cmbphone1.getSelectedItem();
 		String phone2 = tfphone2.getText();
 		String phone3 = tfphone3.getText();
 		String phone = phone1 + "-" + phone2 + "-" + phone3;
-
 		String addr = tfaddr.getText();
-
 		Customer ctm = new Customer(tfno, tfname, jBirth.getTime(), age, jDate.getTime(), new PhoneNumber(phone), addr,
 				new Employee(cmbEmpNo), true);
 		return ctm;
@@ -608,7 +587,6 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 			updateMenu.addActionListener(menuListener);
 			delMenu.addActionListener(menuListener);
 			jp.show((java.awt.Component) e.getSource(), e.getX(), e.getY());
-
 		}
 	}
 
@@ -622,7 +600,6 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 				actionPerformedBtnDelete(e);
 			}
 		}
-
 	};
 
 	public void mouseEntered(MouseEvent arg0) {
@@ -636,7 +613,6 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 
 	public void mouseReleased(MouseEvent e) {
 	}
-
 	protected void do_table_mouseClicked(MouseEvent arg0) {
 		btnUpdate.setEnabled(true);
 		btnDelete.setEnabled(true);
@@ -659,7 +635,6 @@ public class CustomerJPanel extends JPanel implements ActionListener, KeyListene
 		cmbphone1.setSelectedItem(ph1[0]);
 		tfphone2.setText(toString().format("%s", ph1[1]));
 		tfphone3.setText(toString().format("%s", ph1[2]));
-
 		btnAdd.setText("수정");
 		btnUpdate.setEnabled(false);
 		btnDelete.setEnabled(false);

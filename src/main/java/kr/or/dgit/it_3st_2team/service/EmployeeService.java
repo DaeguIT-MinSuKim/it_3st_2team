@@ -7,9 +7,7 @@ import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 
 import kr.or.dgit.it_3st_2team.dao.EmployeeDao;
-import kr.or.dgit.it_3st_2team.dao.TitleDao;
 import kr.or.dgit.it_3st_2team.dto.Employee;
-import kr.or.dgit.it_3st_2team.dto.Title;
 import kr.or.dgit.it_3st_2team.util.MyBatisSqlSessionFactory;
 
 public class EmployeeService {
@@ -23,11 +21,10 @@ public class EmployeeService {
 		}
 	}
 
-
 	public List<Employee> selectEmployeeByLoginId() {
 		log.debug("selectEmployeeByLoginId()");
-		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
-			return sqlSession.selectList(namespace+"selectEmployeeByLoginId");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			return sqlSession.selectList(namespace + "selectEmployeeByLoginId");
 		}
 	}
 
@@ -56,28 +53,16 @@ public class EmployeeService {
 		}
 	}
 
-	public int updateNowEmplyoee(Employee employee) {
-		log.debug("updateNowEmplyoee()");
-		int res = -1;
-		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
-			EmployeeDao employeeDao = sqlSession.getMapper(EmployeeDao.class);
-			res = employeeDao.updateNowEmplyoee(namespace + "updateNowEmplyoee",employee);
-			sqlSession.commit();
-		}
-		return res;
-	}
-
 	public int EmployeeSizeNo() {
 		log.debug("EmployeeSizeNo()");
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
 			sqlSession.commit();
-			
+
 			return sqlSession.selectOne(namespace + "EmployeeSizeNo");
 
 		}
 	}
 
-	
 	public List<Employee> selectemployeeoff() {
 		log.debug("selectemployeeoff()");
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
@@ -86,18 +71,52 @@ public class EmployeeService {
 			return EmployeeDao.selectemployeeoff();
 		}
 	}
-	/*yyj 03-07*/
-	public List<Employee>selectEmpEmpPerformance(){
+
+	public List<Employee> selectEmployeeByid() {
+		log.debug("selectEmployeeByid()");
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			EmployeeDao EmployeeDao = sqlSession.getMapper(EmployeeDao.class);
+			sqlSession.commit();
+			return EmployeeDao.selectEmployeeByid(namespace + "selectEmployeeByid");
+		}
+
+	}
+
+	public int insertEmployee(Employee emp) {
+		log.debug("insertEmployee()");
+		int res = -1;
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			EmployeeDao EmployeeDao = sqlSession.getMapper(EmployeeDao.class);
+			res = EmployeeDao.insertEmployee(emp);
+			sqlSession.commit();
+		}
+		return res;
+	}
+
+	public int updateNowEmployee(Employee emp) {
+		log.debug("updateNowEmployee()");
+		int res = -1;
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
+			EmployeeDao EmployeeDao = sqlSession.getMapper(EmployeeDao.class);
+			res = EmployeeDao.updateNowEmployee(emp);
+			sqlSession.commit();
+		}
+		return res;
+	}
+
+	/* yyj 03-07 */
+	public List<Employee> selectEmpEmpPerformance() {
 		log.debug("selectEmpEmpPerformance()");
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
 			return sqlSession.selectList(namespace + "selectEmpEmpPerformance");
 		}
 	}
-	/*yyj 03-07*/
-	public int SelectEmpPrice(Employee emp) {
+
+	/* yyj 03-07 */
+	public Object SelectEmpPrice(Employee emp) {
 		log.debug("SelectEmpPrice()");
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
-			return sqlSession.selectOne(namespace + "SelectEmpPrice",emp);
+			return sqlSession.selectOne(namespace + "SelectEmpPrice", emp);
 		}
 	}
 }

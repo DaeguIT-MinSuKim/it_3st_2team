@@ -7,9 +7,7 @@ import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 
 import kr.or.dgit.it_3st_2team.dao.HairDao;
-import kr.or.dgit.it_3st_2team.dao.TitleDao;
 import kr.or.dgit.it_3st_2team.dto.Hair;
-import kr.or.dgit.it_3st_2team.dto.Title;
 import kr.or.dgit.it_3st_2team.util.MyBatisSqlSessionFactory;
 
 public class HairService {

@@ -2,6 +2,8 @@ package kr.or.dgit.it_3st_2team.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.TextField;
@@ -13,7 +15,6 @@ import java.util.List;
 
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -21,16 +22,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import kr.or.dgit.it_3st_2team.dto.Title;
 import kr.or.dgit.it_3st_2team.service.TitleService;
 
 @SuppressWarnings("serial")
-public class TitleManage extends JFrame implements ActionListener {
+public class TitleManage extends JPanel implements ActionListener {
 
 	private static final AbstractButton tftitleno = null;
-	private JPanel contentPane;
+	private JPanel TitleManage;
 	private JTable table;
 	private TextField Titleno;
 	private TextField Titlename;
@@ -65,26 +67,30 @@ public class TitleManage extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
+
 	public TitleManage() {
 		tservice = new TitleService();
 		initComponents();
 	}
 
 	private void initComponents() {
-		setTitle("직책등록");
-		/*yyj 03-07수정 이창만 닫기*/
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 385, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		setForeground(Color.BLACK);
+		// setTitle("직책등록");
+		/* yyj 03-07수정 이창만 닫기 */
+		// setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 557, 297);
+		TitleManage = new JPanel();
+		TitleManage.setBorder(new EmptyBorder(5, 5, 5, 5));
+		// setContentPane(contentPane);
+		add(TitleManage);
+		TitleManage.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.CENTER);
+		TitleManage.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setPreferredSize(new Dimension(500, 250));
 		panel.add(scrollPane, BorderLayout.CENTER);
 
 		table = new JTable();
@@ -99,10 +105,15 @@ public class TitleManage extends JFrame implements ActionListener {
 		table.addMouseListener(new TableSelect());
 
 		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, BorderLayout.NORTH);
+		panel_1.setForeground(Color.BLACK);
+		panel_1.setBorder(new TitledBorder("직책 관리"));
+		TitleManage.add(panel_1, BorderLayout.NORTH);
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JPanel panel_2 = new JPanel();
+		panel_2.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		FlowLayout flowLayout = (FlowLayout) panel_2.getLayout();
+		flowLayout.setHgap(3);
 		panel_1.add(panel_2);
 
 		JLabel lbltitleno = new JLabel("직책번호");
@@ -118,7 +129,7 @@ public class TitleManage extends JFrame implements ActionListener {
 		panel_2.add(Titlename);
 
 		JPanel pBottom = new JPanel();
-		contentPane.add(pBottom, BorderLayout.SOUTH);
+		TitleManage.add(pBottom, BorderLayout.SOUTH);
 
 		btnAdd = new JButton("추가");
 		btnAdd.addActionListener(this);
@@ -140,7 +151,11 @@ public class TitleManage extends JFrame implements ActionListener {
 		System.out.println(lists);
 		Object[][] data = getRows(lists);
 
-		model = new DefaultTableModel(data, title);
+		model = new DefaultTableModel(data, title) {
+			public boolean isCellEditable(int rowIndex, int mColIndex) {
+				return false;
+			}
+		};
 		table.setModel(model);
 	}
 
@@ -179,7 +194,6 @@ public class TitleManage extends JFrame implements ActionListener {
 
 			return;
 		}
-
 
 		str[0] = Titleno.getText();
 		str[1] = Titlename.getText();

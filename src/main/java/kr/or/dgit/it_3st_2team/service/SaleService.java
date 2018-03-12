@@ -1,6 +1,5 @@
 package kr.or.dgit.it_3st_2team.service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +8,6 @@ import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 
 import kr.or.dgit.it_3st_2team.dao.SaleDao;
-import kr.or.dgit.it_3st_2team.dto.Customer;
 import kr.or.dgit.it_3st_2team.dto.Sale;
 import kr.or.dgit.it_3st_2team.util.MyBatisSqlSessionFactory;
 

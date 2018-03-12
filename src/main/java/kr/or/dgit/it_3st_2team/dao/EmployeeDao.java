@@ -7,7 +7,7 @@ import kr.or.dgit.it_3st_2team.dto.Employee;
 public interface EmployeeDao {
 	List<Employee> selectAllEmployee();
 
-	//Employee selectEmpByLoginId(Employee id);
+	// Employee selectEmpByLoginId(Employee id);
 
 	List<Employee> selecteNowEmplyoee();
 
@@ -17,8 +17,6 @@ public interface EmployeeDao {
 
 	int selectEmpNo(Employee emp);
 
-	int updateNowEmplyoee(String string, Employee emp);
-	
 	int EmployeeSizeNo();
 
 	List<Employee> selectemployeeoff();
@@ -27,6 +25,15 @@ public interface EmployeeDao {
 	/*yyj 03-07 직원성과*/
 	List<Employee>selectEmpEmpPerformance();
 	/*yyj 03-07 직원성과*/
-	int SelectEmpPrice(Employee emp);
+	Object SelectEmpPrice(Employee emp);
 
+
+	List<Employee> selectEmployeeByid(String string);
+
+	int insertEmployee(Employee emp);
+
+	int updateNowEmployee(Employee emp);
+	
+
+	
 }

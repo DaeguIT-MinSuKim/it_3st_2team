@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.CategoryLabelPositions;
@@ -28,39 +29,51 @@ import org.jfree.ui.TextAnchor;
 import kr.or.dgit.it_3st_2team.dto.Enroll;
 import kr.or.dgit.it_3st_2team.dto.Hair;
 import kr.or.dgit.it_3st_2team.service.SaleService;
+import javax.swing.JComboBox;
+import java.awt.FlowLayout;
+import javax.swing.DefaultComboBoxModel;
 
 public class MonthlyLineGraph extends JPanel {
 
 	private SaleService saleService;
+	private String syear;
+	private String[] smonth=null;
 	/**
 	 * Create the panel.
 	 */
-	public MonthlyLineGraph() {
+	public MonthlyLineGraph(String year, String[] month) {
+		syear = year;
+		smonth = month;
+		this.validate();
+		initComponents();
+	}
+	private void initComponents() {
 		saleService = new SaleService();
+		
 		setLayout(new BorderLayout());
 		
-		
+		if(!syear.equals("")) {
+			JFreeChart chart = this.getChart();
+			
+			ChartPanel cp = new ChartPanel(chart);
+			add(cp);
 
+		}		
 	}
 	
-	/*public JFreeChart getChart() {
+	public JFreeChart getChart() {
 		DefaultCategoryDataset dataset1 = new DefaultCategoryDataset();
 		
+		
 		//그래프1
-		List<Enroll> list = enrollService.selectChart();
-		List<Hair> hlist = new ArrayList<>();
-		for(Enroll e:list) {
-			hlist.add(new Hair(e.getHairNo(), e.getHair().getHairName()));
-		}
-		int num = -1;
-		Map<String,Integer> hmap = new HashMap<>();
-		for(Hair h:hlist) {
-			num = enrollService.selectChartCount(h.getHairNo());
-			hmap.put(h.getHairName(), num);
-		}
-		for(String key:hmap.keySet()) {
-			dataset1.addValue(hmap.get(key), "헤어명", key);
-		}
+		Map<String,String> map = new HashMap<>();
+		map.put("date", syear);
+		List<Integer> priceList = saleService.selectMonthlyChart(map);
+		int cnt=0;
+		for(Integer i:priceList) {
+			System.out.println("월"+smonth[cnt]+"값"+i);
+			dataset1.addValue(i, "월", smonth[cnt++]);
+		}	
 		
 		//랜더링 생성
 		final BarRenderer renderer = new BarRenderer();
@@ -104,5 +117,5 @@ public class MonthlyLineGraph extends JPanel {
 		
 		final JFreeChart chart = new JFreeChart(plot);
 		return chart;
-	}*/
+	}
 }

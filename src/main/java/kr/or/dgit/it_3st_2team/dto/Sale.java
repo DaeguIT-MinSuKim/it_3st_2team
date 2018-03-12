@@ -17,8 +17,6 @@ public class Sale { //Foreign key에 대한 변수타입 수정 kim 2018-02-22
 	private int sPrice;
 	//khj 20180228 일대다
 	private List<Hair> hairs;
-	//khj 180307 기간별 차트
-	private int sum;
 	
 	/*hair변수  get,set 추가 yyj 02-07*/
 	private Hair hair;
@@ -185,9 +183,5 @@ public class Sale { //Foreign key에 대한 변수타입 수정 kim 2018-02-22
 	public String timeToString(Date stime) {
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 		return sdf.format(stime);
-	}
-	//khj
-	public int getSum() {
-		return sum;
 	}
 }

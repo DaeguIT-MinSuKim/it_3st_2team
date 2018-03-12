@@ -1,16 +1,25 @@
 package kr.or.dgit.it_3st_2team.ui;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
+
+import kr.or.dgit.it_3st_2team.service.SaleService;
 
 
 public class Hair extends JFrame implements ActionListener {
@@ -30,6 +39,7 @@ public class Hair extends JFrame implements ActionListener {
 	private JMenuItem itemLogout;
 	public JPanel01 jpanel01 = null; //직원별 매출그래프
 	public JPanel02 jpanel02 = null; //월별 매출그래프
+	private JTabbedPane jTab;
 
 	/**
 	 * Launch the application.
@@ -51,7 +61,6 @@ public class Hair extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public Hair(String titleName) {
-		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 950, 800);
@@ -203,7 +212,7 @@ public class Hair extends JFrame implements ActionListener {
 		this.jpanel01 = new JPanel01();
 		this.jpanel02 = new JPanel02();
 		
-		JTabbedPane jTab = new JTabbedPane();
+		jTab = new JTabbedPane();
 		PolylineBarChart cf = new PolylineBarChart();
 		EmpChart ec = new EmpChart();
 		jTab.addTab("헤어서비스별", cf);
@@ -235,12 +244,54 @@ public class Hair extends JFrame implements ActionListener {
 		}		
 	}
 
-	class JPanel02 extends JPanel{ //기간별
+	class JPanel02 extends JPanel implements ActionListener{ //기간별
+		private JComboBox cmbYear;
+		private JComboBox cmbMonth;
+		private SaleService service;
+		private JPanel panel_1;
+		private JPanel panel_2;
+		
 		public JPanel02() {
-			super();
-			// TODO Auto-generated constructor stub
-			setLayout(null);
-		}		
+			setLayout(new BorderLayout());
+			JPanel panel = new JPanel();
+			add(panel, BorderLayout.NORTH);
+			panel.setLayout(new BorderLayout(0, 0));
+			
+			panel_1 = new JPanel();
+			panel.add(panel_1, BorderLayout.WEST);
+			panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+			
+			//년도
+			cmbYear = new JComboBox();
+			service = new SaleService();
+			List<String> yearList = service.selectYear();
+			String[] yearArr = new String[yearList.size()+1];
+			yearArr[0]="----년";
+			int i=1;
+			for(String str:yearList) {
+				yearArr[i++]=str;
+			}
+			cmbYear.setModel(new DefaultComboBoxModel(yearArr));
+			panel_1.add(cmbYear);
+			cmbYear.addActionListener(this);
+			
+			panel_2 = new JPanel();
+			panel.add(panel_2, BorderLayout.SOUTH);
+			panel_2.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			if(e.getSource()==cmbYear) {
+				String selectYear = cmbYear.getSelectedItem().toString()+"%";
+				Map<String,String> map = new HashMap<>();	
+				map.put("date",selectYear);
+				List<String> monthList = service.selectMonth(map);
+				String[] monthArr = monthList.toArray(new String[monthList.size()]);
+				MonthlyLineGraph ml = new MonthlyLineGraph(selectYear,monthArr);
+				panel_2.add(ml);
+				panel_2.validate();
+			}
+		}
 	}
 
 }

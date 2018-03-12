@@ -149,7 +149,30 @@ public class SaleTest {
 	@Test
 	public void test7SelectMonthlyChart() {
 		Map<String,String> map = new HashMap<>();	
-		map.put("xx","2018%");
-		List<Sale> lists = service.selectMonthlyChart(map);
+		map.put("date","2018%");
+		List<Integer> lists = service.selectMonthlyChart(map);
+		for(Integer i:lists) {
+			System.out.println(i);
+		}
 	}
+	
+/*	@Test
+	public void test8SelectYear() {
+		List<String> lists = service.selectYear();
+		for(String str:lists) {
+			System.out.println(str);
+		}
+	}*/
+	
+/*	@Test
+	public void test9SelectMonth() {
+		Map<String,String> map = new HashMap<>();	
+		map.put("date","2018%");
+		List<String> lists = service.selectMonth(map);
+		String[] monthArr = lists.toArray(new String[lists.size()]);
+		for(String str:monthArr) {
+			System.out.println("string:"+str);
+		}
+	}*/
+	
 }

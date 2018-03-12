@@ -178,9 +178,15 @@
 	</select>
 	
 	<!-- khj 180307 -->
-	<select id="selectMonthlyChart" resultMap="saleResult">
-		select date_format(sdate, '%Y-%m') m, sum(sprice) from sale 
-		where sdate like #{xx}
-		group by m;
+	<select id="selectMonthlyChart" parameterType="map" resultType="int">
+		select sum(sprice) from sale where sdate like #{date} group by Month(sdate);
+	</select>
+	
+	<!-- khj -->
+	<select id="selectYear" resultType="String">
+		select date_format(sdate, '%Y') m from sale group by m;
+	</select>
+	<select id="selectMonth" resultType="String">
+		select date_format(sdate, '%m') m from sale where sdate like #{date} group by m;
 	</select>
 </mapper>

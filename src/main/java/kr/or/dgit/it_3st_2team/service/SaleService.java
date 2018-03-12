@@ -123,9 +123,21 @@ public class SaleService {
 		}
 	}
 	//khj
-	public List<Sale> selectMonthlyChart(Map<String,String> map){
+	public List<Integer> selectMonthlyChart(Map<String,String> map){
 		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
 			return sqlSession.selectList(namespace+"selectMonthlyChart",map);
+		}
+	}
+	//khj
+	public List<String> selectYear(){
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			return sqlSession.selectList(namespace+"selectYear");
+		}
+	}
+	//khj
+	public List<String> selectMonth(Map<String,String> map){
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			return sqlSession.selectList(namespace+"selectMonth",map);
 		}
 	}
 }

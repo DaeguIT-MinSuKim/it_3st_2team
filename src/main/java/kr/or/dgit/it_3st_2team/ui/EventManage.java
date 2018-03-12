@@ -5,7 +5,9 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -13,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -81,35 +84,64 @@ public class EventManage extends JPanel implements ActionListener {
 	}
 
 	private void initComponents() {
-		setLayout(new BorderLayout(0, 0));
-		//setTitle("이벤트등록");
-		/*yyj 03-07수정 이창만 닫기*/
-		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100,  385, 300);
+		setForeground(Color.BLACK);
+		// setTitle("이벤트등록");
+		/* yyj 03-07수정 이창만 닫기 */
+		// setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 800, 650);
 		EventManage = new JPanel();
-		EventManage.setPreferredSize(new Dimension(200,100));
+		// EventManage.setPreferredSize(new Dimension(200,100));
 		EventManage.setBorder(new EmptyBorder(5, 5, 5, 5));
-		//setContentPane(EventManage);
+		// setContentPane(EventManage);
 		add(EventManage);
 		EventManage.setLayout(new BorderLayout(0, 0));
 
-		JPanel panel = new JPanel();
-		EventManage.add(panel, BorderLayout.CENTER);
-		panel.setLayout(new GridLayout(0, 1, 0, 0));
+		JPanel panel_11 = new JPanel();
+		EventManage.add(panel_11, BorderLayout.CENTER);
+		panel_11.setLayout(new BorderLayout(0, 0));
 
-		JPanel panel_5 = new JPanel();
-		panel.add(panel_5);
-		panel_5.setLayout(new BorderLayout(0, 0));
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setPreferredSize(new Dimension(500, 250));
+		panel_11.add(scrollPane, BorderLayout.CENTER);
 
-		JPanel panel_6 = new JPanel();
-		panel_5.add(panel_6);
-		panel_6.setLayout(new BorderLayout(0, 0));
+		table = new JTable();
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPane.setViewportView(table);
+
+		lEvent();
+
+		table.setSelectionBackground(Color.yellow);
+		table.setSelectionForeground(Color.MAGENTA);
+
+		table.addMouseListener(new TableSelect());
+
+		JPanel pBottom = new JPanel();
+		EventManage.add(pBottom, BorderLayout.SOUTH);
+		pBottom.setLayout(new GridLayout(0, 2, 0, 0));
+
+		JPanel panel_2 = new JPanel();
+		pBottom.add(panel_2);
+
+		JPanel panel_4 = new JPanel();
+		pBottom.add(panel_4);
+		panel_4.setLayout(new GridLayout(1, 0, 0, 0));
+
+		btnAdd = new JButton("추가");
+		btnAdd.addActionListener(this);
+		panel_4.add(btnAdd);
+
+		btnDel = new JButton("삭제");
+		btnDel.addActionListener(this);
+		panel_4.add(btnDel);
+
+		btnMod = new JButton("수정");
+		btnMod.addActionListener(this);
+		panel_4.add(btnMod);
 
 		JPanel panel_8 = new JPanel();
+		EventManage.add(panel_8, BorderLayout.NORTH);
 		panel_8.setBorder(new TitledBorder("이벤트 관리"));
-		panel_8.setPreferredSize(new Dimension(200, 50));
 		FlowLayout flowLayout = (FlowLayout) panel_8.getLayout();
-		panel_6.add(panel_8, BorderLayout.CENTER);
 
 		JPanel panel_15 = new JPanel();
 		panel_15.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -157,52 +189,6 @@ public class EventManage extends JPanel implements ActionListener {
 		eventdis = new JTextField();
 		eventdis.setColumns(10);
 		panel_14.add(eventdis);
-
-		JPanel panel_7 = new JPanel();
-		panel_6.add(panel_7, BorderLayout.SOUTH);
-		panel_7.setLayout(new GridLayout(0, 3, 0, 0));
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setPreferredSize(new Dimension(200,50));
-		panel.add(scrollPane);
-
-		table = new JTable();
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane.setViewportView(table);
-
-		lEvent();
-
-		table.setSelectionBackground(Color.yellow);
-		table.setSelectionForeground(Color.MAGENTA);
-
-		table.addMouseListener(new TableSelect());
-
-		JPanel panel_1 = new JPanel();
-		EventManage.add(panel_1, BorderLayout.SOUTH);
-		panel_1.setLayout(new GridLayout(0, 2, 0, 0));
-
-		JPanel panel_2 = new JPanel();
-		panel_1.add(panel_2);
-
-		JPanel panel_4 = new JPanel();
-		panel_1.add(panel_4);
-		panel_4.setLayout(new GridLayout(1, 0, 0, 0));
-
-		btnAdd = new JButton("추가");
-		btnAdd.addActionListener(this);
-		panel_4.add(btnAdd);
-
-		btnDel = new JButton("삭제");
-		btnDel.addActionListener(this);
-		panel_4.add(btnDel);
-
-		btnMod = new JButton("수정");
-		btnMod.addActionListener(this);
-		panel_4.add(btnMod);
-
-		JPanel panel_3 = new JPanel();
-		EventManage.add(panel_3, BorderLayout.NORTH);
-		panel_3.setLayout(new BoxLayout(panel_3, BoxLayout.X_AXIS));
 	}
 
 	private void lEvent() {

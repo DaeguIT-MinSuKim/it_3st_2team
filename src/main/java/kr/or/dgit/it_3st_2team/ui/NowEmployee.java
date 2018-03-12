@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 import javax.swing.AbstractButton;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -42,6 +44,8 @@ import kr.or.dgit.it_3st_2team.dto.PhoneNumber;
 import kr.or.dgit.it_3st_2team.dto.Title;
 import kr.or.dgit.it_3st_2team.service.EmployeeService;
 import kr.or.dgit.it_3st_2team.service.TitleService;
+import java.awt.GridLayout;
+import java.awt.Image;
 
 @SuppressWarnings("serial")
 public class NowEmployee extends JPanel implements ActionListener {
@@ -70,7 +74,8 @@ public class NowEmployee extends JPanel implements ActionListener {
 	private JFrame jf;
 	private JTextField e_tf;
 	public JComboBox<Title> empfind;
-
+	private Image img;
+	private ImageIcon icon;
 	private JComboBox<String> hday;
 
 	/**
@@ -98,23 +103,32 @@ public class NowEmployee extends JPanel implements ActionListener {
 		initComponents();
 	}
 
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+	}
+
 	private void initComponents() {
-		//setTitle("직원현황");
+		setLayout(new BorderLayout(0, 0));
+		// setTitle("직원현황");
 		/* yyj 03-07수정 이창만 닫기 */
-		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1350, 258);
+		// setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 1200, 250);
 		NowEmployee = new JPanel();
 		NowEmployee.setBorder(new EmptyBorder(5, 5, 5, 5));
-		//setContentPane(contentPane);
+		// setContentPane(contentPane);
 		add(NowEmployee);
 		NowEmployee.setLayout(new BorderLayout(0, 0));
+
+		icon = new ImageIcon("111053376.jpg");
+		img = icon.getImage();
 
 		JPanel panel = new JPanel();
 		NowEmployee.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setPreferredSize(new Dimension(370,150));
+		scrollPane.setPreferredSize(new Dimension(370, 150));
 		panel.add(scrollPane, BorderLayout.CENTER);
 
 		table = new JTable();
@@ -131,15 +145,16 @@ public class NowEmployee extends JPanel implements ActionListener {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder("직원 관리"));
 		NowEmployee.add(panel_1, BorderLayout.NORTH);
-		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
 
 		JPanel panel_2 = new JPanel();
+		panel_2.setPreferredSize(new Dimension(450, 80));
 		panel_1.add(panel_2);
 
 		JLabel lbltitleno = new JLabel("직원번호");
 		panel_2.add(lbltitleno);
 
-		empno = new TextField(5);
+		empno = new TextField(2);
 		empno.setEnabled(false);
 		panel_2.add(empno);
 
@@ -158,7 +173,7 @@ public class NowEmployee extends JPanel implements ActionListener {
 		lbljoindate.setHorizontalAlignment(SwingConstants.LEFT);
 		panel_5.add(lbljoindate);
 
-		joindate = new TextField(15);
+		joindate = new TextField(8);
 		joindate.setEnabled(false);
 		panel_5.add(joindate);
 		joindate.setPreferredSize(new Dimension(6, 21));
@@ -172,20 +187,20 @@ public class NowEmployee extends JPanel implements ActionListener {
 
 		tfaddr = new JTextField();
 		tfaddr.setEnabled(false);
-		tfaddr.setColumns(20);
+		tfaddr.setColumns(17);
 		panel_3.add(tfaddr);
 
 		JLabel lblid = new JLabel("아이디");
 		panel_2.add(lblid);
 
-		id = new TextField(8);
+		id = new TextField(6);
 		id.setEnabled(false);
 		panel_2.add(id);
 
 		JLabel lblepassword = new JLabel("패스워드");
 		panel_2.add(lblepassword);
 
-		epassword = new JPasswordField(8);
+		epassword = new JPasswordField(6);
 		panel_2.add(epassword);
 
 		JPanel panel_4 = new JPanel();
@@ -202,8 +217,8 @@ public class NowEmployee extends JPanel implements ActionListener {
 		empfind = new JComboBox<>(model);
 		empfind.addActionListener(this);
 		empfind.setLocation(new Point(5, 0));
-		empfind.setMaximumSize(new Dimension(80, 30));
-		empfind.setPreferredSize(new Dimension(85, 21));
+		empfind.setMaximumSize(new Dimension(78, 30));
+		empfind.setPreferredSize(new Dimension(80, 21));
 		panel_4.add(empfind);
 		// empfind.setModel(cModel);
 
@@ -226,7 +241,7 @@ public class NowEmployee extends JPanel implements ActionListener {
 
 		e_tf = new JTextField();
 		panel_2.add(e_tf);
-		e_tf.setColumns(5);
+		e_tf.setColumns(4);
 
 		JPanel pBottom = new JPanel();
 		NowEmployee.add(pBottom, BorderLayout.SOUTH);
@@ -317,10 +332,9 @@ public class NowEmployee extends JPanel implements ActionListener {
 		// String tfpw = pw.getText();
 		char[] pw2 = epassword.getPassword();
 		String strPw = new String(pw2);
-		if(strPw.equals("")) {
+		if (strPw.equals("")) {
 			strPw = null;
 		}
-		
 
 		Title selectedEventempch = (Title) empfind.getSelectedItem();
 
@@ -344,9 +358,9 @@ public class NowEmployee extends JPanel implements ActionListener {
 		int selectedEventhdaych = hday.getSelectedIndex();
 
 		boolean etf = false;
-		if (e_tf.getText().equals("true")||e_tf.getText().equals("1")) {
+		if (e_tf.getText().equals("true") || e_tf.getText().equals("1")) {
 			etf = true;
-		} else if (e_tf.getText().equals("false")||e_tf.getText().equals("0")) {
+		} else if (e_tf.getText().equals("false") || e_tf.getText().equals("0")) {
 			etf = false;
 		}
 		// System.out.println(e_tf);
@@ -372,13 +386,12 @@ public class NowEmployee extends JPanel implements ActionListener {
 			tfaddr.setText(String.format("%s", table.getValueAt(row, 3)));
 			id.setText(table.getValueAt(row, 4).toString());
 
-
 			// empfind = table.getValueAt(row, 6);
 			empfind.setSelectedItem(table.getValueAt(row, 5).toString());
 
 			System.out.println(empfind);
 
-			String eoff = (String) table.getValueAt(row,6);
+			String eoff = (String) table.getValueAt(row, 6);
 			System.out.println(eoff);
 			/*
 			 * int eoffNo = map.get(eoff); empfind.setSelectedIndex(eoffNo - 1);

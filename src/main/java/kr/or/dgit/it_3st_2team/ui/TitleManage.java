@@ -6,7 +6,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
-import java.awt.Image;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +14,6 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.AbstractButton;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -49,8 +47,6 @@ public class TitleManage extends JPanel implements ActionListener {
 	private JButton btnAdd;
 	private JButton btnDel;
 	private JButton btnMod;
-	private Image img;
-	private ImageIcon icon;
 
 	/**
 	 * Launch the application.
@@ -76,13 +72,9 @@ public class TitleManage extends JPanel implements ActionListener {
 		tservice = new TitleService();
 		initComponents();
 	}
-/*
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
-	}*/
 
 	private void initComponents() {
+		setForeground(Color.BLACK);
 		// setTitle("직책등록");
 		/* yyj 03-07수정 이창만 닫기 */
 		// setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -93,15 +85,12 @@ public class TitleManage extends JPanel implements ActionListener {
 		add(TitleManage);
 		TitleManage.setLayout(new BorderLayout(0, 0));
 
-	/*	icon = new ImageIcon("../background.png");
-		img = icon.getImage();*/
-
 		JPanel panel = new JPanel();
 		TitleManage.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setPreferredSize(new Dimension(450, 150));
+		scrollPane.setPreferredSize(new Dimension(500, 250));
 		panel.add(scrollPane, BorderLayout.CENTER);
 
 		table = new JTable();
@@ -116,6 +105,7 @@ public class TitleManage extends JPanel implements ActionListener {
 		table.addMouseListener(new TableSelect());
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setForeground(Color.BLACK);
 		panel_1.setBorder(new TitledBorder("직책 관리"));
 		TitleManage.add(panel_1, BorderLayout.NORTH);
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));

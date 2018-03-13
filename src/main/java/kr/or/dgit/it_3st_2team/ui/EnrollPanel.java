@@ -539,6 +539,7 @@ public class EnrollPanel extends JPanel implements ActionListener {
 		
 		btnUpdate = new JButton("수정");
 		btnUpdate.setEnabled(false);
+		btnUpdate.setVisible(false);
 		btnUpdate.addActionListener(this);
 		panel_7.add(btnUpdate);
 		panel_7.add(btnDelete);
@@ -552,6 +553,7 @@ public class EnrollPanel extends JPanel implements ActionListener {
 		drawTable(saleList);
 		
 		table.addMouseListener(new TableMouseListener());
+		
 	}
 	
 	public class TableMouseListener extends MouseAdapter{

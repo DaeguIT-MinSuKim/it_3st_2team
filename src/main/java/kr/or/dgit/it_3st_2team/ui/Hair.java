@@ -14,7 +14,6 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
@@ -61,7 +60,7 @@ public class Hair extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public Hair(String titleName) {
-		
+		setTitle(titleName);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 800);
 		
@@ -75,7 +74,7 @@ public class Hair extends JFrame implements ActionListener {
 		itemCus.addActionListener(this);
 		mnCus.add(itemCus);
 		
-		mnEmp = new JMenu("직원");
+		mnEmp = new JMenu("영업");
 		mnEmp.addActionListener(this);
 		menuBar.add(mnEmp);
 		
@@ -220,7 +219,7 @@ public class Hair extends JFrame implements ActionListener {
 		EmpChart ec = new EmpChart();
 		jTab.addTab("헤어서비스별", cf);
 		jTab.addTab("직원별", ec);
-		jTab.addTab("기간별", this.jpanel02);
+	//	jTab.addTab("기간별", this.jpanel02);
 		
 		setContentPane(jTab);
 		validate();

@@ -76,8 +76,7 @@ public class EmployeeService {
 		log.debug("selectEmployeeByid()");
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();) {
 			EmployeeDao EmployeeDao = sqlSession.getMapper(EmployeeDao.class);
-			sqlSession.commit();
-			return EmployeeDao.selectEmployeeByid(namespace + "selectEmployeeByid");
+			return EmployeeDao.selectEmployeeByid();
 		}
 
 	}

@@ -28,7 +28,7 @@ public interface EmployeeDao {
 	Object SelectEmpPrice(Employee emp);
 
 
-	List<Employee> selectEmployeeByid(String string);
+	List<Employee> selectEmployeeByid();
 
 	int insertEmployee(Employee emp);
 

@@ -62,7 +62,6 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 	private JComboBox<String> hday;
 	private TitleService tservice;
 
-	
 	/**
 	 * Launch the application.
 	 */
@@ -251,8 +250,7 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 		findtitle.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_11.add(findtitle);
 
-	
-		List<Title>list = tservice.selectTitle();
+		List<Title> list = tservice.selectTitle();
 		Title[] items = list.toArray(new Title[list.size()]);
 		DefaultComboBoxModel<Title> model = new DefaultComboBoxModel<>(items);
 		empfind = new JComboBox<>(model);
@@ -260,13 +258,11 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 		empfind.setBorder(new MatteBorder(1, 0, 0, 1, (Color) new Color(0, 0, 0)));
 		empfind.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		empfind.setEnabled(false);
-		//empfind.setModel(new DefaultComboBoxModel<Title>(new Title[] { new Title("인턴") }));
+		// empfind.setModel(new DefaultComboBoxModel<Title>(new Title[] { new
+		// Title("인턴") }));
 		empfind.setMaximumSize(new Dimension(80, 30));
 		empfind.setPreferredSize(new Dimension(25, 21));
 		panel_11.add(empfind);
-		
-		
-	
 
 		JPanel panel_14 = new JPanel();
 		panel_14.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -431,11 +427,11 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 
 			Employee Emp = addEmployee();
 			eservice.insertEmployee(Emp);
-			
+
 			LoginFrame lf = new LoginFrame();
 			lf.setVisible(true);
 			this.dispose();
-			
+
 			System.out.println(empfind);
 		}
 	}
@@ -458,10 +454,9 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 		char[] pw2 = pw.getPassword();
 		String strPw = new String(pw2);
 		// String tfrepw = repw.getText();
-		
+
 		Title selectedEventempch = (Title) empfind.getSelectedItem();
 
-		
 		System.out.println(selectedEventempch);
 		if (hday.equals("월")) {
 			hday.setSelectedIndex(0);
@@ -481,7 +476,7 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 
 		int selectedEventhdaych = hday.getSelectedIndex();
 
-		Employee Emp = new Employee(tfno, tfname, calender.getTime(), addr, id, strPw,selectedEventempch,
+		Employee Emp = new Employee(tfno, tfname, calender.getTime(), addr, id, strPw, selectedEventempch,
 				selectedEventhdaych, true);
 		System.out.println(tfno);
 		return Emp;
@@ -490,21 +485,27 @@ public class EmployeeJoin extends JFrame implements ActionListener {
 	// 아이디 중복확인 검사
 	protected void actionPerformedCkid(ActionEvent check) {
 		String id = tfid.getText().trim();
+		if (id.equals("")) {
+			JOptionPane.showMessageDialog(this, "아이디를 입력하세요.");
+			idCk = 0;
+			return;
+		}
 		List<Employee> list = eservice.selectEmployeeByid();
 		for (Employee emp : list) {
+			System.out.println(emp.getId());
 			if (emp.getId().equals(id)) {
-				JOptionPane.showMessageDialog(this, "아이디가 이미 있습니다.");
-				idCk = 0;
-				break;
-			} else if (id.equals("")) {
-				JOptionPane.showMessageDialog(this, "아이디를 입력하세요.");
 				idCk = 0;
 				break;
 			} else {
-				JOptionPane.showMessageDialog(this, "사용가능한 아이디 입니다.");
+
 				idCk++;
-				break;
+
 			}
+		}
+		if (idCk == 0) {
+			JOptionPane.showMessageDialog(this, "아이디가 이미 있습니다.");
+		} else {
+			JOptionPane.showMessageDialog(this, "사용가능한 아이디 입니다.");
 		}
 	}
 }

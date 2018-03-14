@@ -118,7 +118,7 @@
 
 	<select id="selectEmployeeByid" resultMap="EmployeeAddTitle">
 		<!-- select id, epassword, title_no from employee -->
-		select id from employee
+		select id from employee 
 	</select>
 
 
